@@ -46,7 +46,7 @@ namespace Converter
             using (Image image = Image.Load(imagePath))
             {
                 var pen = Pens.Solid(Color.Red, 5);
-                var rect = new Rectangle(position.X, position.Y, position.Width, position.Height);
+                var rect = new Rectangle((int)position.X, (int)position.Y, (int)position.Width, (int)position.Height);
                 image.Mutate(x => x.Draw(pen, rect));
 
                 image.Save(imagePath);

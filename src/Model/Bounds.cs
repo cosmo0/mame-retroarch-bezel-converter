@@ -12,25 +12,25 @@ namespace Converter.Model
         /// Gets or sets the X position
         /// </summary>
         [XmlAttribute("x")]
-        public int X { get; set; }
+        public double X { get; set; }
 
         /// <summary>
         /// Gets or sets the Y position
         /// </summary>
         [XmlAttribute("y")]
-        public int Y { get; set; }
+        public double Y { get; set; }
 
         /// <summary>
         /// Gets or sets the width
         /// </summary>
         [XmlAttribute("width")]
-        public int Width { get; set; }
+        public double Width { get; set; }
 
         /// <summary>
         /// Gets or sets the height
         /// </summary>
         [XmlAttribute("height")]
-        public int Height { get; set; }
+        public double Height { get; set; }
 
         /// <summary>
         /// Gets the orientation (vertical/horizontal)

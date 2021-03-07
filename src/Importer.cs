@@ -94,12 +94,21 @@ namespace Converter
                 if (!string.IsNullOrEmpty(options.OutputDebug))
                 {
                     var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
-                    File.Copy(outputImage, debugImage);
+                    File.Copy(outputImage, debugImage, true);
                     ImageProcessor.DrawRect(debugImage, newPosition);
                 }
 
-                // create config files
+                // create game config files
+                var outputGameCfg = Path.Join(options.OutputRoms, $"{game}.zip.cfg");
+                File.Copy(options.TemplateGameCfg, outputGameCfg, options.Overwrite);
+                Converter.FillTemplate(outputGameCfg, game, newPosition);
 
+                // create overlay config files
+                var outputOverlayCfg = Path.Join(options.OutputOverlays, $"{game}.cfg");
+                File.Copy(options.TemplateOverlayCfg, outputOverlayCfg, options.Overwrite);
+                Converter.FillTemplate(outputOverlayCfg, game, newPosition);
+
+                // clean
                 CleanupFolder(tmp);
             }
 
