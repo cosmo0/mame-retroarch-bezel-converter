@@ -7,9 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAMEBezelConverter", "MAMEB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository files", "Repository files", "{05DA6541-1771-459F-A4B9-B208640CEF65}"
 	ProjectSection(SolutionItems) = preProject
-		..\CREDITS.md = ..\CREDITS.md
-		..\DEVELOPMENT.md = ..\DEVELOPMENT.md
 		..\README.md = ..\README.md
+		..\lay_files_specs.md = ..\lay_files_specs.md
 	EndProjectSection
 EndProject
 Global

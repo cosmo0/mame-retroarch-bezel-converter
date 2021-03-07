@@ -11,3 +11,4 @@ tmp/
 **/obj/
 **/bin/
 **/.vs/
+**/*.csproj.user
