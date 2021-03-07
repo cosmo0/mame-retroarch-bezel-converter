@@ -15,11 +15,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove=".DS_Store" />
-    <None Remove="templates\game.cfg" />
-    <None Remove="templates\overlay.cfg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Model\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="templates\game.cfg">
@@ -28,10 +27,5 @@
     <Content Include="templates\overlay.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="templates\overlay.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
