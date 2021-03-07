@@ -3,7 +3,10 @@ using Converter.Model;
 
 namespace Converter
 {
-    public class Converter
+    /// <summary>
+    /// Conversion from MAME bezels to RetroArch bezels
+    /// </summary>
+    public static class Converter
     {
         /// <summary>
         /// Applies the specified offset to the specified bounds

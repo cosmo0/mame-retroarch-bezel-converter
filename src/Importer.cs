@@ -87,8 +87,16 @@ namespace Converter
                 }
 
                 // resize the bezel image
+                Console.WriteLine($"{game} processing image");
+                ImageProcessor.Resize(outputImage, 1920, 1080);
 
                 // debug: draw target position
+                if (!string.IsNullOrEmpty(options.OutputDebug))
+                {
+                    var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
+                    File.Copy(outputImage, debugImage);
+                    ImageProcessor.DrawRect(debugImage, newPosition);
+                }
 
                 // create config files
 
