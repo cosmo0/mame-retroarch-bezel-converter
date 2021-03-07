@@ -83,6 +83,8 @@ namespace Converter
                     mameProcessor.SourceResolution,
                     options.TargetResolutionBounds);
 
+                Console.WriteLine($"{game} target screen: {newPosition}");
+
                 // get bezel image
                 var outputImage = Path.Join(options.OutputOverlays, $"{game}.png");
                 if (options.Overwrite && File.Exists(outputImage)) { File.Delete(outputImage); }
@@ -93,15 +95,21 @@ namespace Converter
 
                 // resize the bezel image
                 Console.WriteLine($"{game} processing image");
-                ImageProcessor.Resize(outputImage, 1920, 1080);
+                ImageProcessor.Resize(
+                    outputImage,
+                    (int)options.TargetResolutionBounds.Width,
+                    (int)options.TargetResolutionBounds.Height);
 
                 // debug: draw target position
                 if (!string.IsNullOrEmpty(options.OutputDebug))
                 {
+                    Console.WriteLine($"{game} generating debug image");
                     var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
                     File.Copy(outputImage, debugImage, true);
                     ImageProcessor.DrawRect(debugImage, newPosition);
                 }
+
+                Console.WriteLine($"{game} creating configs");
 
                 // create game config files
                 var outputGameCfg = Path.Join(options.OutputRoms, $"{game}.zip.cfg");
@@ -112,6 +120,8 @@ namespace Converter
                 var outputOverlayCfg = Path.Join(options.OutputOverlays, $"{game}.cfg");
                 File.Copy(options.TemplateOverlayCfg, outputOverlayCfg, options.Overwrite);
                 Converter.FillTemplate(outputOverlayCfg, game, newPosition);
+
+                Console.WriteLine($"{game} done");
 
                 // clean
                 CleanupFolder(tmp);

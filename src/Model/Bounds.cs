@@ -61,6 +61,21 @@ namespace Converter.Model
         }
 
         /// <summary>
+        /// Create a clone of this instance
+        /// </summary>
+        /// <returns>The cloned bounds</returns>
+        public Bounds Clone()
+        {
+            return new Bounds
+            {
+                X = this.X,
+                Y = this.Y,
+                Width = this.Width,
+                Height = this.Height
+            };
+        }
+
+        /// <summary>
         /// Gets a string representation of the object
         /// </summary>
         /// <returns>The string representation</returns>

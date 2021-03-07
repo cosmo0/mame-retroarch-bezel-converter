@@ -63,8 +63,31 @@ namespace Converter
         public static Bounds GetSourceScreenCoordinates(LayFile.View view)
         {
             if (view.Screens == null || !view.Screens.Any()) { throw new Exceptions.LayFileException($"No screen found in view {view.Name}"); }
+            if (view.Screens.Count() > 1) { throw new Exceptions.LayFileException($"Unable to automatically process a multi-screen machine (RetroArch doesn't support it)"); }
 
-            return view.Screens.First().Bounds;
+            var screen = view.Screens.First().Bounds;
+
+            // base bounds: screen bounds
+            var bounds = screen.Clone();
+
+            // add overlay and backdrop positions to find the largest possible box
+            if (view.Overlays != null && view.Overlays.Any())
+            {
+                foreach (var o in view.Overlays)
+                {
+                    bounds = AddToBounds(bounds, o.Bounds);
+                }
+            }
+
+            if (view.Backdrops != null && view.Backdrops.Any())
+            {
+                foreach (var b in view.Backdrops)
+                {
+                    bounds = AddToBounds(bounds, b.Bounds);
+                }
+            }
+
+            return bounds;
         }
 
         /// <summary>
@@ -175,6 +198,47 @@ namespace Converter
             }
 
             return view;
+        }
+
+        /// <summary>
+        /// Adds bounds to get the largest possible box
+        /// </summary>
+        /// <param name="a">The first bound</param>
+        /// <param name="b">The second bound</param>
+        /// <returns>The largest possible bounds</returns>
+        private static Bounds AddToBounds(Bounds a, Bounds b)
+        {
+            var result = a.Clone();
+
+            // b is further to the left
+            if (a.X > b.X)
+            {
+                var diff = a.X - b.X;
+                result.X -= diff;
+                result.Width += diff;
+            }
+
+            // b is wider
+            if (a.Width < b.Width)
+            {
+                result.Width += b.Width - a.Width;
+            }
+
+            // b is further to the top
+            if (a.Y > b.Y)
+            {
+                var diff = a.Y - b.Y;
+                result.Y -= diff;
+                result.Height += diff;
+            }
+
+            // b is taller
+            if (a.Height < b.Height)
+            {
+                result.Height += b.Height- a.Height;
+            }
+
+            return result;
         }
     }
 }

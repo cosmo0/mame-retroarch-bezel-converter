@@ -24,12 +24,7 @@ namespace Converter
                 return sourcePosition;
             }
 
-            var newPos = new Bounds {
-                X = sourcePosition.X,
-                Y = sourcePosition.Y,
-                Width = sourcePosition.Width,
-                Height = sourcePosition.Height
-            };
+            var newPos = sourcePosition.Clone();
 
             // multiply w/h by stretch = get target screen size, centered => NEW DIMENSIONS AT SOURCE RESOLUTION
             newPos.Width *= offset.HStretch;
