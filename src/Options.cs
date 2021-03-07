@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using CommandLine;
+using Converter.Model;
 
 namespace Converter
 {
@@ -57,6 +58,32 @@ namespace Converter
         /// </summary>
         [Option("template-overlay", Required = true, HelpText = "The path to the template for the overlay config")]
         public string TemplateOverlayCfg { get; set; }
+
+        /// <summary>
+        /// Gets or sets the target overlay resolution
+        /// </summary>
+        [Option("target-resolution", Required = false, HelpText = "The target resolution", Default = "1920x1080")]
+        public string TargetResolution { get; set; }
+
+        /// <summary>
+        /// Gets the target resolution bounds
+        /// </summary>
+        public Bounds TargetResolutionBounds
+        {
+            get
+            {
+                var splitRes = TargetResolution.Split(new char[] { 'x', '*', ':', '/' });
+                if (splitRes.Length < 2) { throw new ArgumentOutOfRangeException(nameof(TargetResolution), $"Unable to parse target resolution ({TargetResolution})"); }
+
+                return new Bounds
+                {
+                    X = 0,
+                    Y = 0,
+                    Width = int.Parse(splitRes[0]),
+                    Height = int.Parse(splitRes[1])
+                };
+            }
+        }
 
         /// <summary>
         /// Gets the assembly directory path

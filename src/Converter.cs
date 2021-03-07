@@ -15,16 +15,62 @@ namespace Converter
         /// <param name="sourcePosition">The source screen position</param>
         /// <param name="offset">The offset to apply</param>
         /// <param name="sourceResolution">The source resolution</param>
+        /// <param name="targetResolution">The target resolution</param>
         /// <returns>The new bounds</returns>
-        public static Bounds ApplyOffset(Bounds sourcePosition, Offset offset, Bounds sourceResolution)
+        public static Bounds ApplyOffset(Bounds sourcePosition, Offset offset, Bounds sourceResolution, Bounds targetResolution)
         {
             if (offset == null)
             {
                 return sourcePosition;
             }
 
-            // TODO
-            return sourcePosition;
+            var newPos = new Bounds {
+                X = sourcePosition.X,
+                Y = sourcePosition.Y,
+                Width = sourcePosition.Width,
+                Height = sourcePosition.Height
+            };
+
+            // multiply w/h by stretch = get target screen size, centered => NEW DIMENSIONS AT SOURCE RESOLUTION
+            newPos.Width *= offset.HStretch;
+            newPos.Height *= offset.VStretch;
+
+            // compute new base x/y (top/left): x = cx - (w / 2)
+            newPos.X = sourcePosition.Center.X - (newPos.Width / 2);
+            newPos.Y = sourcePosition.Center.Y - (newPos.Height / 2);
+
+            // apply offset: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) => NEW POSITION at source resolution
+            if (offset.HOffset != 0)
+            {
+                if (newPos.Orientation == Orientation.Horizontal)
+                {
+                    newPos.X += (sourceResolution.Width / newPos.Width * newPos.Height) * offset.HOffset;
+                }
+                else
+                {
+                    newPos.X += sourceResolution.Width * offset.HOffset;
+                }
+            }
+
+            if (offset.VOffset != 0)
+            {
+                if (newPos.Orientation == Orientation.Horizontal)
+                {
+                    newPos.Y += sourceResolution.Height * offset.VOffset;
+                }
+                else
+                {
+                    newPos.Y += (sourceResolution.Height / newPos.Height * newPos.Width) * offset.VOffset;
+                }
+            }
+
+            // apply target resolution => NEW COORDINATES AT TARGET RESOLUTION
+            newPos.X *= targetResolution.Width / sourceResolution.Width;
+            newPos.Y *= targetResolution.Height / sourceResolution.Height;
+            newPos.Width *= targetResolution.Width / sourceResolution.Width;
+            newPos.Height *= targetResolution.Height / sourceResolution.Height;
+
+            return newPos;
         }
 
         /// <summary>

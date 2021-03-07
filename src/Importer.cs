@@ -64,6 +64,10 @@ namespace Converter
                     Console.WriteLine($"{game} config file exists");
                     cfg = DeserializeXmlFile<Model.CfgFile>(cfgFile);
                 }
+                else
+                {
+                    Console.WriteLine($"{game} doesn't have a cfg file");
+                }
 
                 // extracts the data from the MAME files
                 var mameProcessor = MameProcessor.BuildProcessor(options, lay, cfg);
@@ -76,7 +80,8 @@ namespace Converter
                 var newPosition = Converter.ApplyOffset(
                     mameProcessor.SourceScreenPosition,
                     mameProcessor.Offset,
-                    mameProcessor.SourceResolution);
+                    mameProcessor.SourceResolution,
+                    options.TargetResolutionBounds);
 
                 // get bezel image
                 var outputImage = Path.Join(options.OutputOverlays, $"{game}.png");

@@ -186,7 +186,7 @@ let requests = files.reduce((promisechain, file, index) => {
                     // apply offset: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) => NEW POSITION at source resolution
                     if (offset.hoffset) {
                         if (orientation == "horizontal") {
-                            screenPos.x = screenPos.x = ((sourceResolution.width / screenPos.width * screenPos.height) * offset.hoffset);
+                            screenPos.x = screenPos.x + ((sourceResolution.width / screenPos.width * screenPos.height) * offset.hoffset);
                         } else {
                             screenPos.x = screenPos.x + (sourceResolution.width * offset.hoffset);
                         }
@@ -194,7 +194,7 @@ let requests = files.reduce((promisechain, file, index) => {
 
                     if (offset.voffset) {
                         if (orientation == "horizontal") {
-                            screenPos.y = screenPos.y = (sourceResolution.height * offset.voffset);
+                            screenPos.y = screenPos.y + (sourceResolution.height * offset.voffset);
                         } else {
                             screenPos.y = screenPos.y + ((sourceResolution.height / screenPos.height * screenPos.width) * offset.voffset);
                         }
