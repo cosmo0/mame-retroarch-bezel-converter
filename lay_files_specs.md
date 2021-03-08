@@ -56,12 +56,12 @@ Try out in MAME:
   - 1.0 = full screen image in its original aspect ratio, generally 4/3 (that's important for the rest)
   - 0.5 = image size / 2
   - 1.5 = image size * 2
-  - resizes the image **FROM THE CENTER**, the corners move, not the center
+  - resizes the image **FROM THE CENTER**: the corners move, not the center
 - **OFFSET** is a value between -0.5 & 0.5 
   - 0/0 is a centered image
   - (-)0.5 = the **center** of the image is at the edge of the original screen area
-  - it's defined **FROM THE CENTER OF THE SCREEN**
-  - it's **RELATIVE TO THE FULLSCREEN IMAGE** so a 4/3 game in a 1920x1080 screen is relative to 1440x1080
+  - it's defined **FROM THE CENTER OF THE SCREEN** (but applying the offset to any pixel works fine)
+  - it's **RELATIVE TO THE ORIGINAL SCREEN SIZE** defined in the LAY file
 
 ## Math
 
@@ -78,5 +78,5 @@ Steps:
 - compute original center: cx = x + (w / 2) => (cx: 640, cy: 360)
 - multiply w/h by stretch = get target screen size, centered: (w: 432, h: 343) => NEW DIMENSIONS 720p
 - compute new base x/y (top/left): x = cx - (w / 2) = (x: 424, y: 188,5)
-- apply offset: x = x + ((hres / 4 * 3) * hoffset) ; y = y + (vres * voffset) = (x: 402, y: 240) => NEW POSITION 720p
+- apply offset, for a horizontal image: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) = (x: 402, y: 240) => NEW POSITION 720p
 - apply target resolution (x * 1920 / 1280) = (x: 603, y: 360, w: 648, h: 514) => NEW COORDINATES 1080p

@@ -39,11 +39,11 @@ namespace Converter
             {
                 if (newPos.Orientation == Orientation.Horizontal)
                 {
-                    newPos.X += (sourceResolution.Width / newPos.Width * newPos.Height) * offset.HOffset;
+                    newPos.X += (sourcePosition.Width / newPos.Width * newPos.Height) * offset.HOffset;
                 }
                 else
                 {
-                    newPos.X += sourceResolution.Width * offset.HOffset;
+                    newPos.X += sourcePosition.Width * offset.HOffset;
                 }
             }
 
@@ -51,11 +51,11 @@ namespace Converter
             {
                 if (newPos.Orientation == Orientation.Horizontal)
                 {
-                    newPos.Y += sourceResolution.Height * offset.VOffset;
+                    newPos.Y += sourcePosition.Height * offset.VOffset;
                 }
                 else
                 {
-                    newPos.Y += (sourceResolution.Height / newPos.Height * newPos.Width) * offset.VOffset;
+                    newPos.Y += (sourcePosition.Height / newPos.Height * newPos.Width) * offset.VOffset;
                 }
             }
 
