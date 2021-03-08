@@ -9,22 +9,20 @@ namespace Converter.Model
     public class Bounds
     {
         /// <summary>
-        /// Gets or sets the X position
+        /// Gets the center point
         /// </summary>
-        [XmlAttribute("x")]
-        public double X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Y position
-        /// </summary>
-        [XmlAttribute("y")]
-        public double Y { get; set; }
-
-        /// <summary>
-        /// Gets or sets the width
-        /// </summary>
-        [XmlAttribute("width")]
-        public double Width { get; set; }
+        [XmlIgnore]
+        public Point Center
+        {
+            get
+            {
+                return new Point
+                {
+                    X = this.X + (this.Width / 2),
+                    Y = this.Y + (this.Height / 2)
+                };
+            }
+        }
 
         /// <summary>
         /// Gets or sets the height
@@ -45,20 +43,22 @@ namespace Converter.Model
         }
 
         /// <summary>
-        /// Gets the center point
+        /// Gets or sets the width
         /// </summary>
-        [XmlIgnore]
-        public Point Center
-        {
-            get
-            {
-                return new Point
-                {
-                    X = this.X + (this.Width / 2),
-                    Y = this.Y + (this.Height / 2)
-                };
-            }
-        }
+        [XmlAttribute("width")]
+        public double Width { get; set; }
+
+        /// <summary>
+        /// Gets or sets the X position
+        /// </summary>
+        [XmlAttribute("x")]
+        public double X { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Y position
+        /// </summary>
+        [XmlAttribute("y")]
+        public double Y { get; set; }
 
         /// <summary>
         /// Create a clone of this instance

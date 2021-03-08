@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Converter.Model;
+using System;
 using System.IO;
-using Converter.Model;
 
 namespace Converter
 {

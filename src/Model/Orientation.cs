@@ -1,5 +1,4 @@
-﻿using System;
-namespace Converter.Model
+﻿namespace Converter.Model
 {
     /// <summary>
     /// The screen orientation

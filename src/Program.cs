@@ -1,6 +1,5 @@
-﻿using System;
+﻿using CommandLine;
 using System.IO;
-using CommandLine;
 
 namespace Converter
 {
@@ -17,20 +16,10 @@ namespace Converter
         public static string TemplateOverlayConfig { get; set; }
 
         /// <summary>
-        /// Main application entry point
-        /// </summary>
-        /// <param name="args">The command line arguments</param>
-        static void Main(string[] args)
-        {
-            Parser.Default.ParseArguments<Options>(args)
-                   .WithParsed<Options>(Init);
-        }
-
-        /// <summary>
         /// Initializes the import
         /// </summary>
         /// <param name="options">The options</param>
-        static void Init(Options options)
+        private static void Init(Options options)
         {
             // check that input folder exists
             if (!Directory.Exists(options.Source)) { throw new DirectoryNotFoundException($"Unable to find directory {options.Source}"); }
@@ -46,8 +35,17 @@ namespace Converter
             TemplateGameConfig = File.ReadAllText(options.TemplateGameCfg);
             TemplateOverlayConfig = File.ReadAllText(options.TemplateOverlayCfg);
 
-            var importer = new Importer(options);
-            importer.Start();
+            Importer.Run(options);
+        }
+
+        /// <summary>
+        /// Main application entry point
+        /// </summary>
+        /// <param name="args">The command line arguments</param>
+        private static void Main(string[] args)
+        {
+            Parser.Default.ParseArguments<Options>(args)
+                   .WithParsed<Options>(Init);
         }
     }
 }

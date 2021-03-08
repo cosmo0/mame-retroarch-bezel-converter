@@ -3,27 +3,15 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml.Serialization;
-using Converter.Model;
 
 namespace Converter
 {
-    public class Importer
+    public static class Importer
     {
-        private readonly Options options;        
-
-        /// <summary>
-        /// Initializes a new Importer instance
-        /// </summary>
-        /// <param name="options">The import options</param>
-        public Importer(Options options)
-        {
-            this.options = options;
-        }
-
         /// <summary>
         /// Starts the import
         /// </summary>
-        public void Start()
+        public static void Run(Options options)
         {
             var tmp = Path.Join(options.OutputOverlays, "tmp");
             if (!Directory.Exists(tmp))
@@ -44,30 +32,7 @@ namespace Converter
 
                 Console.WriteLine($"########## PROCESSING {game}");
 
-                // extract files
-                using (ZipArchive archive = ZipFile.OpenRead(f))
-                {
-                    archive.ExtractToDirectory(tmp);
-                }
-
-                // parse the layout file
-                Model.LayFile lay = DeserializeXmlFile<Model.LayFile>(Path.Join(tmp, "default.lay"));
-                if (!lay.Views.Any())
-                {
-                    throw new Exceptions.LayFileException("Unable to find a view in the LAY file");
-                }
-
-                // parse the config file if it exists
-                Model.CfgFile cfg = null;
-                if (File.Exists(cfgFile))
-                {
-                    Console.WriteLine($"{game} config file exists");
-                    cfg = DeserializeXmlFile<Model.CfgFile>(cfgFile);
-                }
-                else
-                {
-                    Console.WriteLine($"{game} doesn't have a cfg file");
-                }
+                var (lay, cfg) = ExtractFiles(game, f, cfgFile, tmp);
 
                 // extracts the data from the MAME files
                 var mameProcessor = MameProcessor.BuildProcessor(options, lay, cfg);
@@ -167,6 +132,45 @@ namespace Converter
         }
 
         /// <summary>
+        /// Extracts and deserializes the LAY and CFG files
+        /// </summary>
+        /// <param name="game">The game name.</param>
+        /// <param name="zipFile">The zip file path.</param>
+        /// <param name="cfgFile">The CFG file path.</param>
+        /// <param name="tmpFolder">The temporary folder path.</param>
+        /// <returns>The deserialized LAY and CFG files</returns>
+        /// <exception cref="Exceptions.LayFileException">Unable to find a view in the LAY file</exception>
+        private static (Model.LayFile, Model.CfgFile) ExtractFiles(string game, string zipFile, string cfgFile, string tmpFolder)
+        {
+            // extract files
+            using (ZipArchive archive = ZipFile.OpenRead(zipFile))
+            {
+                archive.ExtractToDirectory(tmpFolder);
+            }
+
+            // parse the layout file
+            Model.LayFile lay = DeserializeXmlFile<Model.LayFile>(Path.Join(tmpFolder, "default.lay"));
+            if (!lay.Views.Any())
+            {
+                throw new Exceptions.LayFileException("Unable to find a view in the LAY file");
+            }
+
+            // parse the config file if it exists
+            Model.CfgFile cfg = null;
+            if (File.Exists(cfgFile))
+            {
+                Console.WriteLine($"{game} config file exists");
+                cfg = DeserializeXmlFile<Model.CfgFile>(cfgFile);
+            }
+            else
+            {
+                Console.WriteLine($"{game} doesn't have a cfg file");
+            }
+
+            return (lay, cfg);
+        }
+
+        /// <summary>
         /// Searches for a file in a case-sensitive way, and returns the actual file name
         /// </summary>
         /// <param name="folder">The folder to search</param>
@@ -177,7 +181,8 @@ namespace Converter
             foreach (var f in Directory.GetFiles(folder))
             {
                 var fi = new FileInfo(f);
-                if (fi.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase)) {
+                if (fi.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase))
+                {
                     return fi.FullName;
                 }
             }

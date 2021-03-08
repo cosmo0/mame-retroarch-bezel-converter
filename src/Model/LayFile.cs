@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Xml.Serialization;
 
 namespace Converter.Model
@@ -30,16 +28,16 @@ namespace Converter.Model
         public class Element
         {
             /// <summary>
-            /// Gets or sets the element name
-            /// </summary>
-            [XmlAttribute("name")]
-            public string Name { get; set; }
-
-            /// <summary>
             /// Gets or sets the images
             /// </summary>
             [XmlElement("image")]
             public Image[] Images { get; set; }
+
+            /// <summary>
+            /// Gets or sets the element name
+            /// </summary>
+            [XmlAttribute("name")]
+            public string Name { get; set; }
 
             /// <summary>
             /// An image element
@@ -62,28 +60,10 @@ namespace Converter.Model
         public class View
         {
             /// <summary>
-            /// Gets or sets the view name
-            /// </summary>
-            [XmlAttribute("name")]
-            public string Name { get; set; }
-
-            /// <summary>
-            /// Gets or sets the screens
-            /// </summary>
-            [XmlElement("screen")]
-            public ViewElement[] Screens { get; set; }
-
-            /// <summary>
-            /// Gets or sets the overlays (masks)
-            /// </summary>
-            [XmlElement("overlay")]
-            public ViewElement[] Overlays { get; set; }
-
-            /// <summary>
             /// Gets or sets the backdrops
             /// </summary>
             [XmlElement("backdrop")]
-            public ViewElement[]Backdrops { get; set; }
+            public ViewElement[] Backdrops { get; set; }
 
             /// <summary>
             /// Gets or sets the bezel (background decorations)
@@ -92,23 +72,22 @@ namespace Converter.Model
             public ViewElement[] Bezels { get; set; }
 
             /// <summary>
-            /// A view element (overlay, backdrop, bezel...)
+            /// Gets or sets the view name
             /// </summary>
-            public class ViewElement
-            {
-                /// <summary>
-                /// Gets or sets the name of the referenced element
-                /// </summary>
-                [XmlAttribute("element")]
-                public string ElementName { get; set; }
+            [XmlAttribute("name")]
+            public string Name { get; set; }
 
-                /// <summary>
-                /// Gets or sets the bounds
-                /// </summary>
-                [XmlElement("bounds")]
-                public Bounds Bounds { get; set; }
+            /// <summary>
+            /// Gets or sets the overlays (masks)
+            /// </summary>
+            [XmlElement("overlay")]
+            public ViewElement[] Overlays { get; set; }
 
-            }
+            /// <summary>
+            /// Gets or sets the screens
+            /// </summary>
+            [XmlElement("screen")]
+            public ViewElement[] Screens { get; set; }
 
             /// <summary>
             /// A view screen
@@ -116,16 +95,34 @@ namespace Converter.Model
             public class Screen
             {
                 /// <summary>
+                /// Gets or sets the bounds
+                /// </summary>
+                [XmlElement("bounds")]
+                public Bounds Bounds { get; set; }
+
+                /// <summary>
                 /// Gets or sets the screen index
                 /// </summary>
                 [XmlAttribute("index")]
                 public int Index { get; set; }
+            }
 
+            /// <summary>
+            /// A view element (overlay, backdrop, bezel...)
+            /// </summary>
+            public class ViewElement
+            {
                 /// <summary>
                 /// Gets or sets the bounds
                 /// </summary>
                 [XmlElement("bounds")]
                 public Bounds Bounds { get; set; }
+
+                /// <summary>
+                /// Gets or sets the name of the referenced element
+                /// </summary>
+                [XmlAttribute("element")]
+                public string ElementName { get; set; }
             }
         }
     }

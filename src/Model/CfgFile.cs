@@ -1,5 +1,4 @@
-﻿using System;
-using System.Xml.Serialization;
+﻿using System.Xml.Serialization;
 
 namespace Converter.Model
 {
@@ -38,16 +37,28 @@ namespace Converter.Model
             public class Video
             {
                 /// <summary>
+                /// Gets or sets the video screen configuration
+                /// </summary>
+                [XmlElement("screen")]
+                public Screen VideoScreen { get; set; }
+
+                /// <summary>
                 /// Gets or sets the video target configuration
                 /// </summary>
                 [XmlElement("target")]
                 public Target VideoTarget { get; set; }
 
                 /// <summary>
-                /// Gets or sets the video screen configuration
+                /// A screen configuration
                 /// </summary>
-                [XmlElement("screen")]
-                public Screen VideoScreen { get; set; }
+                public class Screen : Offset
+                {
+                    /// <summary>
+                    /// Gets or sets the screen index
+                    /// </summary>
+                    [XmlAttribute("index")]
+                    public int Index { get; set; }
+                }
 
                 /// <summary>
                 /// A target configuration
@@ -65,18 +76,6 @@ namespace Converter.Model
                     /// </summary>
                     [XmlAttribute("view")]
                     public string View { get; set; }
-                }
-
-                /// <summary>
-                /// A screen configuration
-                /// </summary>
-                public class Screen : Offset
-                {
-                    /// <summary>
-                    /// Gets or sets the screen index
-                    /// </summary>
-                    [XmlAttribute("index")]
-                    public int Index { get; set; }
                 }
             }
         }
