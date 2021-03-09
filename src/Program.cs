@@ -6,7 +6,27 @@ namespace Converter
 {
     public partial class Program
     {
-      
+        /// <summary>
+        /// Main application entry point
+        /// </summary>
+        /// <param name="args">The command line arguments</param>
+        public static void Main(string[] args)
+        {
+            Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions>(args)
+                   .WithParsed<MameToRaOptions>((o) =>
+                   {
+                       InitMameToRa(o);
+
+                       Importer.MameToRetroarch(o);
+                   })
+                   .WithParsed<RaToMameOptions>((o) =>
+                   {
+                       InitRaToMame(o);
+
+                       Importer.RetroarchToMame(o);
+                   });
+        }
+
         /// <summary>
         /// Initializes the import from MAME to Retroarch
         /// </summary>
@@ -42,27 +62,6 @@ namespace Converter
 
             // check templates
             if (!File.Exists(options.Template)) { throw new FileNotFoundException("Unable to find LAY template", options.Template); }
-        }
-
-        /// <summary>
-        /// Main application entry point
-        /// </summary>
-        /// <param name="args">The command line arguments</param>
-        public static void Main(string[] args)
-        {
-            Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions>(args)
-                   .WithParsed<MameToRaOptions>((o) =>
-                   {
-                       InitMameToRa(o);
-
-                       Importer.MameToRetroarch(o);
-                   })
-                   .WithParsed<RaToMameOptions>((o) =>
-                   {
-                       InitRaToMame(o);
-
-                       Importer.RetroarchToMame(o);
-                   });
         }
     }
 }
