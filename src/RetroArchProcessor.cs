@@ -76,8 +76,8 @@ namespace Converter
             {
                 X = 0,
                 Y = 0,
-                Width = int.Parse(xres),
-                Height = int.Parse(yres)
+                Width = int.Parse(xres ?? options.TargetResolutionBounds.Width.ToString()),
+                Height = int.Parse(yres ?? options.TargetResolutionBounds.Height.ToString())
             };
 
             return new RetroArchProcessor

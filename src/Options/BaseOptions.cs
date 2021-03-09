@@ -1,6 +1,8 @@
 ﻿using CommandLine;
 using System.IO;
 using System.Reflection;
+using Converter.Model;
+using System;
 
 namespace Converter.Options
 {
@@ -50,6 +52,32 @@ namespace Converter.Options
         /// </summary>
         [Option("scan-bezel", Required = false, HelpText = "Scans the bezel file for transparent pixels to find the screen position ; otherwise, just convert the LAY file", Default = false)]
         public bool ScanBezelForScreenCoordinates { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the target overlay resolution
+        /// </summary>
+        [Option("target-resolution", Required = false, HelpText = "The target resolution", Default = "1920x1080")]
+        public string TargetResolution { get; set; }
+
+        /// <summary>
+        /// Gets the target resolution bounds
+        /// </summary>
+        public Bounds TargetResolutionBounds
+        {
+            get
+            {
+                var splitRes = TargetResolution.Split(new char[] { 'x', '*', ':', '/' });
+                if (splitRes.Length < 2) { throw new ArgumentOutOfRangeException(nameof(TargetResolution), $"Unable to parse target resolution ({TargetResolution})"); }
+
+                return new Bounds
+                {
+                    X = 0,
+                    Y = 0,
+                    Width = int.Parse(splitRes[0]),
+                    Height = int.Parse(splitRes[1])
+                };
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of threads on which to run the conversion
