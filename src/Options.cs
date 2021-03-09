@@ -24,6 +24,12 @@ namespace Converter
         }
 
         /// <summary>
+        /// Gets or sets the margins applied to the screen after conversion.
+        /// </summary>
+        [Option("margin", Required = false, HelpText = "Applies a margin to the screen (to hide a bit of it)", Default = 0)]
+        public int Margin { get; set; } = 0;
+
+        /// <summary>
         /// Gets or sets a path for debug purpose
         /// </summary>
         [Option('d', "output-debug", Required = false, HelpText = "The folder where debug overlays will be created", Default = "")]
@@ -46,6 +52,12 @@ namespace Converter
         /// </summary>
         [Option("overwrite", Required = false, HelpText = "Overwrites existing files", Default = true)]
         public bool Overwrite { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to scan the bezel for screen position or just convert LAY file.
+        /// </summary>
+        [Option("scan-bezel", Required = false, HelpText = "Scans the bezel file for transparent pixels to find the screen position ; otherwise, just convert the LAY file", Default = false)]
+        public bool ScanBezelForScreenCoordinates { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the path to the source MAME bezels
