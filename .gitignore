@@ -6,6 +6,7 @@ node_modules/
 
 # temp
 tmp/
+errors.txt
 
 # VS artifacts
 **/obj/
