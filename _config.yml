@@ -1,1 +1,14 @@
 theme: jekyll-theme-cayman
+
+title:            MAME/Retroarch bezel converter
+tagline:          ''
+description:      'Conversion between MAME and Retroarch bezels/overlays'
+url:              https://cosmo0.github.io/
+baseurl:          /mame-retroarch-bezel-converter
+
+author:
+  name:           'cosmo0'
+  url:            https://twitter.com/cosmoschtroumpf
+
+github:
+  repo:           https://github.com/cosmo0/mame-retroarch-bezel-converter
