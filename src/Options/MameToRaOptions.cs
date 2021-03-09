@@ -29,6 +29,12 @@ namespace Converter.Options
         public string Source { get; set; }
 
         /// <summary>
+        /// Gets or sets the path to the MAME configs folder
+        /// </summary>
+        [Option("source-configs", Required = false, HelpText = "The folder where the MAME configs are located", Default = "")]
+        public string SourceConfigs { get; set; }
+
+        /// <summary>
         /// Gets or sets the target overlay resolution
         /// </summary>
         [Option("target-resolution", Required = false, HelpText = "The target resolution", Default = "1920x1080")]

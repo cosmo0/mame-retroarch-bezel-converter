@@ -43,12 +43,6 @@ namespace Converter.Model
                 public Screen VideoScreen { get; set; }
 
                 /// <summary>
-                /// Gets or sets the video target configuration
-                /// </summary>
-                [XmlElement("target")]
-                public Target VideoTarget { get; set; }
-
-                /// <summary>
                 /// A screen configuration
                 /// </summary>
                 public class Screen : Offset
@@ -58,24 +52,6 @@ namespace Converter.Model
                     /// </summary>
                     [XmlAttribute("index")]
                     public int Index { get; set; }
-                }
-
-                /// <summary>
-                /// A target configuration
-                /// </summary>
-                public class Target
-                {
-                    /// <summary>
-                    /// Gets or sets the configuration index
-                    /// </summary>
-                    [XmlAttribute("index")]
-                    public int Index { get; set; }
-
-                    /// <summary>
-                    /// Gets or sets the configured view name
-                    /// </summary>
-                    [XmlAttribute("view")]
-                    public string View { get; set; }
                 }
             }
         }

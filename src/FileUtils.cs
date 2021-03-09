@@ -50,6 +50,44 @@ namespace Converter
         }
 
         /// <summary>
+        /// Reads the files in the specified folder
+        /// </summary>
+        /// <param name="game">The game name</param>
+        /// <param name="folder">The folder to read</param>
+        /// <param name="cfgFile">The config file</param>
+        /// <param name="options">The options</param>
+        /// <returns>The parsed files</returns>
+        public static (Model.MameLayFile lay, Model.MameCfgFile cfg, byte[] bezel) ReadFiles(string game, string folder, string cfgFile, MameToRaOptions options)
+        {
+            Model.MameLayFile lay = null;
+            Model.MameCfgFile cfg = null;
+            byte[] bezel = null;
+
+            Console.WriteLine($"{game} Reading files from folder {folder}");
+
+            // get layout and bezel
+            var layFiles = Directory.GetFiles(folder, "default.lay");
+            if (layFiles == null || !layFiles.Any()) { throw new FileNotFoundException($"Unable to find a default.lay file in {folder}"); }
+            lay = DeserializeXmlFile<Model.MameLayFile>(layFiles.First());
+
+            // check that LAY is useful
+            if (!lay.Views.Any()) { throw new Exceptions.LayFileException("Unable to find a view in the LAY file"); }
+            var view = MameProcessor.GetView(lay, options.UseFirstView);
+            var bezelFileNameInLay = MameProcessor.GetBezelFile(lay, view);
+            if (!string.IsNullOrEmpty(bezelFileNameInLay))
+            {
+                var bezelFilePath = Directory.GetFiles(folder, bezelFileNameInLay, new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
+                if (bezelFilePath == null || !bezelFilePath.Any()) { throw new FileNotFoundException($"Unable to find the bezel file {bezelFilePath}"); }
+                bezel = File.ReadAllBytes(bezelFilePath.First());
+            }
+
+            // get config file
+            cfg = GetConfigFile(cfgFile, game);
+
+            return (lay, cfg, bezel);
+        }
+
+        /// <summary>
         /// Extracts and deserializes the LAY and CFG files
         /// </summary>
         /// <param name="game">The game name.</param>
@@ -60,7 +98,8 @@ namespace Converter
         /// <exception cref="Exceptions.LayFileException">Unable to find a view in the LAY file</exception>
         public static (Model.MameLayFile lay, Model.MameCfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, MameToRaOptions options)
         {
-            Model.MameLayFile lay;
+            Model.MameLayFile lay = null;
+            Model.MameCfgFile cfg = null;
             byte[] bezel = null;
 
             Console.WriteLine($"{game} Extracting files from archive {zipFile}");
@@ -100,17 +139,7 @@ namespace Converter
                 }
             }
 
-            // parse the config file if it exists
-            Model.MameCfgFile cfg = null;
-            if (File.Exists(cfgFile))
-            {
-                Console.WriteLine($"{game} config file exists");
-                cfg = DeserializeXmlFile<Model.MameCfgFile>(cfgFile);
-            }
-            else
-            {
-                Console.WriteLine($"{game} doesn't have a cfg file");
-            }
+            cfg = GetConfigFile(cfgFile, game);
 
             return (lay, cfg, bezel);
         }
@@ -133,5 +162,27 @@ namespace Converter
 
             throw new FileNotFoundException($"Unable to find file {fileName} in archive");
         }
+
+        /// <summary>
+        /// Parses the specified config file
+        /// </summary>
+        /// <param name="cfgFile">The config file</param>
+        /// <param name="game">The game name</param>
+        /// <returns>The parsed config file</returns>
+        private static Model.MameCfgFile GetConfigFile(string cfgFile, string game)
+        {
+            // parse the config file if it exists
+            if (!string.IsNullOrEmpty(cfgFile) && File.Exists(cfgFile))
+            {
+                Console.WriteLine($"{game} config file exists");
+                return DeserializeXmlFile<Model.MameCfgFile>(cfgFile);
+            }
+            else
+            {
+                Console.WriteLine($"{game} doesn't have a cfg file");
+                return null;
+            }
+        }
+
     }
 }

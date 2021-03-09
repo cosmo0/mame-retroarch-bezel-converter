@@ -15,9 +15,9 @@ namespace Converter
         /// </summary>
         public static void ConvertMameToRetroarch(MameToRaOptions options)
         {
-            var files = Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff);
+            var fsEntries = Directory.EnumerateFileSystemEntries(options.Source).OrderBy(f => f);
 
-            RunThreads(options.Threads, files, (f) =>
+            RunThreads(options.Threads, fsEntries, (f) =>
             {
                 ProcessMameFile(f, options);
             });
@@ -32,7 +32,7 @@ namespace Converter
         public static void ConvertRetroarchToMame(RaToMameOptions options)
         {
             // get files to process
-            var romFiles = Directory.EnumerateFiles(options.SourceRoms, "*.zip.cfg").OrderBy(ff => ff);
+            var romFiles = Directory.EnumerateFiles(options.SourceRoms, "*.zip.cfg").OrderBy(f => f);
             var configFiles = Directory.EnumerateFiles(options.SourceConfigs, "*.cfg"); // read-only collection, no need for it to be concurrent
 
             RunThreads(options.Threads, romFiles, (f) =>
@@ -48,18 +48,28 @@ namespace Converter
         /// </summary>
         /// <param name="zipFile">The file to process</param>
         /// <param name="options">The options</param>
-        public static void ProcessMameFile(string zipFile, MameToRaOptions options)
+        public static void ProcessMameFile(string fsEntry, MameToRaOptions options)
         {
-            var fi = new FileInfo(zipFile);
-            var game = fi.Name.Replace(".zip", "");
+            var isFolder = File.GetAttributes(fsEntry).HasFlag(FileAttributes.Directory);
+            FileSystemInfo fsi = isFolder ? new DirectoryInfo(fsEntry) : new FileInfo(fsEntry);
+
+            // don't process files that are not zip
+            if (!isFolder && !fsi.Name.EndsWith(".zip", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return;
+            }
+
+            var game = fsi.Name.Replace(".zip", "", StringComparison.InvariantCultureIgnoreCase);
 
             try
             {
-                var cfgFile = Path.Join(options.Source, $"{game}.cfg");
+                var cfgFile = string.IsNullOrEmpty(options.SourceConfigs) ? string.Empty : Path.Join(options.SourceConfigs, $"{game}.cfg");
 
                 Console.WriteLine($"{game} processing start");
 
-                var (lay, cfg, bezel) = FileUtils.ExtractFiles(game, zipFile, cfgFile, options);
+                var (lay, cfg, bezel) = isFolder
+                    ? FileUtils.ReadFiles(game, fsEntry, cfgFile, options)
+                    : FileUtils.ExtractFiles(game, fsEntry, cfgFile, options);
 
                 // extracts the data from the MAME files
                 var mameProcessor = MameProcessor.BuildProcessor(options, lay, cfg);
@@ -101,13 +111,7 @@ namespace Converter
                     (int)options.TargetResolutionBounds.Height);
 
                 // debug: draw target position
-                if (!string.IsNullOrEmpty(options.OutputDebug))
-                {
-                    Console.WriteLine($"{game} generating debug image");
-                    var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
-                    File.Copy(outputImage, debugImage, true);
-                    ImageProcessor.DrawRect(debugImage, newPosition);
-                }
+                DebugDraw(game, options, outputImage, newPosition);
 
                 Console.WriteLine($"{game} creating configs");
 
@@ -181,13 +185,7 @@ namespace Converter
                     (int)processor.SourceResolution.Height);
 
                 // debug: draw target position
-                if (!string.IsNullOrEmpty(options.OutputDebug))
-                {
-                    Console.WriteLine($"{game} generating debug image");
-                    var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
-                    File.Copy(processor.OverlayImagePath, debugImage, true);
-                    ImageProcessor.DrawRect(debugImage, newPosition);
-                }
+                DebugDraw(game, options, processor.OverlayImagePath, newPosition);
 
                 Console.WriteLine($"{game} creating configs");
 
@@ -212,6 +210,24 @@ namespace Converter
             {
                 Console.WriteLine($"{game} PROCESSING ERROR: {ex.Message}");
                 File.AppendAllText(options.ErrorFile, $"{game} - {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Draws a debug rectangle on the overlay image
+        /// </summary>
+        /// <param name="game">The game name</param>
+        /// <param name="options">The options</param>
+        /// <param name="imagePath">The path to the image</param>
+        /// <param name="position">The position of the screen</param>
+        private static void DebugDraw(string game, BaseOptions options, string imagePath, Model.Bounds position)
+        {
+            if (!string.IsNullOrEmpty(options.OutputDebug))
+            {
+                Console.WriteLine($"{game} generating debug image");
+                var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
+                File.Copy(imagePath, debugImage, true);
+                ImageProcessor.DrawRect(debugImage, position);
             }
         }
 

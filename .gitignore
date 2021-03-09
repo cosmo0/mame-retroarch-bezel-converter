@@ -8,11 +8,12 @@ node_modules/
 tmp/
 errors.txt
 
-# VS artifacts
+# VS
 **/obj/
 **/bin/
 **/.vs/
 **/*.csproj.user
+**/.vscode
 
 # Debug parameters
 src/Properties/launchSettings.json

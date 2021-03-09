@@ -10,6 +10,8 @@ This tool converts MAME bezels to Retroarch overlays, so they can be used with a
 
 ## Usage
 
+Get a detailed help by running `mame-bezel-converter --help`.
+
 ### Convert MAME bezels to RetroArch overlays
 
 > mame-bezel-converter.exe mtr --source path/to/mame/zips --output-roms output/roms --output-overlays output/overlay --template-game templates/game.cfg --template-overlay templates/overlay.cfg
@@ -34,11 +36,58 @@ This tool converts MAME bezels to Retroarch overlays, so they can be used with a
 
 - `--overwrite` to overwrite existing files
 - `--scan-bezel` to scan transparent pixels in the images instead of relying on the cfg/lay files
-- `--debug path/to/debug` to see the result of the conversion (it creates an image with a red square where the screen will be)
--  `--margin 10` to add or remove a 10px margin (positive value to crop a bit of the screen)
+- `--output-debug path/to/debug` to see the result of the conversion (it creates an image with a red square where the screen will be)
+- `--margin 10` to add or remove a 10px margin (positive value to crop a bit of the screen)
 - `--threads 4` to use 4 threads
 
 ## Development
+
+### Run it locally
+
+Just install the .Net 5 SDK.
+
+Build:
+
+`dotnet build src /MAMEBezelConverter.sln`
+
+Run:
+
+`dotnet run -p src/MAMEBezelConverter.csproj -- mtr
+    --source tmp/source_mame
+    --source-configs tmp/source_mame
+    --output-roms tmp/output/roms_ra
+    --output-overlays tmp/output/overlay_ra
+    --template-game src/templates/game.cfg
+    --template-overlay src/templates/overlay.cfg
+    --overwrite
+    --scan-bezel
+    --output-debug tmp/debug_ra
+    --margin 10
+    --threads 4`
+
+`dotnet run -p src/MAMEBezelConverter.csproj -- rtm
+    --source-roms tmp/source_ra/roms
+    --source-configs tmp/source_ra/configs
+    --output tmp/output/mame
+    --template src/templates/default.lay
+    --zip
+    --overwrite
+    --scan-bezel
+    --output-debug tmp/debug_mame
+    --margin 10
+    --threads 4`
+
+Publish:
+
+````shell
+dotnet publish src/MAMEBezelConverter.sln -r win-x64 -p:PublishSingleFile=true --self-contained true -o out/win-x64
+dotnet publish src/MAMEBezelConverter.sln -r win-arm64 -p:PublishSingleFile=true --self-contained true -o out/win-arm64
+dotnet publish src/MAMEBezelConverter.sln -r linux-x64 -p:PublishSingleFile=true --self-contained true -o out/linux-x64
+dotnet publish src/MAMEBezelConverter.sln -r linux-arm64 -p:PublishSingleFile=true --self-contained true -o out/linux-arm64
+dotnet publish src/MAMEBezelConverter.sln -r osx-x64 -p:PublishSingleFile=true --self-contained true -o out/osx-x64
+````
+
+### Contribute
 
 Lay file specs are located in [lay_file_specs.md](lay_files_specs.md).
 
