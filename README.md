@@ -4,6 +4,10 @@ Overlays (or bezels) are images added "above" the emulator, to mask the black bo
 
 This tool converts MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator.
 
+## Download
+
+[Download the latest release](https://github.com/cosmo0/mame-retroarch-bezel-converter/releases)
+
 ## Usage
 
 ### Convert MAME bezels to Retroarch overlays
@@ -44,7 +48,14 @@ mame-bezel-converter.exe mtr
 
 Example usage
 
-`mame-bezel-converter.exe mtr -s ./source -r ./output/roms -o ./output/overlay -d ./output/debug --template-game templates/game.cfg --template-overlay templates/overlay.cfg --scan-bezel --margin 10 --threads 4`
+`mame-bezel-converter.exe mtr
+	-s samples/mame
+	-r tmp/output_ra/roms
+	-o tmp/output_ra/overlay
+	-d tmp/debug
+	--template-game src/templates/game.cfg
+	--template-overlay src/templates/overlay.cfg
+	--overwrite --scan-bezel --margin 10 --threads 4`
 
 ### Converts Retroarch overlays to MAME bezels
 
@@ -79,11 +90,17 @@ mame-bezel-converter.exe rtm
 
   --version               Display version information.
 
-```
+````
 
 Example usage
 
-`mame-bezel-converter.exe rtm -r ./source/roms/ -c ./source/configs -o ./output/ -d ./output/debug/ --overwrite -t templates/default.lay --zip --scan-bezel --margin 10 --threads 4`
+`mame-bezel-converter.exe rtm
+	-r samples/retroarch/
+	-c samples/retroarch
+	-o tmp/output_mame/
+	-d tmp/debug/
+	-t src/templates/default.lay
+	--overwrite --zip --scan-bezel --margin 10 --threads 4`
 
 ## Development
 

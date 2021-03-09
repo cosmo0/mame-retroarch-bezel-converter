@@ -17,13 +17,13 @@ namespace Converter
                    {
                        InitMameToRa(o);
 
-                       Importer.MameToRetroarch(o);
+                       Importer.ConvertMameToRetroarch(o);
                    })
                    .WithParsed<RaToMameOptions>((o) =>
                    {
                        InitRaToMame(o);
 
-                       Importer.RetroarchToMame(o);
+                       Importer.ConvertRetroarchToMame(o);
                    });
         }
 

@@ -1,6 +1,4 @@
 ﻿using CommandLine;
-using Converter.Model;
-using System;
 using System.IO;
 using System.Reflection;
 
@@ -24,6 +22,12 @@ namespace Converter.Options
         }
 
         /// <summary>
+        /// Gets or sets the path to the error lists file
+        /// </summary>
+        [Option("error-file", Required = false, HelpText = "The path to the file containing the list of errors", Default = "errors.txt")]
+        public string ErrorFile { get; set; }
+
+        /// <summary>
         /// Gets or sets the margins applied to the screen after conversion.
         /// </summary>
         [Option("margin", Required = false, HelpText = "Applies a margin to the screen (to hide a bit of it)", Default = 0)]
@@ -34,18 +38,6 @@ namespace Converter.Options
         /// </summary>
         [Option('d', "output-debug", Required = false, HelpText = "The folder where debug overlays will be created", Default = "")]
         public string OutputDebug { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path to the error lists file
-        /// </summary>
-        [Option("error-file", Required = false, HelpText = "The path to the file containing the list of errors", Default = "errors.txt")]
-        public string ErrorFile { get; set; }
-
-        /// <summary>
-        /// Gets or sets the number of threads on which to run the conversion
-        /// </summary>
-        [Option("threads", Required = false, HelpText = "Number of threads on which to run", Default = 1)]
-        public int Threads { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets a value indicating whether to overwrite existing files
@@ -60,30 +52,9 @@ namespace Converter.Options
         public bool ScanBezelForScreenCoordinates { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the target overlay resolution
+        /// Gets or sets the number of threads on which to run the conversion
         /// </summary>
-        [Option("target-resolution", Required = false, HelpText = "The target resolution", Default = "1920x1080")]
-        public string TargetResolution { get; set; }
-
-        /// <summary>
-        /// Gets the target resolution bounds
-        /// </summary>
-        public Bounds TargetResolutionBounds
-        {
-            get
-            {
-                var splitRes = TargetResolution.Split(new char[] { 'x', '*', ':', '/' });
-                if (splitRes.Length < 2) { throw new ArgumentOutOfRangeException(nameof(TargetResolution), $"Unable to parse target resolution ({TargetResolution})"); }
-
-                return new Bounds
-                {
-                    X = 0,
-                    Y = 0,
-                    Width = int.Parse(splitRes[0]),
-                    Height = int.Parse(splitRes[1])
-                };
-            }
-        }
-
+        [Option("threads", Required = false, HelpText = "Number of threads on which to run", Default = 1)]
+        public int Threads { get; set; } = 1;
     }
 }

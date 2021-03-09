@@ -7,7 +7,7 @@ namespace Converter.Model
     /// A MAME .lay file
     /// </summary>
     [XmlRoot("mamelayout")]
-    public class LayFile
+    public class MameLayFile
     {
         /// <summary>
         /// Gets or sets the displayable elements

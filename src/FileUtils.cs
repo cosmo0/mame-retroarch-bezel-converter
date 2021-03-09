@@ -13,6 +13,16 @@ namespace Converter
     public static class FileUtils
     {
         /// <summary>
+        /// Compresses the content of the folder.
+        /// </summary>
+        /// <param name="targetFolder">The target folder to compress.</param>
+        /// <param name="targetZip">The target zip to compress into.</param>
+        public static void CompressFolderContent(string targetFolder, string targetZip)
+        {
+            ZipFile.CreateFromDirectory(targetFolder, targetZip);
+        }
+
+        /// <summary>
         /// Deserializes the specified XML file
         /// </summary>
         /// <typeparam name="T">The type to deserialize into</typeparam>
@@ -48,9 +58,9 @@ namespace Converter
         /// <param name="tmpFolder">The temporary folder path.</param>
         /// <returns>The deserialized LAY and CFG files</returns>
         /// <exception cref="Exceptions.LayFileException">Unable to find a view in the LAY file</exception>
-        public static (Model.LayFile lay, Model.CfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, MameToRaOptions options)
+        public static (Model.MameLayFile lay, Model.MameCfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, MameToRaOptions options)
         {
-            Model.LayFile lay;
+            Model.MameLayFile lay;
             byte[] bezel = null;
 
             Console.WriteLine($"{game} Extracting files from archive {zipFile}");
@@ -63,7 +73,7 @@ namespace Converter
                 if (layEntry == null) { throw new Exceptions.LayFileException($"Unable to find default.lay file in {zipFile}"); }
                 using (Stream layStream = layEntry.Open())
                 {
-                    lay = DeserializeXmlFile<Model.LayFile>(layStream);
+                    lay = DeserializeXmlFile<Model.MameLayFile>(layStream);
                 }
 
                 // check that LAY is useful
@@ -91,11 +101,11 @@ namespace Converter
             }
 
             // parse the config file if it exists
-            Model.CfgFile cfg = null;
+            Model.MameCfgFile cfg = null;
             if (File.Exists(cfgFile))
             {
                 Console.WriteLine($"{game} config file exists");
-                cfg = DeserializeXmlFile<Model.CfgFile>(cfgFile);
+                cfg = DeserializeXmlFile<Model.MameCfgFile>(cfgFile);
             }
             else
             {

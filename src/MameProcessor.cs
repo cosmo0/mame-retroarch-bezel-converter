@@ -60,7 +60,7 @@ namespace Converter
         /// <param name="lay">The LAY file</param>
         /// <param name="cfg">The CFG file</param>
         /// <returns>The processor</returns>
-        public static MameProcessor BuildProcessor(MameToRaOptions options, LayFile lay, CfgFile cfg)
+        public static MameProcessor BuildProcessor(MameToRaOptions options, MameLayFile lay, MameCfgFile cfg)
         {
             // extract source data
             var view = GetView(lay, options.UseFirstView);
@@ -78,7 +78,7 @@ namespace Converter
         /// <param name="lay">The LAY file</param>
         /// <param name="view">The processed view</param>
         /// <returns>The bezel file name</returns>
-        public static string GetBezelFile(LayFile lay, LayFile.View view)
+        public static string GetBezelFile(MameLayFile lay, MameLayFile.View view)
         {
             var bezelElementName = view.Bezels.First().ElementName;
 
@@ -94,7 +94,7 @@ namespace Converter
         /// </summary>
         /// <param name="view">The view to process</param>
         /// <returns>The source resolution</returns>
-        public static Bounds GetSourceResolution(Model.LayFile.View view)
+        public static Bounds GetSourceResolution(Model.MameLayFile.View view)
         {
             var bezelOfView = view.Bezels.FirstOrDefault();
             if (bezelOfView == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel for view {view.Name}"); }
@@ -106,7 +106,7 @@ namespace Converter
         /// Gets the source screen coordinates
         /// </summary>
         /// <returns></returns>
-        public static Bounds GetSourceScreenCoordinates(LayFile.View view)
+        public static Bounds GetSourceScreenCoordinates(MameLayFile.View view)
         {
             if (view.Screens == null || !view.Screens.Any()) { throw new Exceptions.LayFileException($"No screen found in view {view.Name}"); }
             if (view.Screens.Length > 1) { throw new Exceptions.LayFileException($"Unable to automatically process a multi-screen machine (RetroArch doesn't support it)"); }
@@ -142,9 +142,9 @@ namespace Converter
         /// <param name="lay">The LAY file</param>
         /// <param name="useFirstView">Whether to automatically use the first found view</param>
         /// <returns>The processed view</returns>
-        public static LayFile.View GetView(LayFile lay, bool useFirstView)
+        public static MameLayFile.View GetView(MameLayFile lay, bool useFirstView)
         {
-            LayFile.View view;
+            MameLayFile.View view;
             if (lay.Views.Length > 1 && !useFirstView)
             {
                 Console.WriteLine("Please choose which bezel you want");
@@ -215,7 +215,7 @@ namespace Converter
         /// </summary>
         /// <param name="cfg">The CFG file</param>
         /// <returns>The offset</returns>
-        private static Offset GetOffset(CfgFile cfg)
+        private static Offset GetOffset(MameCfgFile cfg)
         {
             var screen = cfg?.SystemConfig?.VideoConfig?.VideoScreen;
 

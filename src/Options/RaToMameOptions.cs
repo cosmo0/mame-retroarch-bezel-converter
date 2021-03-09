@@ -1,5 +1,5 @@
 ﻿using CommandLine;
-using System;
+
 namespace Converter.Options
 {
     /// <summary>

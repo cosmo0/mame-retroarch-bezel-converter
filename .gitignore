@@ -12,3 +12,6 @@ tmp/
 **/bin/
 **/.vs/
 **/*.csproj.user
+
+# Debug parameters
+src/Properties/launchSettings.json
