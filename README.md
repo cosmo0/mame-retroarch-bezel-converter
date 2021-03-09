@@ -4,6 +4,8 @@ Overlays (or bezels) are images added "above" the emulator, to mask the black bo
 
 This tool converts MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator.
 
+It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64.
+
 ## Download
 
 **[Download the latest release](https://github.com/cosmo0/mame-retroarch-bezel-converter/releases)**
