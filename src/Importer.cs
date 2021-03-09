@@ -11,18 +11,8 @@ namespace Converter
         /// <summary>
         /// Starts the import
         /// </summary>
-        public static void Run(Options options)
+        public static void MameToRetroarch(Options options)
         {
-            var tmp = Path.Join(options.OutputOverlays, "tmp");
-            if (!Directory.Exists(tmp))
-            {
-                Directory.CreateDirectory(tmp);
-            }
-            else
-            {
-                CleanupFolder(tmp);
-            }
-
             // get all zip files in the source folder
             foreach (var f in Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff))
             {
@@ -32,7 +22,7 @@ namespace Converter
 
                 Console.WriteLine($"########## PROCESSING {game}");
 
-                var (lay, cfg) = ExtractFiles(game, f, cfgFile, tmp);
+                var (lay, cfg, bezel) = ExtractFiles(game, f, cfgFile, options);
 
                 // extracts the data from the MAME files
                 var mameProcessor = MameProcessor.BuildProcessor(options, lay, cfg);
@@ -40,6 +30,8 @@ namespace Converter
                 Console.WriteLine($"{game} image: {mameProcessor.BezelFileName}");
                 Console.WriteLine($"{game} source screen: {mameProcessor.SourceScreenPosition}");
                 Console.WriteLine($"{game} screen offset: {mameProcessor.Offset}");
+
+                throw new Exception("TODO : get position from transparency");
 
                 // calculates the new screen position
                 var newPosition = Converter.ApplyOffset(
@@ -55,7 +47,7 @@ namespace Converter
                 if (options.Overwrite && File.Exists(outputImage)) { File.Delete(outputImage); }
                 if (options.Overwrite || !File.Exists(outputImage))
                 {
-                    File.Copy(FindFile(tmp, mameProcessor.BezelFileName), outputImage);
+                    File.WriteAllBytes(outputImage, bezel);
                 }
 
                 // resize the bezel image
@@ -87,12 +79,7 @@ namespace Converter
                 Converter.FillTemplate(outputOverlayCfg, game, newPosition);
 
                 Console.WriteLine($"{game} done");
-
-                // clean
-                CleanupFolder(tmp);
             }
-
-            Directory.Delete(tmp, true);
 
             Console.WriteLine($"########## DONE");
         }
@@ -132,6 +119,18 @@ namespace Converter
         }
 
         /// <summary>
+        /// Deserializes the specified XML file stream.
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize into</typeparam>
+        /// <param name="fileStream">The file stream.</param>
+        /// <returns>The deserialized XML</returns>
+        private static T DeserializeXmlFile<T>(Stream fileStream)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            return (T)serializer.Deserialize(fileStream);
+        }
+
+        /// <summary>
         /// Extracts and deserializes the LAY and CFG files
         /// </summary>
         /// <param name="game">The game name.</param>
@@ -140,19 +139,43 @@ namespace Converter
         /// <param name="tmpFolder">The temporary folder path.</param>
         /// <returns>The deserialized LAY and CFG files</returns>
         /// <exception cref="Exceptions.LayFileException">Unable to find a view in the LAY file</exception>
-        private static (Model.LayFile, Model.CfgFile) ExtractFiles(string game, string zipFile, string cfgFile, string tmpFolder)
+        private static (Model.LayFile lay, Model.CfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, Options options)
         {
+            Model.LayFile lay;
+            byte[] bezel = null;
+
+            Console.WriteLine($"{game} Extracting files from archive {zipFile}");
+
             // extract files
             using (ZipArchive archive = ZipFile.OpenRead(zipFile))
             {
-                archive.ExtractToDirectory(tmpFolder);
-            }
+                // get layout file
+                var layEntry = archive.GetEntry("default.lay");
+                if (layEntry == null) { throw new Exceptions.LayFileException($"Unable to find default.lay file in {zipFile}"); }
+                using (Stream layStream = layEntry.Open())
+                {
+                    lay = DeserializeXmlFile<Model.LayFile>(layStream);
+                }
 
-            // parse the layout file
-            Model.LayFile lay = DeserializeXmlFile<Model.LayFile>(Path.Join(tmpFolder, "default.lay"));
-            if (!lay.Views.Any())
-            {
-                throw new Exceptions.LayFileException("Unable to find a view in the LAY file");
+                // check that LAY is useful
+                if (!lay.Views.Any()) { throw new Exceptions.LayFileException("Unable to find a view in the LAY file"); }
+
+                // get associated bezel
+                var view = MameProcessor.GetView(lay, options.UseFirstView);
+                var bezelFileNameInLay = MameProcessor.GetBezelFile(lay, view);
+                // sometimes the bezel file name in LAY doesn't have the same case as the actual file
+                var bezelFileNameInZip = FindFile(archive, bezelFileNameInLay);
+                var bezelEntry = archive.GetEntry(bezelFileNameInZip);
+                if (bezelEntry == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel file {bezelFileNameInZip} in {zipFile}"); }
+                using (Stream bezelStream = bezelEntry.Open())
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        bezelStream.CopyTo(ms);
+                        ms.Position = 0;
+                        bezel = ms.ToArray();
+                    }
+                }
             }
 
             // parse the config file if it exists
@@ -167,7 +190,7 @@ namespace Converter
                 Console.WriteLine($"{game} doesn't have a cfg file");
             }
 
-            return (lay, cfg);
+            return (lay, cfg, bezel);
         }
 
         /// <summary>
@@ -176,18 +199,17 @@ namespace Converter
         /// <param name="folder">The folder to search</param>
         /// <param name="fileName">The file name to search</param>
         /// <returns>The proper file name, case sensitiv-ed</returns>
-        private static string FindFile(string folder, string fileName)
+        private static string FindFile(ZipArchive archive, string fileName)
         {
-            foreach (var f in Directory.GetFiles(folder))
+            foreach (var e in archive.Entries)
             {
-                var fi = new FileInfo(f);
-                if (fi.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase))
+                if (e.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    return fi.FullName;
+                    return e.Name;
                 }
             }
 
-            throw new FileNotFoundException($"Unable to find file {fileName} in folder {folder}");
+            throw new FileNotFoundException($"Unable to find file {fileName} in archive");
         }
     }
 }

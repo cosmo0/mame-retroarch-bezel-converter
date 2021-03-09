@@ -35,7 +35,7 @@ namespace Converter
             TemplateGameConfig = File.ReadAllText(options.TemplateGameCfg);
             TemplateOverlayConfig = File.ReadAllText(options.TemplateOverlayCfg);
 
-            Importer.Run(options);
+            Importer.MameToRetroarch(options);
         }
 
         /// <summary>
