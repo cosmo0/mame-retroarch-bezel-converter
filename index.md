@@ -1,37 +1,107 @@
-## Welcome to GitHub Pages
+# MAME / Retroarch bezels and overlays converter
 
-You can use the [editor on GitHub](https://github.com/cosmo0/mame-retroarch-bezel-converter/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Overlays (or bezels) are images added "above" the emulator, to mask the black borders around the image.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This tool converts MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator.
 
-### Markdown
+## Download
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+[Download the latest release](https://github.com/cosmo0/mame-retroarch-bezel-converter/releases)
 
-```markdown
-Syntax highlighted code block
+## Usage
 
-# Header 1
-## Header 2
-### Header 3
+### Convert MAME bezels to Retroarch overlays
 
-- Bulleted
-- List
+````
+mame-bezel-converter.exe mtr
 
-1. Numbered
-2. List
+  -o, --output-overlays    Required. The folder where the overlays configs and images will be created
 
-**Bold** and _Italic_ and `Code` text
+  -r, --output-roms        Required. The folder where the ROM configs will be created
 
-[Link](url) and ![Image](src)
-```
+  -s, --source             Required. The folder where the MAME artworks are located
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+  --template-game          Required. The path to the template for the game config
 
-### Jekyll Themes
+  --template-overlay       Required. The path to the template for the overlay config
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/cosmo0/mame-retroarch-bezel-converter/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+  --use-fist-view          (Default: true) Uses the first found view to generate an overlay
 
-### Support or Contact
+  --margin                 (Default: 0) Applies a margin to the screen (to hide a bit of it)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+  -d, --output-debug       (Default: ) The folder where debug overlays will be created
+
+  --error-file             (Default: errors.txt) The path to the file containing the list of errors
+
+  --threads                (Default: 1) Number of threads on which to run
+
+  --overwrite              (Default: true) Overwrites existing files
+
+  --scan-bezel             (Default: false) Scans the bezel file for transparent pixels to find the screen position ; otherwise, just convert the LAY file
+
+  --target-resolution      (Default: 1920x1080) The target resolution
+
+  --help                   Display this help screen.
+
+  --version                Display version information.
+````
+
+Example usage
+
+`mame-bezel-converter.exe mtr
+	-s samples/mame
+	-r tmp/output_ra/roms
+	-o tmp/output_ra/overlay
+	-d tmp/debug
+	--template-game src/templates/game.cfg
+	--template-overlay src/templates/overlay.cfg
+	--overwrite --scan-bezel --margin 10 --threads 4`
+
+### Converts Retroarch overlays to MAME bezels
+
+````
+mame-bezel-converter.exe rtm
+
+  -o, --output            Required. The folder where the bezels will be created
+
+  -c, --source-configs    Required. The folder where the Retroarch bezels configs are located
+
+  -r, --source-roms       Required. The folder where the Retroarch roms configs are located
+
+  -t, --template          Required. The path to the default.lay template
+
+  -z, --zip               (Default: false) Whether to zip the output bezels
+
+  --margin                (Default: 0) Applies a margin to the screen (to hide a bit of it)
+
+  -d, --output-debug      (Default: ) The folder where debug overlays will be created
+
+  --error-file            (Default: errors.txt) The path to the file containing the list of errors
+
+  --threads               (Default: 1) Number of threads on which to run
+
+  --overwrite             (Default: true) Overwrites existing files
+
+  --scan-bezel            (Default: false) Scans the bezel file for transparent pixels to find the screen position ; otherwise, just convert the LAY file
+
+  --target-resolution     (Default: 1920x1080) The target resolution
+
+  --help                  Display this help screen.
+
+  --version               Display version information.
+
+````
+
+Example usage
+
+`mame-bezel-converter.exe rtm
+	-r samples/retroarch/
+	-c samples/retroarch
+	-o tmp/output_mame/
+	-d tmp/debug/
+	-t src/templates/default.lay
+	--overwrite --zip --scan-bezel --margin 10 --threads 4`
+
+## Development
+
+Lay file specs are located in [lay_file_specs.md](lay_files_specs.md).
