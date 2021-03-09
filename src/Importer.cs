@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Converter
@@ -13,14 +17,46 @@ namespace Converter
 		/// </summary>
 		public static void MameToRetroarch(Options options)
 		{
-			// get all zip files in the source folder
-			foreach (var f in Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff))
+			// get files to process
+			ConcurrentQueue<string> files = new ConcurrentQueue<string>(Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff));
+
+			// run threads
+			var threads = new List<Thread>();
+            for (int i = 0; i < options.Threads; i++)
+            {
+				var t = new Thread(() => {
+					while (files.TryDequeue(out var f))
+                    {
+						ProcessFile(f, options);
+                    }
+				});
+				t.Start();
+            }
+
+			// wait for all threads to finish
+            foreach (var t in threads)
+            {
+				t.Join();
+            }
+
+			Console.WriteLine($"########## DONE");
+		}
+
+		/// <summary>
+        /// Processes a file
+        /// </summary>
+        /// <param name="f">The file to process</param>
+        /// <param name="options">The options</param>
+		public static void ProcessFile(string f, Options options)
+        {
+			var fi = new FileInfo(f);
+			var game = fi.Name.Replace(".zip", "");
+
+			try
 			{
-				var fi = new FileInfo(f);
-				var game = fi.Name.Replace(".zip", "");
 				var cfgFile = Path.Join(options.Source, $"{game}.cfg");
 
-				Console.WriteLine($"########## PROCESSING {game}");
+				Console.WriteLine($"{game} processing start");
 
 				var (lay, cfg, bezel) = ExtractFiles(game, f, cfgFile, options);
 
@@ -84,10 +120,13 @@ namespace Converter
 				File.Copy(options.TemplateOverlayCfg, outputOverlayCfg, options.Overwrite);
 				Converter.FillTemplate(outputOverlayCfg, game, newPosition);
 
-				Console.WriteLine($"{game} done");
+				Console.WriteLine($"{game} processing done");
 			}
-
-			Console.WriteLine($"########## DONE");
+			catch (Exception ex)
+			{
+				Console.WriteLine($"{game} PROCESSING ERROR: {ex.Message}");
+				File.AppendAllText(options.ErrorFile, $"{game} - {ex.Message}");
+			}
 		}
 
 		/// <summary>
@@ -137,7 +176,7 @@ namespace Converter
 			using (ZipArchive archive = ZipFile.OpenRead(zipFile))
 			{
 				// get layout file
-				var layEntry = archive.GetEntry("default.lay");
+				var layEntry = archive.Entries.Where(e => e.Name.EndsWith("default.lay", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
 				if (layEntry == null) { throw new Exceptions.LayFileException($"Unable to find default.lay file in {zipFile}"); }
 				using (Stream layStream = layEntry.Open())
 				{
@@ -150,17 +189,20 @@ namespace Converter
 				// get associated bezel
 				var view = MameProcessor.GetView(lay, options.UseFirstView);
 				var bezelFileNameInLay = MameProcessor.GetBezelFile(lay, view);
-				// sometimes the bezel file name in LAY doesn't have the same case as the actual file
-				var bezelFileNameInZip = FindFile(archive, bezelFileNameInLay);
-				var bezelEntry = archive.GetEntry(bezelFileNameInZip);
-				if (bezelEntry == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel file {bezelFileNameInZip} in {zipFile}"); }
-				using (Stream bezelStream = bezelEntry.Open())
+				if (!string.IsNullOrEmpty(bezelFileNameInLay))
 				{
-					using (MemoryStream ms = new MemoryStream())
+					// sometimes the bezel file name in LAY doesn't have the same case as the actual file
+					var bezelFileNameInZip = FindFile(archive, bezelFileNameInLay);
+					var bezelEntry = archive.Entries.Where(e => e.Name.EndsWith(bezelFileNameInZip, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+					if (bezelEntry == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel file {bezelFileNameInZip} in {zipFile}"); }
+					using (Stream bezelStream = bezelEntry.Open())
 					{
-						bezelStream.CopyTo(ms);
-						ms.Position = 0;
-						bezel = ms.ToArray();
+						using (MemoryStream ms = new MemoryStream())
+						{
+							bezelStream.CopyTo(ms);
+							ms.Position = 0;
+							bezel = ms.ToArray();
+						}
 					}
 				}
 			}

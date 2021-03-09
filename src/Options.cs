@@ -36,10 +36,22 @@ namespace Converter
         public string OutputDebug { get; set; }
 
         /// <summary>
+        /// Gets or sets the path to the error lists file
+        /// </summary>
+        [Option("error-file", Required = false, HelpText = "The path to the file containing the list of errors", Default = "errors.txt")]
+        public string ErrorFile { get; set; }
+
+        /// <summary>
         /// Gets or sets the path to the output overlays
         /// </summary>
         [Option('o', "output-overlays", Required = true, HelpText = "The folder where the overlays configs and images will be created")]
         public string OutputOverlays { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of threads on which to run the conversion
+        /// </summary>
+        [Option("threads", Required = false, HelpText = "Number of threads on which to run", Default = 1)]
+        public int Threads { get; set; } = 1;
 
         /// <summary>
         /// Gets or sets the path to the output roms
