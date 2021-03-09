@@ -24,6 +24,7 @@
   <ItemGroup>
     <Folder Include="Model\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Options\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="templates\game.cfg">

@@ -1,4 +1,5 @@
 ﻿using Converter.Model;
+using Converter.Options;
 using System;
 using System.Linq;
 
@@ -59,7 +60,7 @@ namespace Converter
         /// <param name="lay">The LAY file</param>
         /// <param name="cfg">The CFG file</param>
         /// <returns>The processor</returns>
-        public static MameProcessor BuildProcessor(Options options, LayFile lay, CfgFile cfg)
+        public static MameProcessor BuildProcessor(MameToRaOptions options, LayFile lay, CfgFile cfg)
         {
             // extract source data
             var view = GetView(lay, options.UseFirstView);

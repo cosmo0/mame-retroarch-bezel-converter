@@ -7,18 +7,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Converter.Options;
 
 namespace Converter
 {
     public static class Importer
 	{
 		/// <summary>
-		/// Starts the import
+		/// Starts the import from MAME to Retroarch
 		/// </summary>
-		public static void MameToRetroarch(Options options)
+		public static void MameToRetroarch(MameToRaOptions options)
 		{
 			// get files to process
-			ConcurrentQueue<string> files = new ConcurrentQueue<string>(Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff));
+			var files = new ConcurrentQueue<string>(Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff));
 
 			// run threads
 			var threads = new List<Thread>();
@@ -27,7 +28,7 @@ namespace Converter
 				var t = new Thread(() => {
 					while (files.TryDequeue(out var f))
                     {
-						ProcessFile(f, options);
+						ProcessMameFile(f, options);
                     }
 				});
 				t.Start();
@@ -47,7 +48,7 @@ namespace Converter
         /// </summary>
         /// <param name="f">The file to process</param>
         /// <param name="options">The options</param>
-		public static void ProcessFile(string f, Options options)
+		public static void ProcessMameFile(string f, MameToRaOptions options)
         {
 			var fi = new FileInfo(f);
 			var game = fi.Name.Replace(".zip", "");
@@ -113,12 +114,12 @@ namespace Converter
 				// create game config files
 				var outputGameCfg = Path.Join(options.OutputRoms, $"{game}.zip.cfg");
 				File.Copy(options.TemplateGameCfg, outputGameCfg, options.Overwrite);
-				Converter.FillTemplate(outputGameCfg, game, newPosition);
+				Converter.FillTemplate(outputGameCfg, game, newPosition, options.TargetResolutionBounds);
 
 				// create overlay config files
 				var outputOverlayCfg = Path.Join(options.OutputOverlays, $"{game}.cfg");
 				File.Copy(options.TemplateOverlayCfg, outputOverlayCfg, options.Overwrite);
-				Converter.FillTemplate(outputOverlayCfg, game, newPosition);
+				Converter.FillTemplate(outputOverlayCfg, game, newPosition, options.TargetResolutionBounds);
 
 				Console.WriteLine($"{game} processing done");
 			}
@@ -130,16 +131,48 @@ namespace Converter
 		}
 
 		/// <summary>
-		/// Deserializes the specified XML file
-		/// </summary>
-		/// <typeparam name="T">The type to deserialize into</typeparam>
-		/// <param name="filePath">The path to the XML file</param>
-		/// <returns>The deserialiazed XML</returns>
-		private static T DeserializeXmlFile<T>(string filePath)
+        /// Starts the import from Retroarch to MAME
+        /// </summary>
+        /// <param name="options"></param>
+        public static void RetroarchToMame(RaToMameOptions options)
+        {
+			// get files to process
+			var romFiles = new ConcurrentQueue<string>(Directory.EnumerateFiles(options.SourceRoms, "*.zip.cfg").OrderBy(ff => ff));
+			var configFiles = Directory.EnumerateFiles(options.SourceConfigs, "*.cfg"); // read-only, no need for it to be concurrent
+
+			// run threads
+			var threads = new List<Thread>();
+			for (int i = 0; i < options.Threads; i++)
+			{
+				var t = new Thread(() => {
+					while (romFiles.TryDequeue(out var f))
+					{
+						throw new NotImplementedException();
+					}
+				});
+				t.Start();
+			}
+
+			// wait for all threads to finish
+			foreach (var t in threads)
+			{
+				t.Join();
+			}
+
+			Console.WriteLine($"########## DONE");
+		}
+
+        /// <summary>
+        /// Deserializes the specified XML file
+        /// </summary>
+        /// <typeparam name="T">The type to deserialize into</typeparam>
+        /// <param name="filePath">The path to the XML file</param>
+        /// <returns>The deserialiazed XML</returns>
+        private static T DeserializeXmlFile<T>(string filePath)
 		{
 			using (var fileStream = File.Open(filePath, FileMode.Open))
 			{
-				XmlSerializer serializer = new XmlSerializer(typeof(T));
+				var serializer = new XmlSerializer(typeof(T));
 				return (T)serializer.Deserialize(fileStream);
 			}
 		}
@@ -152,7 +185,7 @@ namespace Converter
 		/// <returns>The deserialized XML</returns>
 		private static T DeserializeXmlFile<T>(Stream fileStream)
 		{
-			XmlSerializer serializer = new XmlSerializer(typeof(T));
+			var serializer = new XmlSerializer(typeof(T));
 			return (T)serializer.Deserialize(fileStream);
 		}
 
@@ -165,7 +198,7 @@ namespace Converter
 		/// <param name="tmpFolder">The temporary folder path.</param>
 		/// <returns>The deserialized LAY and CFG files</returns>
 		/// <exception cref="Exceptions.LayFileException">Unable to find a view in the LAY file</exception>
-		private static (Model.LayFile lay, Model.CfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, Options options)
+		private static (Model.LayFile lay, Model.CfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, MameToRaOptions options)
 		{
 			Model.LayFile lay;
 			byte[] bezel = null;
@@ -195,9 +228,9 @@ namespace Converter
 					var bezelFileNameInZip = FindFile(archive, bezelFileNameInLay);
 					var bezelEntry = archive.Entries.Where(e => e.Name.EndsWith(bezelFileNameInZip, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
 					if (bezelEntry == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel file {bezelFileNameInZip} in {zipFile}"); }
-					using (Stream bezelStream = bezelEntry.Open())
+					using (var bezelStream = bezelEntry.Open())
 					{
-						using (MemoryStream ms = new MemoryStream())
+						using (var ms = new MemoryStream())
 						{
 							bezelStream.CopyTo(ms);
 							ms.Position = 0;

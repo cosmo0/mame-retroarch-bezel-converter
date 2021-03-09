@@ -1,25 +1,17 @@
 ﻿using CommandLine;
+using Converter.Options;
 using System.IO;
 
 namespace Converter
 {
     public partial class Program
     {
+      
         /// <summary>
-        /// Gets or sets the template for the game configs
-        /// </summary>
-        public static string TemplateGameConfig { get; set; }
-
-        /// <summary>
-        /// Gets or sets the template for the game configs
-        /// </summary>
-        public static string TemplateOverlayConfig { get; set; }
-
-        /// <summary>
-        /// Initializes the import
+        /// Initializes the import from MAME to Retroarch
         /// </summary>
         /// <param name="options">The options</param>
-        private static void Init(Options options)
+        private static void InitMameToRa(MameToRaOptions options)
         {
             // check that input folder exists
             if (!Directory.Exists(options.Source)) { throw new DirectoryNotFoundException($"Unable to find directory {options.Source}"); }
@@ -29,23 +21,48 @@ namespace Converter
             if (!Directory.Exists(options.OutputOverlays)) { Directory.CreateDirectory(options.OutputOverlays); }
             if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) { Directory.CreateDirectory(options.OutputDebug); }
 
-            // load templates
+            // check templates
             if (!File.Exists(options.TemplateGameCfg)) { throw new FileNotFoundException("Unable to find game config template", options.TemplateGameCfg); }
             if (!File.Exists(options.TemplateOverlayCfg)) { throw new FileNotFoundException("Unable to find overlay config template", options.TemplateOverlayCfg); }
-            TemplateGameConfig = File.ReadAllText(options.TemplateGameCfg);
-            TemplateOverlayConfig = File.ReadAllText(options.TemplateOverlayCfg);
+        }
 
-            Importer.MameToRetroarch(options);
+        /// <summary>
+        /// Initializes the import from Retroarch to MAME
+        /// </summary>
+        /// <param name="options">The options</param>
+        private static void InitRaToMame(RaToMameOptions options)
+        {
+            // check that input folder exists
+            if (!Directory.Exists(options.SourceConfigs)) { throw new DirectoryNotFoundException($"Unable to find directory {options.SourceConfigs}"); }
+            if (!Directory.Exists(options.SourceRoms)) { throw new DirectoryNotFoundException($"Unable to find directory {options.SourceRoms}"); }
+
+            // create folders
+            if (!Directory.Exists(options.Output)) { Directory.CreateDirectory(options.Output); }
+            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) { Directory.CreateDirectory(options.OutputDebug); }
+
+            // check templates
+            if (!File.Exists(options.Template)) { throw new FileNotFoundException("Unable to find LAY template", options.Template); }
         }
 
         /// <summary>
         /// Main application entry point
         /// </summary>
         /// <param name="args">The command line arguments</param>
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args)
-                   .WithParsed<Options>(Init);
+            Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions>(args)
+                   .WithParsed<MameToRaOptions>((o) =>
+                   {
+                       InitMameToRa(o);
+
+                       Importer.MameToRetroarch(o);
+                   })
+                   .WithParsed<RaToMameOptions>((o) =>
+                   {
+                       InitRaToMame(o);
+
+                       Importer.RetroarchToMame(o);
+                   });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Converter.Model;
+using Converter.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
@@ -35,7 +36,7 @@ namespace Converter
         /// <param name="bezel">The bezel file.</param>
         /// <param name="options">The options.</param>
         /// <returns>The screen position</returns>
-        public static Bounds FindScreen(byte[] bezel, Options options)
+        public static Bounds FindScreen(byte[] bezel, BaseOptions options)
         {
             using (Image<Rgba32> image = Image.Load(bezel))
             {

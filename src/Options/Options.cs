@@ -4,12 +4,12 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace Converter
+namespace Converter.Options
 {
     /// <summary>
-    /// Command line option arguments
+    /// Command line base option arguments
     /// </summary>
-    public class Options
+    public abstract class BaseOptions
     {
         /// <summary>
         /// Gets the assembly directory path
@@ -42,22 +42,10 @@ namespace Converter
         public string ErrorFile { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to the output overlays
-        /// </summary>
-        [Option('o', "output-overlays", Required = true, HelpText = "The folder where the overlays configs and images will be created")]
-        public string OutputOverlays { get; set; }
-
-        /// <summary>
         /// Gets or sets the number of threads on which to run the conversion
         /// </summary>
         [Option("threads", Required = false, HelpText = "Number of threads on which to run", Default = 1)]
         public int Threads { get; set; } = 1;
-
-        /// <summary>
-        /// Gets or sets the path to the output roms
-        /// </summary>
-        [Option('r', "output-roms", Required = true, HelpText = "The folder where the ROM configs will be created")]
-        public string OutputRoms { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to overwrite existing files
@@ -70,12 +58,6 @@ namespace Converter
         /// </summary>
         [Option("scan-bezel", Required = false, HelpText = "Scans the bezel file for transparent pixels to find the screen position ; otherwise, just convert the LAY file", Default = false)]
         public bool ScanBezelForScreenCoordinates { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets the path to the source MAME bezels
-        /// </summary>
-        [Option('s', "source", Required = true, HelpText = "The folder where the MAME artworks are located")]
-        public string Source { get; set; }
 
         /// <summary>
         /// Gets or sets the target overlay resolution
@@ -103,22 +85,5 @@ namespace Converter
             }
         }
 
-        /// <summary>
-        /// Gets or sets the path to the game config template
-        /// </summary>
-        [Option("template-game", Required = true, HelpText = "The path to the template for the game config")]
-        public string TemplateGameCfg { get; set; }
-
-        /// <summary>
-        /// Gets or sets the path to the overlay config template
-        /// </summary>
-        [Option("template-overlay", Required = true, HelpText = "The path to the template for the overlay config")]
-        public string TemplateOverlayCfg { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether to use the first view, if multiple are found
-        /// </summary>
-        [Option("use-fist-view", Required = false, HelpText = "Uses the first found view to generate an overlay", Default = true)]
-        public bool UseFirstView { get; set; } = true;
     }
 }

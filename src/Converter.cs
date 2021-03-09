@@ -74,7 +74,8 @@ namespace Converter
         /// <param name="configPath">The path to the config file to fill</param>
         /// <param name="game">The game name</param>
         /// <param name="position">The position of the image</param>
-        public static void FillTemplate(string configPath, string game, Bounds position)
+        /// <param name="resolution">The target resolution</param>
+        public static void FillTemplate(string configPath, string game, Bounds position, Bounds resolution)
         {
             var content = File.ReadAllText(configPath);
             content = content
@@ -83,7 +84,9 @@ namespace Converter
                 .Replace("{{height}}", Math.Round(position.Height, 0).ToString())
                 .Replace("{{x}}", Math.Round(position.X, 0).ToString())
                 .Replace("{{y}}", Math.Round(position.Y, 0).ToString())
-                .Replace("{{orientation}}", position.Orientation.ToString().ToLower());
+                .Replace("{{orientation}}", position.Orientation.ToString().ToLower())
+                .Replace("{{width_res}}", Math.Round(resolution.Width, 0).ToString())
+                .Replace("{{height_res}}", Math.Round(resolution.Height, 0).ToString());
 
             File.WriteAllText(configPath, content);
         }
