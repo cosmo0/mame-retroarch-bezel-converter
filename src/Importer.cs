@@ -15,28 +15,12 @@ namespace Converter
         /// </summary>
         public static void ConvertMameToRetroarch(MameToRaOptions options)
         {
-            // get files to process
-            var files = new ConcurrentQueue<string>(Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff));
+            var files = Directory.EnumerateFiles(options.Source, "*.zip").OrderBy(ff => ff);
 
-            // run threads
-            var threads = new List<Thread>();
-            for (int i = 0; i < options.Threads; i++)
+            RunThreads(options.Threads, files, (f) =>
             {
-                var t = new Thread(() =>
-                {
-                    while (files.TryDequeue(out var zipFile))
-                    {
-                        ProcessMameFile(zipFile, options);
-                    }
-                });
-                t.Start();
-            }
-
-            // wait for all threads to finish
-            for (int t = 0; t < threads.Count; t++)
-            {
-                threads[t].Join();
-            }
+                ProcessMameFile(f, options);
+            });
 
             Console.WriteLine($"########## DONE");
         }
@@ -48,28 +32,13 @@ namespace Converter
         public static void ConvertRetroarchToMame(RaToMameOptions options)
         {
             // get files to process
-            var romFiles = new ConcurrentQueue<string>(Directory.EnumerateFiles(options.SourceRoms, "*.zip.cfg").OrderBy(ff => ff));
+            var romFiles = Directory.EnumerateFiles(options.SourceRoms, "*.zip.cfg").OrderBy(ff => ff);
             var configFiles = Directory.EnumerateFiles(options.SourceConfigs, "*.cfg"); // read-only collection, no need for it to be concurrent
 
-            // run threads
-            var threads = new List<Thread>();
-            for (int i = 0; i < options.Threads; i++)
+            RunThreads(options.Threads, romFiles, (f) =>
             {
-                var t = new Thread(() =>
-                {
-                    while (romFiles.TryDequeue(out var romConfig))
-                    {
-                        ProcessRetroarchFile(romConfig, configFiles, options);
-                    }
-                });
-                t.Start();
-            }
-
-            // wait for all threads to finish
-            for (int t = 0; t < threads.Count; t++)
-            {
-                threads[t].Join();
-            }
+                ProcessRetroarchFile(f, configFiles, options);
+            });
 
             Console.WriteLine($"########## DONE");
         }
@@ -243,6 +212,38 @@ namespace Converter
             {
                 Console.WriteLine($"{game} PROCESSING ERROR: {ex.Message}");
                 File.AppendAllText(options.ErrorFile, $"{game} - {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Runs threads on the specified files
+        /// </summary>
+        /// <param name="threadsNb">The number of threads to run</param>
+        /// <param name="inputFiles">The input files collection</param>
+        /// <param name="threadMethod">The method executed by the thread</param>
+        private static void RunThreads(int threadsNb, IEnumerable<string> inputFiles, Action<string> threadMethod)
+        {
+            // get files to process
+            var files = new ConcurrentQueue<string>(inputFiles);
+
+            // run threads
+            var threads = new List<Thread>();
+            for (int i = 0; i < threadsNb; i++)
+            {
+                var t = new Thread(() =>
+                {
+                    while (files.TryDequeue(out var f))
+                    {
+                        threadMethod(f);
+                    }
+                });
+                t.Start();
+            }
+
+            // wait for all threads to finish
+            for (int t = 0; t < threads.Count; t++)
+            {
+                threads[t].Join();
             }
         }
     }
