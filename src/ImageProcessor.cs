@@ -130,7 +130,17 @@ namespace Converter
                 // last transparent pixel has been found
                 if (image[column, y].A == 255 && last > 0)
                 {
-                    break;
+                    // arbitrary margin of error in case a transparent pixel (or column) exists somewhere in the bezel
+                    if (last - first < 100)
+                    {
+                        // it's an error = reset values
+                        first = 0;
+                        last = 0;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
@@ -166,7 +176,17 @@ namespace Converter
                 // last transparent pixel has been found
                 if (pixelRowSpan[x].A == 255 && last > 0)
                 {
-                    break;
+                    // arbitrary margin of error in case a transparent pixel (or column) exists somewhere in the bezel
+                    if (last - first < 100)
+                    {
+                        // it's an error = reset values
+                        first = 0;
+                        last = 0;
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
             }
 
