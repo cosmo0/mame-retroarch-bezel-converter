@@ -296,7 +296,7 @@ namespace BezelTools
 
             lock (errorFileLock)
             {
-                File.AppendAllText(errorFile, $"{game} - {errorMessage}");
+                File.AppendAllText(errorFile, $"{game} - {errorMessage}\n");
             }
 
             errorsNb++;

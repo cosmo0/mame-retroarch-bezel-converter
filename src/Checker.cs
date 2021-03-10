@@ -23,6 +23,35 @@ namespace BezelTools
         {
             var searchOption = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
 
+            Console.WriteLine("########## CHECKING ROMS CONFIGS ##########");
+
+            // check roms configs
+            var romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
+            var overlaysUsedByRoms = new List<string>();
+            ThreadUtils.RunThreadsOnFiles(options.Threads, romConfigs, (f) =>
+            {
+                var fi = new FileInfo(f);
+                var game = fi.Name.Replace(".zip.cfg", "").Replace(".cfg", "");
+
+                Console.WriteLine($"rom {game} start processing");
+
+                var cfgContent = File.ReadAllText(f);
+
+                var overlayPath = RetroArchProcessor.GetCfgData(cfgContent, "input_overlay");
+                var ofi = new FileInfo(overlayPath);
+
+                // check that there is an matching overlay file at the expected localtion
+                if (!File.Exists(Path.Join(options.OverlaysConfigFolder, ofi.Name)))
+                {
+                    Error($"ERROR: rom {fi.Name} points to a non-existing overlay: {overlayPath}", options.ErrorFile);
+                }
+                else
+                {
+                    Console.WriteLine($"rom {game} uses an existing overlay config");
+                    overlaysUsedByRoms.Add(ofi.Name);
+                }
+            });
+
             Console.WriteLine("########## CHECKING OVERLAY CONFIGS ##########");
 
             // check overlay config files
@@ -40,12 +69,29 @@ namespace BezelTools
                 // check that the image exists
                 if (!File.Exists(Path.Join(options.OverlaysConfigFolder, overlayFileName)))
                 {
-                    Error($"ERROR: overlay {game} points to a non-existing image: {overlayFileName}", options.ErrorFile);
+                    Error($"ERROR: overlay {fi.Name} points to a non-existing image: {overlayFileName}", options.ErrorFile);
                 }
                 else
                 {
                     Console.WriteLine($"overlay {game} uses an existing image");
                     imagesUsedByOverlays.Add(overlayFileName);
+                }
+
+                // check that the overlay is used
+                if (!overlaysUsedByRoms.Contains(fi.Name, StringComparer.InvariantCultureIgnoreCase))
+                {
+                    if (options.AutoFix)
+                    {
+                        Console.WriteLine($"overlay {game} is not used by any rom, creating a rom config file");
+                        var dest = Path.Join(options.RomsConfigFolder, fi.Name);
+                        File.Copy(options.TemplateRom, dest);
+                        FileUtils.FillTemplate(dest, game);
+                        overlaysUsedByRoms.Add(fi.Name);
+                    }
+                    else
+                    {
+                        Error($"ERROR: overlay {fi.Name} is not used by any game", options.ErrorFile);
+                    }
                 }
             });
 
@@ -73,39 +119,12 @@ namespace BezelTools
                     }
                     else
                     {
-                        Error($"ERROR: image {game} is not used by any overlay", options.ErrorFile);
+                        Error($"ERROR: image {fi.Name} is not used by any overlay", options.ErrorFile);
                     }
                 }
                 else
                 {
                     Console.WriteLine($"image {game} is used");
-                }
-            });
-
-            Console.WriteLine("########## CHECKING ROMS CONFIGS ##########");
-
-            // check roms configs
-            var romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
-            ThreadUtils.RunThreadsOnFiles(options.Threads, romConfigs, (f) =>
-            {
-                var fi = new FileInfo(f);
-                var game = fi.Name.Replace(".zip.cfg", "").Replace(".cfg", "");
-
-                Console.WriteLine($"rom {game} start processing");
-
-                var cfgContent = File.ReadAllText(f);
-
-                var overlayPath = RetroArchProcessor.GetCfgData(cfgContent, "input_overlay");
-                var ofi = new FileInfo(overlayPath);
-
-                // check that there is an matching overlay file at the expected localtion
-                if (!File.Exists(Path.Join(options.OverlaysConfigFolder, ofi.Name)))
-                {
-                    Error($"ERROR: rom {game} points to a non-existing overlay: {overlayPath}", options.ErrorFile);
-                }
-                else
-                {
-                    Console.WriteLine($"rom {game} uses an existing overlay config");
                 }
             });
 
@@ -123,7 +142,7 @@ namespace BezelTools
 
             lock (errorFileLock)
             {
-                File.AppendAllText(errorFile, msg);
+                File.AppendAllText(errorFile, msg + "\n");
             }
 
             errorsNb++;
