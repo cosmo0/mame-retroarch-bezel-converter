@@ -9,7 +9,7 @@ namespace BezelTools
 {
     public static class Converter
     {
-        private static readonly object errorFileLock = new object();
+        private static readonly object errorFileLock = new();
         private static int errorsNb = 0;
 
         /// <summary>
@@ -290,13 +290,16 @@ namespace BezelTools
             }
         }
 
-        private static void Error(string errorFile, string game, string errorMessage)
+        private static void Error(string errorFile, string game, string msg)
         {
-            Console.WriteLine($"{game} PROCESSING ERROR: {errorMessage}");
+            Console.WriteLine($"{game} PROCESSING ERROR: {msg}");
 
-            lock (errorFileLock)
+            if (!string.IsNullOrWhiteSpace(errorFile))
             {
-                File.AppendAllText(errorFile, $"{game} - {errorMessage}\n");
+                lock (errorFileLock)
+                {
+                    File.AppendAllText(errorFile, $"{game};{msg}\n");
+                }
             }
 
             errorsNb++;

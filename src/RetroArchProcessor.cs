@@ -47,16 +47,24 @@ namespace BezelTools
         /// <returns>The config value</returns>
         public static string GetCfgData(string fileContent, string key)
         {
-            /// searched value looks like:
-            /// key = "value"
-            /// with or without spaces, with or without quotes, with or without trailing spaces
-            var match = Regex.Match(fileContent, "^" + key + "\\s*=\\s\"?([^\"\\n\\s]*)\"?\\s*$", RegexOptions.Multiline);
+            var match = Regex.Match(fileContent, BuildCfgRegex(key), RegexOptions.Multiline);
             if (match.Success && match.Captures.Any())
             {
-                return match.Groups[1].Value;
+                return match.Groups[1].Value.Trim();
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Sets a value in the specified config file
+        /// </summary>
+        /// <param name="fileContent">The contents of the file</param>
+        /// <param name="key">The key to set</param>
+        /// <returns>The modified content</returns>
+        public static string SetCfgData(string fileContent, string key, string value)
+        {
+            return Regex.Replace(fileContent, BuildCfgRegex(key), $"{key} = {value}", RegexOptions.Multiline);
         }
 
         /// <summary>
@@ -107,6 +115,14 @@ namespace BezelTools
                 SourceScreenPosition = screenBounds,
                 SourceResolution = resolution
             };
+        }
+
+        private static string BuildCfgRegex(string key)
+        {
+            /// searched value looks like:
+            /// key = "value"
+            /// with or without spaces, with or without quotes, with or without trailing spaces
+            return $"^{key}\\s*=\\s\"?([^\"\\n]*)\"?\\s*$";
         }
     }
 }

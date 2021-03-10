@@ -26,7 +26,7 @@ namespace BezelTools.Options
         /// <summary>
         /// Gets or sets the path to the error lists file
         /// </summary>
-        [Option("error-file", Required = false, HelpText = "The path to the file containing the list of errors", Default = "errors.txt")]
+        [Option('e', "error-file", Required = false, HelpText = "The path to the CSV file containing the list of errors")]
         public string ErrorFile { get; set; }
 
         /// <summary>

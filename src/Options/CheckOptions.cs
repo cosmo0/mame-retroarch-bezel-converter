@@ -17,8 +17,8 @@ namespace BezelTools.Options
         /// <summary>
         /// Gets or sets the path to the errors file.
         /// </summary>
-        [Option("error-file", Required = false, HelpText = "The path to the text file containing the errors", Default = "errors.txt")]
-        public string ErrorFile { get; set; } = "errors.txt";
+        [Option('e', "error-file", Required = false, HelpText = "The path to the CSV file containing the errors")]
+        public string ErrorFile { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the overlay configuration in rom configuration (input_overlay).
@@ -41,13 +41,13 @@ namespace BezelTools.Options
         /// <summary>
         /// Gets or sets the path to the overlay template.
         /// </summary>
-        [Option("template-overlay", Group = "fix", HelpText = "The path to the overlay config template file", Default = "templates/overlay.cfg")]
+        [Option("template-overlay", Group = "fix", Required = true, HelpText = "The path to the overlay config template file", Default = "templates/overlay.cfg")]
         public string TemplateOverlay { get; set; } = "templates/overlay.cfg";
 
         /// <summary>
         /// Gets or sets the rom template.
         /// </summary>
-        [Option("template-rom", Group = "fix", Required = false, HelpText = "The path to the rom config template file", Default = "templates/game.cfg")]
+        [Option("template-rom", Group = "fix", Required = true, HelpText = "The path to the rom config template file", Default = "templates/game.cfg")]
         public string TemplateRom { get; set; } = "templates/game.cfg";
 
         /// <summary>

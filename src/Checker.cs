@@ -11,7 +11,7 @@ namespace BezelTools
     /// </summary>
     public static class Checker
     {
-        private readonly static object errorFileLock = new object();
+        private readonly static object errorFileLock = new();
 
         private static int errorsNb = 0;
 
@@ -36,19 +36,50 @@ namespace BezelTools
                 Console.WriteLine($"rom {game} start processing");
 
                 var cfgContent = File.ReadAllText(f);
-
                 var overlayPath = RetroArchProcessor.GetCfgData(cfgContent, "input_overlay");
-                var ofi = new FileInfo(overlayPath);
 
-                // check that there is an matching overlay file at the expected localtion
-                if (!File.Exists(Path.Join(options.OverlaysConfigFolder, ofi.Name)))
+                if (string.IsNullOrWhiteSpace(overlayPath))
                 {
-                    Error($"ERROR: rom {fi.Name} points to a non-existing overlay: {overlayPath}", options.ErrorFile);
+                    Error(options.ErrorFile, game, $"rom has no input_overlay parameter");
                 }
                 else
                 {
-                    Console.WriteLine($"rom {game} uses an existing overlay config");
-                    overlaysUsedByRoms.Add(ofi.Name);
+                    // make sure a Windows path is converted to Unix under *nix, and vice versa
+                    var overlayFileName = Path.GetFileName(FileUtils.NormalizePath(overlayPath));
+
+                    // check that there is an matching overlay file at the expected localtion
+                    if (!File.Exists(Path.Join(options.OverlaysConfigFolder, overlayFileName)))
+                    {
+                        Error(options.ErrorFile, game, $"rom points to a non-existing overlay: {overlayFileName}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"rom {game} uses an existing overlay config");
+                        overlaysUsedByRoms.Add(overlayFileName);
+                    }
+
+                    // check that the path in the rom config is valid
+                    if (!string.IsNullOrEmpty(options.InputOverlayConfigPathInRomConfig))
+                    {
+                        var overlayShouldBe = $"{options.InputOverlayConfigPathInRomConfig}/{overlayFileName}";
+                        if (!overlayPath.Equals(overlayShouldBe, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            if (options.AutoFix)
+                            {
+                                Console.WriteLine($"rom {game} has a wrong overlay path, fixing it");
+                                cfgContent = RetroArchProcessor.SetCfgData(cfgContent, "input_overlay", overlayShouldBe);
+                                File.WriteAllText(f, cfgContent);
+                            }
+                            else
+                            {
+                                Error(options.ErrorFile, game, $"rom has a wrong overlay path: {overlayPath}");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"rom {game} has correct overlay path");
+                        }
+                    }
                 }
             });
 
@@ -69,7 +100,7 @@ namespace BezelTools
                 // check that the image exists
                 if (!File.Exists(Path.Join(options.OverlaysConfigFolder, overlayFileName)))
                 {
-                    Error($"ERROR: overlay {fi.Name} points to a non-existing image: {overlayFileName}", options.ErrorFile);
+                    Error(options.ErrorFile, game, $"overlay points to a non-existing image: {overlayFileName}");
                 }
                 else
                 {
@@ -90,7 +121,7 @@ namespace BezelTools
                     }
                     else
                     {
-                        Error($"ERROR: overlay {fi.Name} is not used by any game", options.ErrorFile);
+                        Error(options.ErrorFile, game, $"overlay is not used by any game");
                     }
                 }
             });
@@ -113,13 +144,20 @@ namespace BezelTools
                     {
                         Console.WriteLine($"image {game} missing overlay, creating it");
                         var dest = Path.Join(options.OverlaysConfigFolder, $"{game}.cfg");
-                        File.Copy(options.TemplateOverlay, dest);
-                        FileUtils.FillTemplate(dest, game);
-                        imagesUsedByOverlays.Add(fi.Name);
+                        if (File.Exists(dest))
+                        {
+                            Error(options.ErrorFile, game, $"trying to create overlay {dest} but file already exists");
+                        }
+                        else
+                        {
+                            File.Copy(options.TemplateOverlay, dest);
+                            FileUtils.FillTemplate(dest, game);
+                            imagesUsedByOverlays.Add(fi.Name);
+                        }
                     }
                     else
                     {
-                        Error($"ERROR: image {fi.Name} is not used by any overlay", options.ErrorFile);
+                        Error(options.ErrorFile, game, $"image {fi.Name} is not used by any overlay");
                     }
                 }
                 else
@@ -136,13 +174,16 @@ namespace BezelTools
             }
         }
 
-        private static void Error(string msg, string errorFile)
+        private static void Error(string errorFile, string game, string msg)
         {
-            Console.WriteLine(msg);
+            Console.WriteLine($"{game} ERROR: {msg}");
 
-            lock (errorFileLock)
+            if (!string.IsNullOrWhiteSpace(errorFile))
             {
-                File.AppendAllText(errorFile, msg + "\n");
+                lock (errorFileLock)
+                {
+                    File.AppendAllText(errorFile, $"{game};{msg}\n");
+                }
             }
 
             errorsNb++;
