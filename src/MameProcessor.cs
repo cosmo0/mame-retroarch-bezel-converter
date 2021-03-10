@@ -1,9 +1,9 @@
-﻿using Converter.Model;
-using Converter.Options;
+﻿using BezelTools.Model;
+using BezelTools.Options;
 using System;
 using System.Linq;
 
-namespace Converter
+namespace BezelTools
 {
     /// <summary>
     /// Processor for a MAME artwork

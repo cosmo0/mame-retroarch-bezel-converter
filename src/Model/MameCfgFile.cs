@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace Converter.Model
+namespace BezelTools.Model
 {
     /// <summary>
     /// A MAME config file

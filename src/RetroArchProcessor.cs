@@ -1,11 +1,11 @@
-﻿using Converter.Model;
-using Converter.Options;
+﻿using BezelTools.Model;
+using BezelTools.Options;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Converter
+namespace BezelTools
 {
     /// <summary>
     /// A processor for RetroArch files

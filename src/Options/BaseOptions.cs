@@ -1,10 +1,10 @@
-﻿using CommandLine;
+﻿using BezelTools.Model;
+using CommandLine;
+using System;
 using System.IO;
 using System.Reflection;
-using Converter.Model;
-using System;
 
-namespace Converter.Options
+namespace BezelTools.Options
 {
     /// <summary>
     /// Command line base option arguments

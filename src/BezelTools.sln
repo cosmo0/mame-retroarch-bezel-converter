@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BezelTools", "BezelTools.csproj", "{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE22AD53-98FD-495A-A924-999ABFDD27F7}
+	EndGlobalSection
+EndGlobal

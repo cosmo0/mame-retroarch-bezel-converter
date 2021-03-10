@@ -1,8 +1,8 @@
-﻿using Converter.Model;
+﻿using BezelTools.Model;
 using System;
 using System.IO;
 
-namespace Converter
+namespace BezelTools
 {
     /// <summary>
     /// Conversion from MAME bezels to RetroArch bezels

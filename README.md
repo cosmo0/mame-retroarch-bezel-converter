@@ -1,8 +1,13 @@
-# MAME / Retroarch bezels and overlays converter
+# Retroarch bezels / overlays tool
 
 Overlays (or bezels) are images added "above" the emulator, to mask the black borders around the image.
 
-This tool converts MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator.
+This tool provides several utilities:
+
+- convert MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator
+- convert Retroarch overlays to MAME bezels
+- check Retroarch overlays integrity
+- generate Retroarch overlays from images
 
 It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64.
 
@@ -12,11 +17,11 @@ It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64.
 
 ## Usage
 
-Get a detailed help by running `mame-bezel-converter --help`.
+Get a detailed help by running `bezel-tools --help`.
 
 ### Convert MAME bezels to RetroArch overlays
 
-> mame-bezel-converter.exe mtr --source path/to/mame/zips --output-roms output/roms --output-overlays output/overlay --template-game templates/game.cfg --template-overlay templates/overlay.cfg
+> bezel-tools mtr --source path/to/mame/zips --output-roms output/roms --output-overlays output/overlay --template-game templates/game.cfg --template-overlay templates/overlay.cfg
 
 - `--source` is the path where you store your zip files containing your MAME bezels
 - `--output-overlays` is where the png and overlay cfg files will be created
@@ -26,7 +31,7 @@ Get a detailed help by running `mame-bezel-converter --help`.
 
 ## Convert RetroArch overlays to MAME bezels
 
-> mame-bezel-converter.exe rtm --source-roms path/to/rom/files --source-configs path/to/config/files --output path/to/output --template templates/default.lay --zip
+> bezel-tools rtm --source-roms path/to/rom/files --source-configs path/to/config/files --output path/to/output --template templates/default.lay --zip
 
 - `--source-roms` is the path to the rom cfg (the .zip.cfg files)
 - `--source-configs` is the path to the folder where the cfg files are located
@@ -36,6 +41,7 @@ Get a detailed help by running `mame-bezel-converter --help`.
 
 ## Common parameters
 
+- `--error-file` the path to the output file containing the error (otherwise defaults to error.txt in the working folder)
 - `--overwrite` to overwrite existing files
 - `--scan-bezel` to scan transparent pixels in the images instead of relying on the cfg/lay files
 - `--output-debug path/to/debug` to see the result of the conversion (it creates an image with a red square where the screen will be)
@@ -48,11 +54,11 @@ Get a detailed help by running `mame-bezel-converter --help`.
 
 Just install the .Net 5 SDK.
 
-Build:
+**Build:**
 
 `dotnet build src /MAMEBezelConverter.sln`
 
-Run:
+**Run:**
 
 `dotnet run -p src/MAMEBezelConverter.csproj -- mtr
     --source tmp/source_mame
@@ -79,7 +85,7 @@ Run:
     --margin 10
     --threads 4`
 
-Publish:
+**Publish:**
 
 ````shell
 dotnet publish src/MAMEBezelConverter.sln -r win-x64 -p:PublishSingleFile=true --self-contained true -o out/win-x64

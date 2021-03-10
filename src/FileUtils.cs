@@ -1,11 +1,11 @@
-﻿using Converter.Options;
+﻿using BezelTools.Options;
 using System;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml.Serialization;
 
-namespace Converter
+namespace BezelTools
 {
     /// <summary>
     /// Utilities for file management
@@ -47,44 +47,6 @@ namespace Converter
         {
             var serializer = new XmlSerializer(typeof(T));
             return (T)serializer.Deserialize(fileStream);
-        }
-
-        /// <summary>
-        /// Reads the files in the specified folder
-        /// </summary>
-        /// <param name="game">The game name</param>
-        /// <param name="folder">The folder to read</param>
-        /// <param name="cfgFile">The config file</param>
-        /// <param name="options">The options</param>
-        /// <returns>The parsed files</returns>
-        public static (Model.MameLayFile lay, Model.MameCfgFile cfg, byte[] bezel) ReadFiles(string game, string folder, string cfgFile, MameToRaOptions options)
-        {
-            Model.MameLayFile lay = null;
-            Model.MameCfgFile cfg = null;
-            byte[] bezel = null;
-
-            Console.WriteLine($"{game} Reading files from folder {folder}");
-
-            // get layout and bezel
-            var layFiles = Directory.GetFiles(folder, "default.lay");
-            if (layFiles == null || !layFiles.Any()) { throw new FileNotFoundException($"Unable to find a default.lay file in {folder}"); }
-            lay = DeserializeXmlFile<Model.MameLayFile>(layFiles.First());
-
-            // check that LAY is useful
-            if (!lay.Views.Any()) { throw new Exceptions.LayFileException("Unable to find a view in the LAY file"); }
-            var view = MameProcessor.GetView(lay, options.UseFirstView);
-            var bezelFileNameInLay = MameProcessor.GetBezelFile(lay, view);
-            if (!string.IsNullOrEmpty(bezelFileNameInLay))
-            {
-                var bezelFilePath = Directory.GetFiles(folder, bezelFileNameInLay, new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
-                if (bezelFilePath == null || !bezelFilePath.Any()) { throw new FileNotFoundException($"Unable to find the bezel file {bezelFilePath}"); }
-                bezel = File.ReadAllBytes(bezelFilePath.First());
-            }
-
-            // get config file
-            cfg = GetConfigFile(cfgFile, game);
-
-            return (lay, cfg, bezel);
         }
 
         /// <summary>
@@ -164,6 +126,42 @@ namespace Converter
         }
 
         /// <summary>
+        /// Reads the files in the specified folder
+        /// </summary>
+        /// <param name="game">The game name</param>
+        /// <param name="folder">The folder to read</param>
+        /// <param name="cfgFile">The config file</param>
+        /// <param name="options">The options</param>
+        /// <returns>The parsed files</returns>
+        public static (Model.MameLayFile lay, Model.MameCfgFile cfg, byte[] bezel) ReadFiles(string game, string folder, string cfgFile, MameToRaOptions options)
+        {
+            byte[] bezel = null;
+
+            Console.WriteLine($"{game} Reading files from folder {folder}");
+
+            // get layout and bezel
+            var layFiles = Directory.GetFiles(folder, "default.lay");
+            if (layFiles == null || !layFiles.Any()) { throw new FileNotFoundException($"Unable to find a default.lay file in {folder}"); }
+            Model.MameLayFile lay = DeserializeXmlFile<Model.MameLayFile>(layFiles.First());
+
+            // check that LAY is useful
+            if (!lay.Views.Any()) { throw new Exceptions.LayFileException("Unable to find a view in the LAY file"); }
+            var view = MameProcessor.GetView(lay, options.UseFirstView);
+            var bezelFileNameInLay = MameProcessor.GetBezelFile(lay, view);
+            if (!string.IsNullOrEmpty(bezelFileNameInLay))
+            {
+                var bezelFilePath = Directory.GetFiles(folder, bezelFileNameInLay, new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
+                if (bezelFilePath == null || !bezelFilePath.Any()) { throw new FileNotFoundException($"Unable to find the bezel file {bezelFilePath}"); }
+                bezel = File.ReadAllBytes(bezelFilePath.First());
+            }
+
+            // get config file
+            Model.MameCfgFile cfg = GetConfigFile(cfgFile, game);
+
+            return (lay, cfg, bezel);
+        }
+
+        /// <summary>
         /// Parses the specified config file
         /// </summary>
         /// <param name="cfgFile">The config file</param>
@@ -183,6 +181,5 @@ namespace Converter
                 return null;
             }
         }
-
     }
 }

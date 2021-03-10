@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace Converter.Options
+namespace BezelTools.Options
 {
     /// <summary>
     /// Converts a Retroarch overlay to a MAME bezel

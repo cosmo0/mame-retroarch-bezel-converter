@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Converter.Exceptions
+namespace BezelTools.Exceptions
 {
     /// <summary>
     /// Exception thrown when a bezel is not found

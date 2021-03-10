@@ -1,4 +1,4 @@
-﻿namespace Converter.Model
+﻿namespace BezelTools.Model
 {
     /// <summary>
     /// The screen orientation

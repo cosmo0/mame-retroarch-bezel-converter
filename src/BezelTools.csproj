@@ -3,9 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Converter</RootNamespace>
-    <AssemblyName>mame-bezel-converter</AssemblyName>
-    <ReleaseVersion>1.1</ReleaseVersion>
+    <RootNamespace>BezelTools</RootNamespace>
+    <AssemblyName>bezel-tools</AssemblyName>
+    <ReleaseVersion>2.0</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
     <RuntimeIdentifiers>win-x64;win-arm64;osx-x64;linux-x64;linux-arm64</RuntimeIdentifiers>
   </PropertyGroup>
@@ -29,6 +29,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="templates\overlay.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="templates\default.lay">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
 using System.Xml.Serialization;
 
-namespace Converter.Model
+namespace BezelTools.Model
 {
     public class Offset
     {

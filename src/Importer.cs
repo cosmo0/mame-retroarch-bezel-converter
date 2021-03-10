@@ -1,4 +1,4 @@
-﻿using Converter.Options;
+﻿using BezelTools.Options;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 
-namespace Converter
+namespace BezelTools
 {
     public static class Importer
     {

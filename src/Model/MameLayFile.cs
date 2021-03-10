@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Xml.Serialization;
 
-namespace Converter.Model
+namespace BezelTools.Model
 {
     /// <summary>
     /// A MAME .lay file

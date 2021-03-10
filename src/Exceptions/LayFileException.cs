@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Converter.Exceptions
+namespace BezelTools.Exceptions
 {
     /// <summary>
     /// Thrown when there is a problem with the source LAY file

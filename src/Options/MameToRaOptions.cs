@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace Converter.Options
+namespace BezelTools.Options
 {
     /// <summary>
     /// Options for conversion from MAME to Retroarch

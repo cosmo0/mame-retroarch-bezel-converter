@@ -1,8 +1,8 @@
-﻿using CommandLine;
-using Converter.Options;
+﻿using BezelTools.Options;
+using CommandLine;
 using System.IO;
 
-namespace Converter
+namespace BezelTools
 {
     public partial class Program
     {
