@@ -40,6 +40,26 @@ namespace BezelTools
         public Bounds SourceScreenPosition { get; private set; }
 
         /// <summary>
+        /// Gets data from the specified config file.
+        /// </summary>
+        /// <param name="fileContent">The content of the file.</param>
+        /// <param name="key">The key to look for.</param>
+        /// <returns>The config value</returns>
+        public static string GetCfgData(string fileContent, string key)
+        {
+            /// searched value looks like:
+            /// key = "value"
+            /// with or without spaces, with or without quotes, with or without trailing spaces
+            var match = Regex.Match(fileContent, "^" + key + "\\s*=\\s\"?([^\"\\n\\s]*)\"?\\s*$", RegexOptions.Multiline);
+            if (match.Success && match.Captures.Any())
+            {
+                return match.Groups[1].Value;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets the RetroArch processor.
         /// </summary>
         /// <returns>The RetroArch processor</returns>
@@ -87,26 +107,6 @@ namespace BezelTools
                 SourceScreenPosition = screenBounds,
                 SourceResolution = resolution
             };
-        }
-
-        /// <summary>
-        /// Gets data from the specified config file.
-        /// </summary>
-        /// <param name="fileContent">The content of the file.</param>
-        /// <param name="key">The key to look for.</param>
-        /// <returns>The config value</returns>
-        private static string GetCfgData(string fileContent, string key)
-        {
-            /// searched value looks like:
-            /// key = "value"
-            /// with or without spaces, with or without quotes, with or without trailing spaces
-            var match = Regex.Match(fileContent, "^" + key + "\\s*=\\s\"?([^\"\\n\\s]*)\"?\\s*$", RegexOptions.Multiline);
-            if (match.Success && match.Captures.Any())
-            {
-                return match.Groups[1].Value;
-            }
-
-            return null;
         }
     }
 }

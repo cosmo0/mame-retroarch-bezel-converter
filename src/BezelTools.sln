@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BezelTools", "BezelTools.csproj", "{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BB738DD6-20F6-4494-939E-BF26A167E238}"
+	ProjectSection(SolutionItems) = preProject
+		..\lay_files_specs.md = ..\lay_files_specs.md
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

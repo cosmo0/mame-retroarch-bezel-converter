@@ -9,7 +9,7 @@ This tool provides several utilities:
 - check Retroarch overlays integrity
 - generate Retroarch overlays from images
 
-It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64.
+It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64. You can build it for any platform supported by .Net 5 (it's very easy).
 
 ## Download
 
@@ -17,7 +17,17 @@ It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64.
 
 ## Usage
 
-Get a detailed help by running `bezel-tools --help`.
+Get a detailed help and list of options by running `bezel-tools --help` or `bezel-tools [verb] --help`.
+
+### Check overlays integrity
+
+Simple check:
+
+> bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms
+
+Check and fix when possible:
+
+> bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms --autofix --input-overlay-path /opt/retropie/configs/all/retroarch/overlay/ --template-overlay templates/overlay.cfg --template-rom templates/game.cfg
 
 ### Convert MAME bezels to RetroArch overlays
 
@@ -29,7 +39,7 @@ Get a detailed help by running `bezel-tools --help`.
 - `--template-game` is a template rom cfg that will be modified (a sample is provided)
 - `--template-overlay` is a template overlay cfg that will be modified (a sample is provided)
 
-## Convert RetroArch overlays to MAME bezels
+### Convert RetroArch overlays to MAME bezels
 
 > bezel-tools rtm --source-roms path/to/rom/files --source-configs path/to/config/files --output path/to/output --template templates/default.lay --zip
 
@@ -39,7 +49,7 @@ Get a detailed help by running `bezel-tools --help`.
 - `--template` is the template for the lay file that will be modified (a sample is provided)
 - `--zip` zips the result (otherwise it just creates a folder)
 
-## Common parameters
+### Common conversion parameters
 
 - `--error-file` the path to the output file containing the error (otherwise defaults to error.txt in the working folder)
 - `--overwrite` to overwrite existing files
@@ -52,15 +62,35 @@ Get a detailed help by running `bezel-tools --help`.
 
 ### Run it locally
 
-Just install the .Net 5 SDK.
+You'll need to install the [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
 
 **Build:**
 
-`dotnet build src /MAMEBezelConverter.sln`
+`dotnet build src /BezelTools.sln`
 
 **Run:**
 
-`dotnet run -p src/MAMEBezelConverter.csproj -- mtr
+Simple check:
+
+`dotnet run -p src/BezelTools.csproj -- check
+    --overlays-config tmp/retroarch/configs
+    --roms-config tmp/retroarch/roms
+    --threads 4`
+
+Check and fix:
+
+`dotnet run -p src/BezelTools.csproj -- check
+    --overlays-config tmp/retroarch/configs
+    --roms-config tmp/retroarch/roms
+    --autofix
+    --input-overlay-path /opt/retropie/configs/all/retroarch/overlay/
+    --template-overlay src/templates/overlay.cfg
+    --template-rom src/templates/game.cfg
+    --threads 4`  
+
+MAME to RA conversion:
+
+`dotnet run -p src/BezelTools.csproj -- mtr
     --source tmp/source_mame
     --source-configs tmp/source_mame
     --output-roms tmp/output/roms_ra
@@ -73,7 +103,9 @@ Just install the .Net 5 SDK.
     --margin 10
     --threads 4`
 
-`dotnet run -p src/MAMEBezelConverter.csproj -- rtm
+RA to MAME conversion:
+
+`dotnet run -p src/BezelTools.csproj -- rtm
     --source-roms tmp/source_ra/roms
     --source-configs tmp/source_ra/configs
     --output tmp/output/mame
@@ -88,20 +120,18 @@ Just install the .Net 5 SDK.
 **Publish:**
 
 ````shell
-dotnet publish src/MAMEBezelConverter.sln -r win-x64 -p:PublishSingleFile=true --self-contained true -o out/win-x64
-dotnet publish src/MAMEBezelConverter.sln -r win-arm64 -p:PublishSingleFile=true --self-contained true -o out/win-arm64
-dotnet publish src/MAMEBezelConverter.sln -r linux-x64 -p:PublishSingleFile=true --self-contained true -o out/linux-x64
-dotnet publish src/MAMEBezelConverter.sln -r linux-arm64 -p:PublishSingleFile=true --self-contained true -o out/linux-arm64
-dotnet publish src/MAMEBezelConverter.sln -r osx-x64 -p:PublishSingleFile=true --self-contained true -o out/osx-x64
+dotnet publish src/BezelTools.sln -r win-x64 -p:PublishSingleFile=true --self-contained true -o out/win-x64
+dotnet publish src/BezelTools.sln -r win-arm64 -p:PublishSingleFile=true --self-contained true -o out/win-arm64
+dotnet publish src/BezelTools.sln -r linux-x64 -p:PublishSingleFile=true --self-contained true -o out/linux-x64
+dotnet publish src/BezelTools.sln -r linux-arm64 -p:PublishSingleFile=true --self-contained true -o out/linux-arm64
+dotnet publish src/BezelTools.sln -r osx-x64 -p:PublishSingleFile=true --self-contained true -o out/osx-x64
 ````
 
 ### Contribute
 
 Lay file specs are located in [lay_file_specs.md](lay_files_specs.md).
 
-It's a standard .Net console app, starting in `Program.cs` / `Main`. It uses [CommandLine](https://github.com/commandlineparser/commandline)
+It's a regular .Net console app. It uses [CommandLine](https://github.com/commandlineparser/commandline)
 to parse arguments and execute the right verb.
 
-The class `Importer` launches threads. They scan the input folders, get the files, send them to the processors and converters, then save the result.
-
-`MameProcessor` and `RetroArchProcessor` read the files and extract data in a standardized way.
+It's not a very complex app, no surprises.
