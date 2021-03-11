@@ -249,17 +249,14 @@ namespace BezelTools
                     }
                     else
                     {
-                        // bounds are too different
+                        // output debug in all cases
+                        ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, f, boundsInConf);
+                        ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, boundsInImage);
+
                         if (options.AutoFix)
                         {
                             Info(options.ErrorFile, game, "Fixing screen position in config");
-
-                            // rewrite conf
                             RetroArchProcessor.SetBounds(romCfgPath, game, boundsInImage, options.TargetResolutionBounds);
-
-                            // output debug
-                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, f, boundsInConf);
-                            ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, boundsInImage);
                         }
                         else
                         {
