@@ -266,7 +266,7 @@ namespace BezelTools
                 }
                 else
                 {
-                    throw new NotImplementedException("wait what");
+                    Error(options.ErrorFile, game, "Something happened that shouldn't be possible, please file an issue https://github.com/cosmo0/mame-retroarch-bezel-converter/issues");
                 }
             });
 

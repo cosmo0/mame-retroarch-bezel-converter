@@ -97,6 +97,12 @@ namespace BezelTools
 
                 Console.WriteLine($"{game} target screen: {newPosition}");
 
+                if (newPosition.Width <= 0 || newPosition.Height <= 0)
+                {
+                    Error(options.ErrorFile, game, $"Width/height of screen are invalid: {newPosition}");
+                    return;
+                }
+
                 // get bezel image
                 var outputImage = Path.Join(options.OutputOverlays, $"{game}.png");
                 if (options.Overwrite && File.Exists(outputImage)) { File.Delete(outputImage); }
