@@ -6,7 +6,7 @@ namespace BezelTools.Options
     /// Options for conversion from MAME to Retroarch
     /// </summary>
     [Verb("mtr", HelpText = "Converts overlays from MAME to Retroarch")]
-    public class MameToRaOptions : BaseOptions
+    public class MameToRaOptions : BaseConvertOptions
     {
         /// <summary>
         /// Gets or sets the path to the output overlays

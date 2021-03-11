@@ -6,19 +6,13 @@ namespace BezelTools.Options
     /// Checks overlay files integrity
     /// </summary>
     [Verb("check", HelpText = "Checks overlay files integrity")]
-    public class CheckOptions
+    public class CheckOptions : BaseOptions
     {
         /// <summary>
         /// Gets or sets a value indicating whether to automatically fix overlays.
         /// </summary>
         [Option('f', "autofix", Group = "fix", Required = false, HelpText = "Whether to auto-fix the files", Default = false)]
         public bool AutoFix { get; set; } = false;
-
-        /// <summary>
-        /// Gets or sets the path to the errors file.
-        /// </summary>
-        [Option('e', "error-file", Required = false, HelpText = "The path to the CSV file containing the errors")]
-        public string ErrorFile { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the overlay configuration in rom configuration (input_overlay).
@@ -49,11 +43,5 @@ namespace BezelTools.Options
         /// </summary>
         [Option("template-rom", Group = "fix", Required = true, HelpText = "The path to the rom config template file", Default = "templates/game.cfg")]
         public string TemplateRom { get; set; } = "templates/game.cfg";
-
-        /// <summary>
-        /// Gets or sets the number of threads to use.
-        /// </summary>
-        [Option("threads", Required = false, HelpText = "The number of threads to use", Default = 1)]
-        public int Threads { get; set; } = 1;
     }
 }

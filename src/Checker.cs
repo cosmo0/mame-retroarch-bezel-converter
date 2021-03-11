@@ -66,7 +66,7 @@ namespace BezelTools
                         {
                             if (options.AutoFix)
                             {
-                                Console.WriteLine($"rom {game} has a wrong overlay path, fixing it");
+                                Info(options.ErrorFile, game, "fixing overlay path in rom config");
                                 cfgContent = RetroArchProcessor.SetCfgData(cfgContent, "input_overlay", overlayShouldBe);
                                 File.WriteAllText(f, cfgContent);
                             }
@@ -113,7 +113,7 @@ namespace BezelTools
                 {
                     if (options.AutoFix)
                     {
-                        Console.WriteLine($"overlay {game} is not used by any rom, creating a rom config file");
+                        Info(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
                         var dest = Path.Join(options.RomsConfigFolder, fi.Name);
                         File.Copy(options.TemplateRom, dest);
                         FileUtils.FillTemplate(dest, game);
@@ -150,6 +150,7 @@ namespace BezelTools
                         }
                         else
                         {
+                            Info(options.ErrorFile, game, $"Creating overlay config for orphan image at {dest}");
                             File.Copy(options.TemplateOverlay, dest);
                             FileUtils.FillTemplate(dest, game);
                             imagesUsedByOverlays.Add(fi.Name);
@@ -176,13 +177,23 @@ namespace BezelTools
 
         private static void Error(string errorFile, string game, string msg)
         {
-            Console.WriteLine($"{game} ERROR: {msg}");
+            Write(errorFile, game, msg, "ERROR");
+        }
 
-            if (!string.IsNullOrWhiteSpace(errorFile))
+        private static void Info(string errorFile, string game, string msg)
+        {
+            Write(errorFile, game, msg, "INFO");
+        }
+
+        private static void Write(string file, string game, string msg, string level)
+        {
+            Console.WriteLine($"{game} {level}: {msg}");
+
+            if (!string.IsNullOrWhiteSpace(file))
             {
                 lock (errorFileLock)
                 {
-                    File.AppendAllText(errorFile, $"{game};{msg}\n");
+                    File.AppendAllText(file, $"{level};{game};{msg}\n");
                 }
             }
 

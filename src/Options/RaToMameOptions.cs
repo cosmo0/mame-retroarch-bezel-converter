@@ -6,7 +6,7 @@ namespace BezelTools.Options
     /// Converts a Retroarch overlay to a MAME bezel
     /// </summary>
     [Verb("rtm", HelpText = "Converts overlays from Retroarch to MAME")]
-    public class RaToMameOptions : BaseOptions
+    public class RaToMameOptions : BaseConvertOptions
     {
         /// <summary>
         /// Gets or sets the path to the output
