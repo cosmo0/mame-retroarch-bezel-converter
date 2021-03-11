@@ -30,6 +30,14 @@ namespace BezelTools
             return entry;
         }
 
+        private static Config GetConfigEntry(Func<Config, bool> predicate)
+        {
+            lock (configsLock)
+            {
+                return Checker.configs.Where(predicate).FirstOrDefault();
+            }
+        }
+
         /// <summary>
         /// Checks the Retroarch configuration files.
         /// </summary>
@@ -113,7 +121,7 @@ namespace BezelTools
                 var overlayFileName = RetroArchProcessor.GetCfgData(cfgContent, "overlay0_overlay");
 
                 // check that the overlay is used
-                var cfgEntry = Checker.configs.Where(c => c.Overlay != null && c.Overlay.Equals(fi.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var cfgEntry = GetConfigEntry(c => c.Overlay != null && c.Overlay.Equals(fi.Name, StringComparison.InvariantCultureIgnoreCase));
                 if (cfgEntry == null)
                 {
                     if (options.AutoFix)
@@ -166,7 +174,7 @@ namespace BezelTools
                 Console.WriteLine($"image {game} start processing");
 
                 // check that the image is used by an overlay
-                var cfgEntry = Checker.configs.Where(c => c.Image != null && c.Image.Equals(fi.Name, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var cfgEntry = GetConfigEntry(c => c.Image != null && c.Image.Equals(fi.Name, StringComparison.InvariantCultureIgnoreCase));
                 if (cfgEntry == null)
                 {
                     if (options.AutoFix)
@@ -190,11 +198,7 @@ namespace BezelTools
                             var bounds = ImageProcessor.FindScreen(File.ReadAllBytes(f), options);
                             CreateConfig(options.TemplateRom, game, romDest, bounds, options.TargetResolutionBounds);
 
-                            cfgEntry = new Config { Image = fi.Name, Overlay = cfgFilesName, Rom = cfgFilesName };
-                            lock (configsLock)
-                            {
-                                Checker.configs.Add(cfgEntry);
-                            }
+                            AddConfigEntry(cfgFilesName, cfgFilesName, fi.Name);
                         }
                     }
                     else
