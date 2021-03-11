@@ -80,6 +80,25 @@ namespace BezelTools
         }
 
         /// <summary>
+        /// Gets the image size.
+        /// </summary>
+        /// <param name="imagePath">The image path.</param>
+        /// <returns>The image size</returns>
+        public static Bounds GetSize(string imagePath)
+        {
+            using (Image image = Image.Load(imagePath))
+            {
+                return new Bounds
+                {
+                    X = 0,
+                    Y = 0,
+                    Width = image.Width,
+                    Height = image.Height
+                };
+            }
+        }
+
+        /// <summary>
         /// Resizes an image to the specified dimension, cropping it if necessary
         /// </summary>
         /// <param name="imagePath">The path to the image</param>

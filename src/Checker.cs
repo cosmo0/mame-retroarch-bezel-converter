@@ -168,6 +168,25 @@ namespace BezelTools
                 {
                     Console.WriteLine($"image {game} is used");
                 }
+
+                // check that image is not too large
+                var imgSize = ImageProcessor.GetSize(f);
+                if (imgSize.Width > options.TargetResolutionBounds.Width || imgSize.Height > options.TargetResolutionBounds.Height)
+                {
+                    if (options.AutoFix)
+                    {
+                        Info(options.ErrorFile, game, $"resizing image (previous size: {imgSize.Width}x{imgSize.Height})");
+                        ImageProcessor.Resize(f, (int)options.TargetResolutionBounds.Width, (int)options.TargetResolutionBounds.Height);
+                    }
+                    else
+                    {
+                        Error(options.ErrorFile, game, $"image has wrong size: {imgSize.Width}x{imgSize.Height}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"image {game} has the right size");
+                }
             });
 
             Console.WriteLine("########## DONE ##########");
