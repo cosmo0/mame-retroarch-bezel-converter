@@ -57,17 +57,6 @@ namespace BezelTools
         }
 
         /// <summary>
-        /// Sets a value in the specified config file
-        /// </summary>
-        /// <param name="fileContent">The contents of the file</param>
-        /// <param name="key">The key to set</param>
-        /// <returns>The modified content</returns>
-        public static string SetCfgData(string fileContent, string key, string value)
-        {
-            return Regex.Replace(fileContent, BuildCfgRegex(key), $"{key} = {value}", RegexOptions.Multiline);
-        }
-
-        /// <summary>
         /// Gets the RetroArch processor.
         /// </summary>
         /// <returns>The RetroArch processor</returns>
@@ -115,6 +104,17 @@ namespace BezelTools
                 SourceScreenPosition = screenBounds,
                 SourceResolution = resolution
             };
+        }
+
+        /// <summary>
+        /// Sets a value in the specified config file
+        /// </summary>
+        /// <param name="fileContent">The contents of the file</param>
+        /// <param name="key">The key to set</param>
+        /// <returns>The modified content</returns>
+        public static string SetCfgData(string fileContent, string key, string value)
+        {
+            return Regex.Replace(fileContent, BuildCfgRegex(key), $"{key} = {value}", RegexOptions.Multiline);
         }
 
         private static string BuildCfgRegex(string key)

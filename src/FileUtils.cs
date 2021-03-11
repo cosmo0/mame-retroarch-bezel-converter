@@ -180,6 +180,22 @@ namespace BezelTools
         }
 
         /// <summary>
+        /// Normalizes a path so it's understandable by System.IO.Path
+        /// </summary>
+        /// <param name="path">The path to normalize</param>
+        /// <returns>The normalized path</returns>
+        public static string NormalizePath(string path)
+        {
+            // RetroArch has this weird syntax where ":\" means "at the RA root"
+            path = path.StartsWith(":") ? path[1..] : path;
+
+            // Windows handles *nix slashes fine, the opposite is not true
+            path = path.Replace("\\", "/");
+
+            return path;
+        }
+
+        /// <summary>
         /// Reads the files in the specified folder
         /// </summary>
         /// <param name="game">The game name</param>
@@ -213,22 +229,6 @@ namespace BezelTools
             MameCfgFile cfg = GetConfigFile(cfgFile, game);
 
             return (lay, cfg, bezel);
-        }
-
-        /// <summary>
-        /// Normalizes a path for the current OS
-        /// </summary>
-        /// <param name="path">The path to normalize</param>
-        /// <returns>The normalized path</returns>
-        public static string NormalizePath(string path)
-        {
-            // RetroArch has this weird syntax where ":\" means "at the RA root"
-            path = path.StartsWith(":") ? path[1..] : path;
-
-            // Windows handles *nix slashes fine, the opposite is not true
-            path = path.Replace("\\", "/");
-
-            return path;
         }
 
         /// <summary>
