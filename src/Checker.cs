@@ -113,10 +113,9 @@ namespace BezelTools
                 {
                     if (options.AutoFix)
                     {
-                        Info(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
                         var dest = Path.Join(options.RomsConfigFolder, fi.Name);
-                        File.Copy(options.TemplateRom, dest);
-                        FileUtils.FillTemplate(dest, game);
+                        Info(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
+                        CreateConfig(options.TemplateRom, game, dest);
                         overlaysUsedByRoms.Add(fi.Name);
                     }
                     else
@@ -151,9 +150,13 @@ namespace BezelTools
                         else
                         {
                             Info(options.ErrorFile, game, $"Creating overlay config for orphan image at {dest}");
-                            File.Copy(options.TemplateOverlay, dest);
-                            FileUtils.FillTemplate(dest, game);
+                            CreateConfig(options.TemplateOverlay, game, dest);
                             imagesUsedByOverlays.Add(fi.Name);
+
+                            var romDest = Path.Join(options.RomsConfigFolder, fi.Name);
+                            Info(options.ErrorFile, game, $"Creating rom config for orphan image at {romDest}");
+                            CreateConfig(options.TemplateRom, game, romDest);
+                            overlaysUsedByRoms.Add(fi.Name.Replace(".png", ".cfg"));
                         }
                     }
                     else
@@ -173,6 +176,12 @@ namespace BezelTools
             {
                 Console.WriteLine($"{errorsNb} error(s)! Check {options.ErrorFile}");
             }
+        }
+
+        private static void CreateConfig(string templatePath, string game, string dest)
+        {
+            File.Copy(templatePath, dest);
+            FileUtils.FillTemplate(dest, game);
         }
 
         private static void Error(string errorFile, string game, string msg)
