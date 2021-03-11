@@ -17,6 +17,8 @@ It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64. You can build i
 
 ## Usage
 
+**!!! BACKUP YOUR FILES BEFORE USING THIS TOOL !!!** I have used it on my own files but I cannot guarantee that it will work on yours.
+
 Get a detailed help and list of options by running `bezel-tools --help` or `bezel-tools [verb] --help`.
 
 ### Check overlays integrity
@@ -76,7 +78,8 @@ Simple check:
 `dotnet run -p src/BezelTools.csproj -- check
     --overlays-config tmp/retroarch/configs
     --roms-config tmp/retroarch/roms
-    --threads 4`
+    --threads 4
+    -e tmp/errors.csv`
 
 Check and fix:
 
@@ -87,7 +90,8 @@ Check and fix:
     --input-overlay-path /opt/retropie/configs/all/retroarch/overlay/
     --template-overlay src/templates/overlay.cfg
     --template-rom src/templates/game.cfg
-    --threads 4`  
+    --threads 4
+    -e tmp/errors.csv`
 
 MAME to RA conversion:
 
@@ -102,7 +106,8 @@ MAME to RA conversion:
     --scan-bezel
     --output-debug tmp/debug_ra
     --margin 10
-    --threads 4`
+    --threads 4
+    -e tmp/errors.csv`
 
 RA to MAME conversion:
 
@@ -116,7 +121,8 @@ RA to MAME conversion:
     --scan-bezel
     --output-debug tmp/debug_mame
     --margin 10
-    --threads 4`
+    --threads 4
+    -e tmp/errors.csv`
 
 **Publish:**
 

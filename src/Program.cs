@@ -18,18 +18,21 @@ namespace BezelTools
                 Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions, CheckOptions>(args)
                        .WithParsed<MameToRaOptions>((o) =>
                        {
+                           InitCommon(o);
                            InitMameToRa(o);
 
                            Converter.ConvertMameToRetroarch(o);
                        })
                        .WithParsed<RaToMameOptions>((o) =>
                        {
+                           InitCommon(o);
                            InitRaToMame(o);
 
                            Converter.ConvertRetroarchToMame(o);
                        })
                        .WithParsed<CheckOptions>((o) =>
                        {
+                           InitCommon(o);
                            InitCheck(o);
 
                            Checker.Check(o);
@@ -39,6 +42,16 @@ namespace BezelTools
             {
                 Console.WriteLine($"An error has occurred: {ex.Message}\n\n{ex.StackTrace}");
             }
+        }
+
+        /// <summary>
+        /// Initializes common parameters
+        /// </summary>
+        /// <param name="options">The common parameters</param>
+        private static void InitCommon(BaseOptions options)
+        {
+            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) { Directory.CreateDirectory(options.OutputDebug); }
+            if (!string.IsNullOrEmpty(options.ErrorFile) && File.Exists(options.ErrorFile)) { File.Delete(options.ErrorFile); }
         }
 
         /// <summary>
@@ -94,7 +107,6 @@ namespace BezelTools
             // create folders
             if (!Directory.Exists(options.OutputRoms)) { Directory.CreateDirectory(options.OutputRoms); }
             if (!Directory.Exists(options.OutputOverlays)) { Directory.CreateDirectory(options.OutputOverlays); }
-            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) { Directory.CreateDirectory(options.OutputDebug); }
 
             // check templates
             if (!File.Exists(options.TemplateGameCfg)) { throw new FileNotFoundException("Unable to find game config template", options.TemplateGameCfg); }
