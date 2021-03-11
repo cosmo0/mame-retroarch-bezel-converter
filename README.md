@@ -91,7 +91,8 @@ Check and fix:
     --template-overlay src/templates/overlay.cfg
     --template-rom src/templates/game.cfg
     --threads 4
-    -e tmp/errors.csv`
+    -e tmp/errors.csv
+    -d tmp/debug`
 
 MAME to RA conversion:
 

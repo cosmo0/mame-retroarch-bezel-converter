@@ -258,8 +258,8 @@ namespace BezelTools
                             RetroArchProcessor.SetBounds(romCfgPath, game, boundsInImage, options.TargetResolutionBounds);
 
                             // output debug
-                            ImageProcessor.DebugDraw(game, options.OutputDebug, f.Replace(".png", "_before.png"), boundsInConf);
-                            ImageProcessor.DebugDraw(game, options.OutputDebug, f.Replace(".png", "_after.png"), boundsInImage);
+                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, f, boundsInConf);
+                            ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, boundsInImage);
                         }
                         else
                         {
