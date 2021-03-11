@@ -5,6 +5,7 @@ using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
+using System.IO;
 
 namespace BezelTools
 {
@@ -13,6 +14,24 @@ namespace BezelTools
     /// </summary>
     public static class ImageProcessor
     {
+        /// <summary>
+        /// Draws a debug rectangle on the overlay image
+        /// </summary>
+        /// <param name="game">The game name</param>
+        /// <param name="debugFolder">The path to the debug folder</param>
+        /// <param name="sourceImagePath">The path to the image</param>
+        /// <param name="position">The position of the screen</param>
+        public static void DebugDraw(string game, string debugFolder, string sourceImagePath, Model.Bounds position)
+        {
+            if (!string.IsNullOrEmpty(debugFolder))
+            {
+                Console.WriteLine($"{game} generating debug image");
+                var debugImage = Path.Join(debugFolder, $"{game}.png");
+                File.Copy(sourceImagePath, debugImage, true);
+                ImageProcessor.DrawRect(debugImage, position);
+            }
+        }
+
         /// <summary>
         /// Draws a red rectangle on the specified image at the specified position
         /// </summary>

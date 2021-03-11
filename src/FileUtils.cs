@@ -139,6 +139,21 @@ namespace BezelTools
         {
             var content = File.ReadAllText(configPath);
 
+            content = FillTemplateContent(content, game, position, resolution);
+
+            File.WriteAllText(configPath, content);
+        }
+
+        /// <summary>
+        /// Fills the specified config content template with the specified infos
+        /// </summary>
+        /// <param name="content">The content to fill</param>
+        /// <param name="game">The game name</param>
+        /// <param name="position">The screen position</param>
+        /// <param name="resolution">The target resolution</param>
+        /// <returns>The filled content</returns>
+        public static string FillTemplateContent(string content, string game, Bounds position, Bounds resolution)
+        {
             content = content.Replace("{{game}}", game);
 
             if (position != null)
@@ -157,7 +172,7 @@ namespace BezelTools
                     .Replace("{{height_res}}", Math.Round(resolution.Height, 0).ToString());
             }
 
-            File.WriteAllText(configPath, content);
+            return content;
         }
 
         /// <summary>

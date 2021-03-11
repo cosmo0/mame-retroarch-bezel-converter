@@ -38,6 +38,7 @@ Check and fix when possible:
 - `--output-roms` is where rom cfg files will be created (where the screen dimensions are stored)
 - `--template-game` is a template rom cfg that will be modified (a sample is provided)
 - `--template-overlay` is a template overlay cfg that will be modified (a sample is provided)
+- `--overwrite` to overwrite existing files
 
 ### Convert RetroArch overlays to MAME bezels
 
@@ -48,11 +49,11 @@ Check and fix when possible:
 - `--output` is where the MAME bezels will be created
 - `--template` is the template for the lay file that will be modified (a sample is provided)
 - `--zip` zips the result (otherwise it just creates a folder)
-
-### Common conversion parameters
-
-- `--error-file` the path to the output file containing the error (otherwise defaults to error.txt in the working folder)
 - `--overwrite` to overwrite existing files
+
+### Common parameters for all actions
+
+- `--error-file` the path to the output CSV file containing the errors and fixes
 - `--scan-bezel` to scan transparent pixels in the images instead of relying on the cfg/lay files
 - `--output-debug path/to/debug` to see the result of the conversion (it creates an image with a red square where the screen will be)
 - `--margin 10` to add or remove a 10px margin (positive value to crop a bit of the screen)

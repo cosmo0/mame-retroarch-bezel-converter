@@ -113,7 +113,7 @@ namespace BezelTools
                     (int)options.TargetResolutionBounds.Height);
 
                 // debug: draw target position
-                DebugDraw(game, options, outputImage, newPosition);
+                ImageProcessor.DebugDraw(game, options.OutputDebug, outputImage, newPosition);
 
                 Console.WriteLine($"{game} creating configs");
 
@@ -186,7 +186,7 @@ namespace BezelTools
                     (int)processor.SourceResolution.Height);
 
                 // debug: draw target position
-                DebugDraw(game, options, processor.OverlayImagePath, newPosition);
+                ImageProcessor.DebugDraw(game, options.OutputDebug, processor.OverlayImagePath, newPosition);
 
                 Console.WriteLine($"{game} creating configs");
 
@@ -270,24 +270,6 @@ namespace BezelTools
             newPos.Height *= targetResolution.Height / sourceResolution.Height;
 
             return newPos;
-        }
-
-        /// <summary>
-        /// Draws a debug rectangle on the overlay image
-        /// </summary>
-        /// <param name="game">The game name</param>
-        /// <param name="options">The options</param>
-        /// <param name="imagePath">The path to the image</param>
-        /// <param name="position">The position of the screen</param>
-        private static void DebugDraw(string game, BaseOptions options, string imagePath, Model.Bounds position)
-        {
-            if (!string.IsNullOrEmpty(options.OutputDebug))
-            {
-                Console.WriteLine($"{game} generating debug image");
-                var debugImage = Path.Join(options.OutputDebug, $"{game}.png");
-                File.Copy(imagePath, debugImage, true);
-                ImageProcessor.DrawRect(debugImage, position);
-            }
         }
 
         private static void Error(string errorFile, string game, string msg)

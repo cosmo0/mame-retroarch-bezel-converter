@@ -73,18 +73,7 @@ namespace BezelTools
 
             // extract data from configs
             var overlayImageFileName = GetCfgData(overlayCfgFileContent, "overlay0_overlay");
-            var width = GetCfgData(romFileContent, "custom_viewport_width");
-            var height = GetCfgData(romFileContent, "custom_viewport_height");
-            var x = GetCfgData(romFileContent, "custom_viewport_x");
-            var y = GetCfgData(romFileContent, "custom_viewport_y");
-
-            var screenBounds = new Bounds
-            {
-                X = int.Parse(x),
-                Y = int.Parse(y),
-                Width = int.Parse(width),
-                Height = int.Parse(height)
-            };
+            var screenBounds = GetBoundsFromConfig(romFileContent);
 
             var xres = GetCfgData(romFileContent, "video_fullscreen_x");
             var yres = GetCfgData(romFileContent, "video_fullscreen_y");
@@ -104,6 +93,51 @@ namespace BezelTools
                 SourceScreenPosition = screenBounds,
                 SourceResolution = resolution
             };
+        }
+
+        /// <summary>
+        /// Gets the bounds written in a config file
+        /// </summary>
+        /// <param name="fileContent">The content of the file</param>
+        /// <returns>The rom file content</returns>
+        public static Bounds GetBoundsFromConfig(string fileContent)
+        {
+            if (int.TryParse(GetCfgData(fileContent, "custom_viewport_width"), out int width)
+                && int.TryParse(GetCfgData(fileContent, "custom_viewport_height"), out int height)
+                && int.TryParse(GetCfgData(fileContent, "custom_viewport_x"), out int x)
+                && int.TryParse(GetCfgData(fileContent, "custom_viewport_y"), out int y))
+            {
+                return new Bounds
+                {
+                    X = x,
+                    Y = y,
+                    Width = width,
+                    Height = height
+                };
+            }
+
+            return new Bounds { X = 0, Y = 0, Width = 0, Height = 0 };
+        }
+
+        /// <summary>
+        /// Sets the bounds in the specified config
+        /// </summary>
+        /// <param name="filePath">The path to the file to set</param>
+        /// <param name="bounds">The bounds to set</param>
+        /// <returns>The modified config</returns>
+        public static void SetBounds(string filePath, string game, Bounds bounds, Bounds resolution)
+        {
+            var fileContent = File.ReadAllText(filePath);
+
+            fileContent = SetCfgData(fileContent, "custom_viewport_width", bounds.Width.ToString("N0"));
+            fileContent = SetCfgData(fileContent, "custom_viewport_height", bounds.Height.ToString("N0"));
+            fileContent = SetCfgData(fileContent, "custom_viewport_x", bounds.X.ToString("N0"));
+            fileContent = SetCfgData(fileContent, "custom_viewport_y", bounds.Y.ToString("N0"));
+
+            // fill placeholders
+            fileContent = FileUtils.FillTemplateContent(fileContent, game, bounds, resolution);
+
+            File.WriteAllText(filePath, fileContent);
         }
 
         /// <summary>
