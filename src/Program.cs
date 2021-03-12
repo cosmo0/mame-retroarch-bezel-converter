@@ -91,15 +91,15 @@ namespace BezelTools
             // check auto-fix
             if (options.AutoFix)
             {
-                if (!string.IsNullOrEmpty(options.TemplateRom) && !File.Exists(options.TemplateRom))
+                if (string.IsNullOrEmpty(options.TemplateRom) || !File.Exists(options.TemplateRom))
                 {
-                    Console.Write($"Unable to find rom config template {options.TemplateRom}");
+                    Console.WriteLine($"Unable to find rom config template {options.TemplateRom}");
                     err = true;
                 }
 
-                if (!string.IsNullOrEmpty(options.TemplateOverlay) && !File.Exists(options.TemplateOverlay))
+                if (string.IsNullOrEmpty(options.TemplateOverlay) || !File.Exists(options.TemplateOverlay))
                 {
-                    Console.Write($"Unable to find overlay config template {options.TemplateOverlay}");
+                    Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlay}");
                     err = true;
                 }
             }
