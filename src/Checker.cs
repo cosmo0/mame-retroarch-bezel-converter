@@ -122,7 +122,7 @@ namespace BezelTools
                             var img = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, overlayFileName));
                             var bounds = ImageProcessor.FindScreen(img, options.Margin);
 
-                            CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
+                            RetroArchProcessor.CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
 
                             cfgEntry = AddConfigEntry(romFile, fi.Name, overlayFileName);
                         }
@@ -179,14 +179,14 @@ namespace BezelTools
                         else
                         {
                             Fix(options.ErrorFile, game, $"Creating overlay config for orphan image at {dest}");
-                            CreateConfig(options.TemplateOverlay, game, dest, null, options.TargetResolutionBounds);
+                            RetroArchProcessor.CreateConfig(options.TemplateOverlay, game, dest, null, options.TargetResolutionBounds);
 
                             var romDest = Path.Join(options.RomsConfigFolder, cfgFilesName);
                             Fix(options.ErrorFile, game, $"Creating rom config for orphan image at {romDest}");
 
                             // create the config
                             var bounds = ImageProcessor.FindScreen(File.ReadAllBytes(f), options.Margin);
-                            CreateConfig(options.TemplateRom, game, romDest, bounds, options.TargetResolutionBounds);
+                            RetroArchProcessor.CreateConfig(options.TemplateRom, game, romDest, bounds, options.TargetResolutionBounds);
 
                             AddConfigEntry(cfgFilesName, cfgFilesName, fi.Name);
                         }
@@ -273,18 +273,21 @@ namespace BezelTools
 
                     boundsInImage = boundsInImage.ApplyMargin(options.Margin);
 
-                    // output debug whether fixing or not
-                    if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
+                    if (!string.IsNullOrWhiteSpace(options.OutputDebug))
                     {
-                        ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imagePath, boundsInConf);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"image {game} has width/height equal to zero in config");
-                    }
+                        // output debug whether fixing or not
+                        if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
+                        {
+                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imagePath, boundsInConf);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"image {game} has width/height equal to zero in config");
+                        }
 
-                    ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imagePath, boundsInImage);
-
+                        ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imagePath, boundsInImage);
+                    }
+                    
                     // fix the image
                     if (options.AutoFix)
                     {
@@ -326,17 +329,6 @@ namespace BezelTools
         private static bool CheckCoordinate(double a, double b, int margin)
         {
             return Math.Abs(a - b) <= margin;
-        }
-
-        private static void CreateConfig(string templatePath, string game, string dest, Bounds bounds, Bounds resolution)
-        {
-            File.Copy(templatePath, dest);
-            FileUtils.FillTemplate(dest, game);
-
-            if (bounds != null)
-            {
-                RetroArchProcessor.SetBounds(dest, game, bounds, resolution);
-            }
         }
 
         private static void Error(string errorFile, string game, string msg)

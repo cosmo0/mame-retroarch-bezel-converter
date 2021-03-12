@@ -161,6 +161,25 @@ namespace BezelTools
             return $"{fileContent}\n{v}";
         }
 
+        /// <summary>
+        /// Creates a config file
+        /// </summary>
+        /// <param name="templatePath">The path to the template</param>
+        /// <param name="game">The game name</param>
+        /// <param name="dest">The destination path</param>
+        /// <param name="bounds">The screen bounds</param>
+        /// <param name="resolution">The target resolution</param>
+        public static void CreateConfig(string templatePath, string game, string dest, Bounds bounds, Bounds resolution)
+        {
+            File.Copy(templatePath, dest);
+            FileUtils.FillTemplate(dest, game);
+
+            if (bounds != null)
+            {
+                SetBounds(dest, game, bounds, resolution);
+            }
+        }
+
         private static string BuildCfgRegex(string key)
         {
             /// searched value looks like:

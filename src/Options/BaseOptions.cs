@@ -45,12 +45,6 @@ namespace BezelTools.Options
         public string OutputDebug { get => outputDebug; set => outputDebug = FileUtils.ResolvePath(value); }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to scan the bezel for screen position or just convert LAY file.
-        /// </summary>
-        [Option("scan-bezel", Required = false, HelpText = "Scans the bezel file for transparent pixels to find the screen position ; otherwise, just convert the LAY file", Default = false)]
-        public bool ScanBezelForScreenCoordinates { get; set; } = false;
-
-        /// <summary>
         /// Gets or sets the target overlay resolution
         /// </summary>
         [Option("target-resolution", Required = false, HelpText = "The target resolution", Default = "1920x1080")]

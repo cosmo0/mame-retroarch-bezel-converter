@@ -15,7 +15,7 @@ namespace BezelTools
         {
             try
             {
-                Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions, CheckOptions>(args)
+                Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions, CheckOptions, GenerateOptions>(args)
                        .WithParsed<MameToRaOptions>((o) =>
                        {
                            InitCommon(o);
@@ -36,6 +36,12 @@ namespace BezelTools
                            InitCheck(o);
 
                            Checker.Check(o);
+                       })
+                       .WithParsed<GenerateOptions>((o) => {
+                           InitCommon(o);
+                           InitGenerate(o);
+
+                           Generator.Generate(o);
                        });
             }
             catch (Exception ex)
@@ -89,6 +95,47 @@ namespace BezelTools
                     Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlay}");
                     err = true;
                 }
+            }
+
+            if (err)
+            {
+                Environment.Exit(1);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the generation
+        /// </summary>
+        /// <param name="options">The generation options</param>
+        private static void InitGenerate(GenerateOptions options)
+        {
+            bool err = false;
+
+            //check input folder
+            if (!Directory.Exists(options.ImagesFolder))
+            {
+                Console.WriteLine($"Unable to find image folder {options.ImagesFolder}");
+                err = true;
+            }
+
+            // check output folders
+            if (!Directory.Exists(options.RomsFolder))
+            {
+                Console.WriteLine($"Unable to find rom directory {options.RomsFolder}");
+                err = true;
+            }
+
+            // check templates
+            if (string.IsNullOrEmpty(options.TemplateRom) || !File.Exists(options.TemplateRom))
+            {
+                Console.WriteLine($"Unable to find rom config template {options.TemplateRom}");
+                err = true;
+            }
+
+            if (string.IsNullOrEmpty(options.TemplateOverlay) || !File.Exists(options.TemplateOverlay))
+            {
+                Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlay}");
+                err = true;
             }
 
             if (err)
