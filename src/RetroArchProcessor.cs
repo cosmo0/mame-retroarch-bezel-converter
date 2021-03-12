@@ -152,13 +152,13 @@ namespace BezelTools
             var v = $"{key} = {value}";
 
             // if it exists: replace value
-            if (Regex.Match(fileContent, r).Success)
+            if (Regex.Match(fileContent, r, RegexOptions.Multiline).Success)
             {
                 return Regex.Replace(fileContent, r, v, RegexOptions.Multiline);
             }
 
             // if it doesn't exist: add value
-            return $"{fileContent}\n\n{v}";
+            return $"{fileContent}\n{v}";
         }
 
         private static string BuildCfgRegex(string key)
@@ -166,7 +166,7 @@ namespace BezelTools
             /// searched value looks like:
             /// key = "value"
             /// with or without spaces, with or without quotes, with or without trailing spaces
-            return $"^{key}\\s*=\\s\"?([^\"\\n]*)\"?\\s*$";
+            return $"^{key}\\s*=\\s?\"?([^\"\\n]*)\"?\\s*$";
         }
     }
 }
