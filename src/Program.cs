@@ -50,8 +50,13 @@ namespace BezelTools
         /// <param name="options">The common parameters</param>
         private static void InitCommon(BaseOptions options)
         {
-            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) { Directory.CreateDirectory(options.OutputDebug); }
-            if (!string.IsNullOrEmpty(options.ErrorFile) && File.Exists(options.ErrorFile)) { File.Delete(options.ErrorFile); }
+            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) {
+                Directory.CreateDirectory(options.OutputDebug);
+            }
+
+            if (!string.IsNullOrEmpty(options.ErrorFile) && File.Exists(options.ErrorFile)) {
+                File.Delete(options.ErrorFile);
+            }
         }
 
         /// <summary>
@@ -70,22 +75,38 @@ namespace BezelTools
         /// </exception>
         private static void InitCheck(CheckOptions options)
         {
+            bool err = false;
+
             // check input folders
-            if (!Directory.Exists(options.RomsConfigFolder)) { throw new DirectoryNotFoundException($"Unable to find rom directory {options.RomsConfigFolder}"); }
-            if (!Directory.Exists(options.RomsConfigFolder)) { throw new DirectoryNotFoundException($"Unable to find rom directory {options.RomsConfigFolder}"); }
+            if (!Directory.Exists(options.RomsConfigFolder)) {
+                Console.WriteLine($"Unable to find rom directory {options.RomsConfigFolder}");
+                err = true;
+            }
+
+            if (!Directory.Exists(options.OverlaysConfigFolder)) {
+                Console.WriteLine($"Unable to find overlays directory {options.OverlaysConfigFolder}");
+                err = true;
+            }
 
             // check auto-fix
             if (options.AutoFix)
             {
                 if (!string.IsNullOrEmpty(options.TemplateRom) && !File.Exists(options.TemplateRom))
                 {
-                    throw new FileNotFoundException("Unable to find rom config template", options.TemplateRom);
+                    Console.Write($"Unable to find rom config template {options.TemplateRom}");
+                    err = true;
                 }
 
                 if (!string.IsNullOrEmpty(options.TemplateOverlay) && !File.Exists(options.TemplateOverlay))
                 {
-                    throw new FileNotFoundException("Unable to find overlay config template", options.TemplateOverlay);
+                    Console.Write($"Unable to find overlay config template {options.TemplateOverlay}");
+                    err = true;
                 }
+            }
+
+            if (err)
+            {
+                Environment.Exit(1);
             }
         }
 
@@ -101,16 +122,37 @@ namespace BezelTools
         /// </exception>
         private static void InitMameToRa(MameToRaOptions options)
         {
+            var err = false;
             // check that input folder exists
-            if (!Directory.Exists(options.Source)) { throw new DirectoryNotFoundException($"Unable to find directory {options.Source}"); }
+            if (!Directory.Exists(options.Source)) {
+                Console.WriteLine($"Unable to find directory {options.Source}");
+                err = true;
+            }
 
             // create folders
-            if (!Directory.Exists(options.OutputRoms)) { Directory.CreateDirectory(options.OutputRoms); }
-            if (!Directory.Exists(options.OutputOverlays)) { Directory.CreateDirectory(options.OutputOverlays); }
+            if (!Directory.Exists(options.OutputRoms)) {
+                Directory.CreateDirectory(options.OutputRoms);
+            }
+
+            if (!Directory.Exists(options.OutputOverlays)) {
+                Directory.CreateDirectory(options.OutputOverlays);
+            }
 
             // check templates
-            if (!File.Exists(options.TemplateGameCfg)) { throw new FileNotFoundException("Unable to find game config template", options.TemplateGameCfg); }
-            if (!File.Exists(options.TemplateOverlayCfg)) { throw new FileNotFoundException("Unable to find overlay config template", options.TemplateOverlayCfg); }
+            if (!File.Exists(options.TemplateGameCfg)) {
+                Console.WriteLine($"Unable to find game config template {options.TemplateGameCfg}");
+                err = true;
+            }
+            
+            if (!File.Exists(options.TemplateOverlayCfg)) {
+                Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlayCfg}");
+                err = true;
+            }
+
+            if (err)
+            {
+                Environment.Exit(1);
+            }
         }
 
         /// <summary>
@@ -125,16 +167,38 @@ namespace BezelTools
         /// <exception cref="FileNotFoundException">Unable to find LAY template</exception>
         private static void InitRaToMame(RaToMameOptions options)
         {
+            var err = false;
+
             // check that input folder exists
-            if (!Directory.Exists(options.SourceConfigs)) { throw new DirectoryNotFoundException($"Unable to find directory {options.SourceConfigs}"); }
-            if (!Directory.Exists(options.SourceRoms)) { throw new DirectoryNotFoundException($"Unable to find directory {options.SourceRoms}"); }
+            if (!Directory.Exists(options.SourceConfigs)) {
+                Console.WriteLine($"Unable to find directory {options.SourceConfigs}");
+                err = true;
+            }
+
+            if (!Directory.Exists(options.SourceRoms)) {
+                Console.WriteLine($"Unable to find directory {options.SourceRoms}");
+                err = true;
+            }
 
             // create folders
-            if (!Directory.Exists(options.Output)) { Directory.CreateDirectory(options.Output); }
-            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) { Directory.CreateDirectory(options.OutputDebug); }
+            if (!Directory.Exists(options.Output)) {
+                Directory.CreateDirectory(options.Output);
+            }
+
+            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) {
+                Directory.CreateDirectory(options.OutputDebug);
+            }
 
             // check templates
-            if (!File.Exists(options.Template)) { throw new FileNotFoundException("Unable to find LAY template", options.Template); }
+            if (!File.Exists(options.Template)) {
+                Console.WriteLine($"Unable to find LAY template {options.Template}");
+                err = true;
+            }
+
+            if (err)
+            {
+                Environment.Exit(1);
+            }
         }
     }
 }

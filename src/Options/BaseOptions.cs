@@ -11,6 +11,9 @@ namespace BezelTools.Options
     /// </summary>
     public abstract class BaseOptions
     {
+        private string errorFile;
+        private string outputDebug;
+
         /// <summary>
         /// Gets the assembly directory path
         /// </summary>
@@ -27,7 +30,7 @@ namespace BezelTools.Options
         /// Gets or sets the path to the error lists file
         /// </summary>
         [Option('e', "error-file", Required = false, HelpText = "The path to the CSV file containing the list of errors")]
-        public string ErrorFile { get; set; }
+        public string ErrorFile { get => errorFile; set => errorFile = FileUtils.ResolvePath(value); }
 
         /// <summary>
         /// Gets or sets the margins applied to the screen after conversion.
@@ -39,7 +42,7 @@ namespace BezelTools.Options
         /// Gets or sets a path for debug purpose
         /// </summary>
         [Option('d', "output-debug", Required = false, HelpText = "The folder where debug overlays will be created", Default = "")]
-        public string OutputDebug { get; set; }
+        public string OutputDebug { get => outputDebug; set => outputDebug = FileUtils.ResolvePath(value); }
 
         /// <summary>
         /// Gets or sets a value indicating whether to scan the bezel for screen position or just convert LAY file.

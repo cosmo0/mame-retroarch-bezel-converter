@@ -247,6 +247,20 @@ namespace BezelTools
         }
 
         /// <summary>
+        /// Resolves a path
+        /// </summary>
+        /// <param name="path">The path to resolve</param>
+        /// <returns>The resolved path</returns>
+        public static string ResolvePath(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) { return null; }
+
+            path = path.Replace("~", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+            path = Path.GetFullPath(path);
+            return path;
+        }
+
+        /// <summary>
         /// Parses the specified config file
         /// </summary>
         /// <param name="cfgFile">The config file</param>

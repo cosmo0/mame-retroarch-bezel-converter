@@ -8,6 +8,11 @@ namespace BezelTools.Options
     [Verb("check", HelpText = "Checks overlay files integrity")]
     public class CheckOptions : BaseOptions
     {
+        private string overlaysConfigFolder;
+        private string romsConfigFolder;
+        private string templateOverlay;
+        private string templateRom;
+
         /// <summary>
         /// Gets or sets a value indicating whether to automatically fix overlays.
         /// </summary>
@@ -24,24 +29,24 @@ namespace BezelTools.Options
         /// Gets or sets the path to the overlays configuration folder.
         /// </summary>
         [Option('o', "overlays-config", Required = true, HelpText = "The path to the overlays configs folder")]
-        public string OverlaysConfigFolder { get; set; }
+        public string OverlaysConfigFolder { get => overlaysConfigFolder; set => overlaysConfigFolder = FileUtils.ResolvePath(value); }
 
         /// <summary>
         /// Gets or sets the path to the roms configuration folder.
         /// </summary>
         [Option('r', "roms-config", Required = true, HelpText = "The path to the rom configs folder")]
-        public string RomsConfigFolder { get; set; }
+        public string RomsConfigFolder { get => romsConfigFolder; set => romsConfigFolder = FileUtils.ResolvePath(value); }
 
         /// <summary>
         /// Gets or sets the path to the overlay template.
         /// </summary>
-        [Option("template-overlay", Group = "fix", Required = true, HelpText = "The path to the overlay config template file", Default = "templates/overlay.cfg")]
-        public string TemplateOverlay { get; set; } = "templates/overlay.cfg";
+        [Option("template-overlay", Group = "fix", Required = true, HelpText = "The path to the overlay config template file")]
+        public string TemplateOverlay { get => templateOverlay; set => templateOverlay = FileUtils.ResolvePath(value); }
 
         /// <summary>
         /// Gets or sets the rom template.
         /// </summary>
-        [Option("template-rom", Group = "fix", Required = true, HelpText = "The path to the rom config template file", Default = "templates/game.cfg")]
-        public string TemplateRom { get; set; } = "templates/game.cfg";
+        [Option("template-rom", Group = "fix", Required = true, HelpText = "The path to the rom config template file")]
+        public string TemplateRom { get => templateRom; set => templateRom = FileUtils.ResolvePath(value); }
     }
 }

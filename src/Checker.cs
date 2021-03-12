@@ -46,7 +46,7 @@ namespace BezelTools
         {
             Console.WriteLine("########## CHECKING ROMS CONFIGS ##########");
 
-            var romTemplateContent = File.ReadAllText(options.TemplateRom);
+            var romTemplateContent = string.IsNullOrEmpty(options.TemplateRom) ? "" : File.ReadAllText(options.TemplateRom);
 
             // check roms configs
             var romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
