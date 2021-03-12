@@ -17,7 +17,7 @@ namespace BezelTools
         private readonly static object errorFileLock = new();
         private readonly static EnumerationOptions searchOption = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
         private static int errorsNb = 0;
-        private static int infosNb = 0;
+        private static int fixesNb = 0;
 
         /// <summary>
         /// Checks the Retroarch configuration files.
@@ -71,7 +71,7 @@ namespace BezelTools
                         {
                             if (options.AutoFix)
                             {
-                                Info(options.ErrorFile, game, "fixing overlay path in rom config");
+                                Fix(options.ErrorFile, game, "fixing overlay path in rom config");
                                 cfgContent = RetroArchProcessor.SetCfgData(cfgContent, "input_overlay", overlayShouldBe);
                                 File.WriteAllText(f, cfgContent);
                             }
@@ -110,15 +110,22 @@ namespace BezelTools
                         // create a rom
                         var romFile = fi.Name.Replace(".cfg", ".zip.cfg");
                         var dest = Path.Join(options.RomsConfigFolder, romFile);
-                        Info(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
+                        if (File.Exists(dest))
+                        {
+                            Error(options.ErrorFile, game, $"rom file {romFile} already exists but does not use overlay {fi.Name}");
+                        }
+                        else
+                        {
+                            Fix(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
 
-                        // get bounds
-                        var img = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, overlayFileName));
-                        var bounds = ImageProcessor.FindScreen(img, options.Margin);
+                            // get bounds
+                            var img = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, overlayFileName));
+                            var bounds = ImageProcessor.FindScreen(img, options.Margin);
 
-                        CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
+                            CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
 
-                        cfgEntry = AddConfigEntry(romFile, fi.Name, overlayFileName);
+                            cfgEntry = AddConfigEntry(romFile, fi.Name, overlayFileName);
+                        }
                     }
                     else
                     {
@@ -171,11 +178,11 @@ namespace BezelTools
                         }
                         else
                         {
-                            Info(options.ErrorFile, game, $"Creating overlay config for orphan image at {dest}");
+                            Fix(options.ErrorFile, game, $"Creating overlay config for orphan image at {dest}");
                             CreateConfig(options.TemplateOverlay, game, dest, null, options.TargetResolutionBounds);
 
                             var romDest = Path.Join(options.RomsConfigFolder, cfgFilesName);
-                            Info(options.ErrorFile, game, $"Creating rom config for orphan image at {romDest}");
+                            Fix(options.ErrorFile, game, $"Creating rom config for orphan image at {romDest}");
 
                             // create the config
                             var bounds = ImageProcessor.FindScreen(File.ReadAllBytes(f), options.Margin);
@@ -200,7 +207,7 @@ namespace BezelTools
                 {
                     if (options.AutoFix)
                     {
-                        Info(options.ErrorFile, game, $"resizing image (previous size: {imgSize.Width}x{imgSize.Height})");
+                        Fix(options.ErrorFile, game, $"resizing image (previous size: {imgSize.Width}x{imgSize.Height})");
                         ImageProcessor.Resize(f, (int)options.TargetResolutionBounds.Width, (int)options.TargetResolutionBounds.Height);
                     }
                     else
@@ -267,7 +274,7 @@ namespace BezelTools
                     // fix the image
                     if (options.AutoFix)
                     {
-                        Info(options.ErrorFile, game, "Fixing screen position in config");
+                        Fix(options.ErrorFile, game, "Fixing screen position in config");
                         RetroArchProcessor.SetBounds(f, game, boundsInImage, options.TargetResolutionBounds);
                     }
                     else
@@ -279,13 +286,13 @@ namespace BezelTools
 
             Console.WriteLine("########## DONE ##########");
 
-            if (errorsNb > 0 || infosNb > 0)
+            if (errorsNb > 0 || fixesNb > 0)
             {
                 Console.WriteLine("");
 
                 Console.WriteLine("Check result:");
                 Console.WriteLine($"- {errorsNb} error(s)");
-                Console.WriteLine($"- {infosNb} info(s)");
+                Console.WriteLine($"- {fixesNb} fixes(s)");
 
                 Console.WriteLine($"Check {options.ErrorFile} to see the details");
             }
@@ -333,11 +340,11 @@ namespace BezelTools
             }
         }
 
-        private static void Info(string errorFile, string game, string msg)
+        private static void Fix(string errorFile, string game, string msg)
         {
-            Write(errorFile, game, msg, "INFO");
+            Write(errorFile, game, msg, "FIX");
 
-            infosNb++;
+            fixesNb++;
         }
 
         private static void Write(string file, string game, string msg, string level)
