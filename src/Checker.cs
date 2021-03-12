@@ -246,9 +246,11 @@ namespace BezelTools
                 // get overlay file name
                 var romContent = File.ReadAllText(f);
                 var overlayFile = Path.GetFileName(FileUtils.NormalizePath(RetroArchProcessor.GetCfgData(romContent, "input_overlay")));
-                var overlayContent = File.ReadAllText(Path.Join(options.OverlaysConfigFolder, overlayFile));
+                var overlayPath = Path.Join(options.OverlaysConfigFolder, overlayFile);
+                var overlayContent = File.ReadAllText(overlayPath);
                 var imageFile = RetroArchProcessor.GetCfgData(overlayContent, "overlay0_overlay");
-                var imageContent = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, imageFile));
+                var imagePath = Path.Join(options.OverlaysConfigFolder, imageFile);
+                var imageContent = File.ReadAllBytes(imagePath);
 
                 // get bounds
                 var boundsInImage = ImageProcessor.FindScreen(imageContent, options);
@@ -268,14 +270,14 @@ namespace BezelTools
                     // output debug whether fixing or not
                     if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
                     {
-                        ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imageFile, boundsInConf);
+                        ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imagePath, boundsInConf);
                     }
                     else
                     {
                         Console.WriteLine($"image {game} has width/height equal to zero in config");
                     }
 
-                    ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imageFile, boundsInImage);
+                    ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imagePath, boundsInImage);
 
                     // fix the image
                     if (options.AutoFix)
