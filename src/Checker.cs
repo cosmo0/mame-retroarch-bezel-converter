@@ -267,6 +267,8 @@ namespace BezelTools
                 }
                 else
                 {
+                    Console.WriteLine($"image {game} has wrong bounds in config: {boundsInConf} instead of {boundsInImage}");
+
                     // output debug whether fixing or not
                     if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
                     {

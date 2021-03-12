@@ -83,5 +83,14 @@ namespace BezelTools.Model
         {
             return JsonSerializer.Serialize(this);
         }
+
+        /// <summary>
+        /// Gets a short string representation of the object
+        /// </summary>
+        /// <returns>The string representation</returns>
+        public string ToShortString()
+        {
+            return $"{{ X: {X}, Y: {Y}, Width: {Width}, Height: {Height} }}";
+        }
     }
 }

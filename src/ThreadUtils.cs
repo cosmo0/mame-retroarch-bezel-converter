@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace BezelTools
@@ -21,7 +22,7 @@ namespace BezelTools
         public static void RunThreadsOnFiles(int threadsNb, IEnumerable<string> inputFiles, Action<string> threadMethod)
         {
             // get files to process
-            var files = new ConcurrentQueue<string>(inputFiles);
+            var files = new ConcurrentQueue<string>(inputFiles.OrderBy(f => f));
 
             // run threads
             for (int i = 0; i < threadsNb; i++)
