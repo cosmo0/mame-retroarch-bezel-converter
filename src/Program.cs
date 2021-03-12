@@ -45,21 +45,6 @@ namespace BezelTools
         }
 
         /// <summary>
-        /// Initializes common parameters
-        /// </summary>
-        /// <param name="options">The common parameters</param>
-        private static void InitCommon(BaseOptions options)
-        {
-            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) {
-                Directory.CreateDirectory(options.OutputDebug);
-            }
-
-            if (!string.IsNullOrEmpty(options.ErrorFile) && File.Exists(options.ErrorFile)) {
-                File.Delete(options.ErrorFile);
-            }
-        }
-
-        /// <summary>
         /// Initializes the check.
         /// </summary>
         /// <param name="options">The options.</param>
@@ -78,12 +63,14 @@ namespace BezelTools
             bool err = false;
 
             // check input folders
-            if (!Directory.Exists(options.RomsConfigFolder)) {
+            if (!Directory.Exists(options.RomsConfigFolder))
+            {
                 Console.WriteLine($"Unable to find rom directory {options.RomsConfigFolder}");
                 err = true;
             }
 
-            if (!Directory.Exists(options.OverlaysConfigFolder)) {
+            if (!Directory.Exists(options.OverlaysConfigFolder))
+            {
                 Console.WriteLine($"Unable to find overlays directory {options.OverlaysConfigFolder}");
                 err = true;
             }
@@ -111,6 +98,23 @@ namespace BezelTools
         }
 
         /// <summary>
+        /// Initializes common parameters
+        /// </summary>
+        /// <param name="options">The common parameters</param>
+        private static void InitCommon(BaseOptions options)
+        {
+            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug))
+            {
+                Directory.CreateDirectory(options.OutputDebug);
+            }
+
+            if (!string.IsNullOrEmpty(options.ErrorFile) && File.Exists(options.ErrorFile))
+            {
+                File.Delete(options.ErrorFile);
+            }
+        }
+
+        /// <summary>
         /// Initializes the import from MAME to Retroarch
         /// </summary>
         /// <param name="options">The options</param>
@@ -124,27 +128,32 @@ namespace BezelTools
         {
             var err = false;
             // check that input folder exists
-            if (!Directory.Exists(options.Source)) {
+            if (!Directory.Exists(options.Source))
+            {
                 Console.WriteLine($"Unable to find directory {options.Source}");
                 err = true;
             }
 
             // create folders
-            if (!Directory.Exists(options.OutputRoms)) {
+            if (!Directory.Exists(options.OutputRoms))
+            {
                 Directory.CreateDirectory(options.OutputRoms);
             }
 
-            if (!Directory.Exists(options.OutputOverlays)) {
+            if (!Directory.Exists(options.OutputOverlays))
+            {
                 Directory.CreateDirectory(options.OutputOverlays);
             }
 
             // check templates
-            if (!File.Exists(options.TemplateGameCfg)) {
+            if (!File.Exists(options.TemplateGameCfg))
+            {
                 Console.WriteLine($"Unable to find game config template {options.TemplateGameCfg}");
                 err = true;
             }
-            
-            if (!File.Exists(options.TemplateOverlayCfg)) {
+
+            if (!File.Exists(options.TemplateOverlayCfg))
+            {
                 Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlayCfg}");
                 err = true;
             }
@@ -170,27 +179,32 @@ namespace BezelTools
             var err = false;
 
             // check that input folder exists
-            if (!Directory.Exists(options.SourceConfigs)) {
+            if (!Directory.Exists(options.SourceConfigs))
+            {
                 Console.WriteLine($"Unable to find directory {options.SourceConfigs}");
                 err = true;
             }
 
-            if (!Directory.Exists(options.SourceRoms)) {
+            if (!Directory.Exists(options.SourceRoms))
+            {
                 Console.WriteLine($"Unable to find directory {options.SourceRoms}");
                 err = true;
             }
 
             // create folders
-            if (!Directory.Exists(options.Output)) {
+            if (!Directory.Exists(options.Output))
+            {
                 Directory.CreateDirectory(options.Output);
             }
 
-            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug)) {
+            if (!string.IsNullOrEmpty(options.OutputDebug) && !Directory.Exists(options.OutputDebug))
+            {
                 Directory.CreateDirectory(options.OutputDebug);
             }
 
             // check templates
-            if (!File.Exists(options.Template)) {
+            if (!File.Exists(options.Template))
+            {
                 Console.WriteLine($"Unable to find LAY template {options.Template}");
                 err = true;
             }

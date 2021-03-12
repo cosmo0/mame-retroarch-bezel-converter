@@ -40,6 +40,30 @@ namespace BezelTools
         public Bounds SourceScreenPosition { get; private set; }
 
         /// <summary>
+        /// Gets the bounds written in a config file
+        /// </summary>
+        /// <param name="fileContent">The content of the file</param>
+        /// <returns>The rom file content</returns>
+        public static Bounds GetBoundsFromConfig(string fileContent)
+        {
+            if (int.TryParse(GetCfgData(fileContent, "custom_viewport_width"), out int width)
+                && int.TryParse(GetCfgData(fileContent, "custom_viewport_height"), out int height)
+                && int.TryParse(GetCfgData(fileContent, "custom_viewport_x"), out int x)
+                && int.TryParse(GetCfgData(fileContent, "custom_viewport_y"), out int y))
+            {
+                return new Bounds
+                {
+                    X = x,
+                    Y = y,
+                    Width = width,
+                    Height = height
+                };
+            }
+
+            return new Bounds { X = 0, Y = 0, Width = 0, Height = 0 };
+        }
+
+        /// <summary>
         /// Gets data from the specified config file.
         /// </summary>
         /// <param name="fileContent">The content of the file.</param>
@@ -93,30 +117,6 @@ namespace BezelTools
                 SourceScreenPosition = screenBounds,
                 SourceResolution = resolution
             };
-        }
-
-        /// <summary>
-        /// Gets the bounds written in a config file
-        /// </summary>
-        /// <param name="fileContent">The content of the file</param>
-        /// <returns>The rom file content</returns>
-        public static Bounds GetBoundsFromConfig(string fileContent)
-        {
-            if (int.TryParse(GetCfgData(fileContent, "custom_viewport_width"), out int width)
-                && int.TryParse(GetCfgData(fileContent, "custom_viewport_height"), out int height)
-                && int.TryParse(GetCfgData(fileContent, "custom_viewport_x"), out int x)
-                && int.TryParse(GetCfgData(fileContent, "custom_viewport_y"), out int y))
-            {
-                return new Bounds
-                {
-                    X = x,
-                    Y = y,
-                    Width = width,
-                    Height = height
-                };
-            }
-
-            return new Bounds { X = 0, Y = 0, Width = 0, Height = 0 };
         }
 
         /// <summary>

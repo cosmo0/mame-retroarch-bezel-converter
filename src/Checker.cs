@@ -12,32 +12,12 @@ namespace BezelTools
     /// </summary>
     public static class Checker
     {
-        private readonly static object errorFileLock = new();
-        private readonly static object configsLock = new();
-        private readonly static EnumerationOptions searchOption = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
-
         private static readonly List<Config> configs = new();
+        private readonly static object configsLock = new();
+        private readonly static object errorFileLock = new();
+        private readonly static EnumerationOptions searchOption = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
         private static int errorsNb = 0;
         private static int infosNb = 0;
-
-        private static Config AddConfigEntry(string rom, string overlay, string image)
-        {
-            var entry = new Config { Rom = rom, Overlay = overlay, Image = image };
-            lock (configsLock)
-            {
-                Checker.configs.Add(entry);
-            }
-
-            return entry;
-        }
-
-        private static Config GetConfigEntry(Func<Config, bool> predicate)
-        {
-            lock (configsLock)
-            {
-                return Checker.configs.Where(predicate).FirstOrDefault();
-            }
-        }
 
         /// <summary>
         /// Checks the Retroarch configuration files.
@@ -232,7 +212,6 @@ namespace BezelTools
                 }
             });
 
-
             Console.WriteLine("########## CHECKING SCREEN POSIITIONS ##########");
 
             // get list of roms configs, again (in case some have been created)
@@ -308,6 +287,17 @@ namespace BezelTools
             }
         }
 
+        private static Config AddConfigEntry(string rom, string overlay, string image)
+        {
+            var entry = new Config { Rom = rom, Overlay = overlay, Image = image };
+            lock (configsLock)
+            {
+                Checker.configs.Add(entry);
+            }
+
+            return entry;
+        }
+
         private static bool CheckCoordinate(double a, double b, int margin)
         {
             return Math.Abs(a - b) <= margin;
@@ -329,6 +319,14 @@ namespace BezelTools
             Write(errorFile, game, msg, "ERROR");
 
             errorsNb++;
+        }
+
+        private static Config GetConfigEntry(Func<Config, bool> predicate)
+        {
+            lock (configsLock)
+            {
+                return Checker.configs.Where(predicate).FirstOrDefault();
+            }
         }
 
         private static void Info(string errorFile, string game, string msg)
