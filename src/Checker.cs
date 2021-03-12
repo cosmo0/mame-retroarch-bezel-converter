@@ -231,7 +231,7 @@ namespace BezelTools
                 }
 
                 // check screen bounds
-                if (cfgEntry != null) // can't write to rom config if we don't know where the image is used
+                if (cfgEntry != null && !string.IsNullOrEmpty(cfgEntry.Rom)) // can't write to rom config if we don't know where the image is used
                 {
                     var img = File.ReadAllBytes(f);
                     var romCfgPath = Path.Join(options.RomsConfigFolder, cfgEntry.Rom);
@@ -250,7 +250,15 @@ namespace BezelTools
                     else
                     {
                         // output debug in all cases
-                        ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, f, boundsInConf);
+                        if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
+                        {
+                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, f, boundsInConf);
+                        }
+                        else
+                        {
+                            Error(options.ErrorFile, game, "image has width/height equal to zero in config");
+                        }
+
                         ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, boundsInImage);
 
                         if (options.AutoFix)
@@ -266,7 +274,7 @@ namespace BezelTools
                 }
                 else
                 {
-                    Error(options.ErrorFile, game, "Something happened that shouldn't be possible, please file an issue https://github.com/cosmo0/mame-retroarch-bezel-converter/issues");
+                    Error(options.ErrorFile, game, "image is not used anywhere, can't calculate coordinates (run with --autofix to create the config, then re-run the check)");
                 }
             });
 
