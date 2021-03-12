@@ -112,7 +112,7 @@ namespace BezelTools
                         var dest = Path.Join(options.RomsConfigFolder, romFile);
                         if (File.Exists(dest))
                         {
-                            Error(options.ErrorFile, game, $"rom file {romFile} already exists but does not use overlay {fi.Name}");
+                            Error(options.ErrorFile, game, $"overlay matches rom file but is not used by it: {romFile}");
                         }
                         else
                         {
@@ -193,7 +193,7 @@ namespace BezelTools
                     }
                     else
                     {
-                        Error(options.ErrorFile, game, $"image {fi.Name} is not used by any overlay");
+                        Error(options.ErrorFile, game, $"image is not used by any overlay: {fi.Name}");
                     }
                 }
                 else
@@ -235,9 +235,23 @@ namespace BezelTools
                 var romContent = File.ReadAllText(f);
                 var overlayFile = Path.GetFileName(FileUtils.NormalizePath(RetroArchProcessor.GetCfgData(romContent, "input_overlay")));
                 var overlayPath = Path.Join(options.OverlaysConfigFolder, overlayFile);
+
+                if (!File.Exists(overlayPath))
+                {
+                    Error(options.ErrorFile, game, $"fixing screen: overlay file does not exist: {overlayPath}");
+                    return;
+                }
+
                 var overlayContent = File.ReadAllText(overlayPath);
                 var imageFile = RetroArchProcessor.GetCfgData(overlayContent, "overlay0_overlay");
                 var imagePath = Path.Join(options.OverlaysConfigFolder, imageFile);
+
+                if (!File.Exists(imagePath))
+                {
+                    Error(options.ErrorFile, game, $"fixing screen: image file does not exist: {imagePath}");
+                    return;
+                }
+
                 var imageContent = File.ReadAllBytes(imagePath);
 
                 // get bounds
