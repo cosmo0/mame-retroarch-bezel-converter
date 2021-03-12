@@ -88,7 +88,7 @@ Check and fix:
     --overlays-config tmp/retroarch/configs
     --roms-config tmp/retroarch/roms
     --autofix
-    --input-overlay-path /opt/retropie/configs/all/retroarch/overlay/
+    --input-overlay-path /opt/retropie/configs/all/retroarch/overlay/arcade-realistic
     --template-overlay src/templates/overlay.cfg
     --template-rom src/templates/game.cfg
     --threads 4
