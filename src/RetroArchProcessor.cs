@@ -129,10 +129,10 @@ namespace BezelTools
         {
             var fileContent = File.ReadAllText(filePath);
 
-            fileContent = SetCfgData(fileContent, "custom_viewport_width", bounds.Width.ToString("N0"));
-            fileContent = SetCfgData(fileContent, "custom_viewport_height", bounds.Height.ToString("N0"));
-            fileContent = SetCfgData(fileContent, "custom_viewport_x", bounds.X.ToString("N0"));
-            fileContent = SetCfgData(fileContent, "custom_viewport_y", bounds.Y.ToString("N0"));
+            fileContent = SetCfgData(fileContent, "custom_viewport_width", bounds.Width.ToString());
+            fileContent = SetCfgData(fileContent, "custom_viewport_height", bounds.Height.ToString());
+            fileContent = SetCfgData(fileContent, "custom_viewport_x", bounds.X.ToString());
+            fileContent = SetCfgData(fileContent, "custom_viewport_y", bounds.Y.ToString());
 
             // fill placeholders
             fileContent = FileUtils.FillTemplateContent(fileContent, game, bounds, resolution);
@@ -148,7 +148,17 @@ namespace BezelTools
         /// <returns>The modified content</returns>
         public static string SetCfgData(string fileContent, string key, string value)
         {
-            return Regex.Replace(fileContent, BuildCfgRegex(key), $"{key} = {value}", RegexOptions.Multiline);
+            var r = BuildCfgRegex(key);
+            var v = $"{key} = {value}";
+
+            // if it exists: replace value
+            if (Regex.Match(fileContent, r).Success)
+            {
+                return Regex.Replace(fileContent, r, v, RegexOptions.Multiline);
+            }
+
+            // if it doesn't exist: add value
+            return $"{fileContent}\n\n{v}";
         }
 
         private static string BuildCfgRegex(string key)

@@ -18,6 +18,7 @@ namespace BezelTools
 
         private static readonly List<Config> configs = new();
         private static int errorsNb = 0;
+        private static int infosNb = 0;
 
         private static Config AddConfigEntry(string rom, string overlay, string image)
         {
@@ -229,60 +230,77 @@ namespace BezelTools
                 {
                     Console.WriteLine($"image {game} has the right size");
                 }
+            });
 
-                // check screen bounds
-                if (cfgEntry != null && !string.IsNullOrEmpty(cfgEntry.Rom)) // can't write to rom config if we don't know where the image is used
+
+            Console.WriteLine("########## CHECKING SCREEN POSIITIONS ##########");
+
+            // get list of roms configs, again (in case some have been created)
+            romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
+            ThreadUtils.RunThreadsOnFiles(options.Threads, romConfigs, (f) =>
+            {
+                var fi = new FileInfo(f);
+                var game = fi.Name.Replace(".cfg", "").Replace(".zip", "");
+                Console.WriteLine($"{game} checking screen position");
+
+                // get overlay file name
+                var romContent = File.ReadAllText(f);
+                var overlayFile = Path.GetFileName(FileUtils.NormalizePath(RetroArchProcessor.GetCfgData(romContent, "input_overlay")));
+                var overlayContent = File.ReadAllText(Path.Join(options.OverlaysConfigFolder, overlayFile));
+                var imageFile = RetroArchProcessor.GetCfgData(overlayContent, "overlay0_overlay");
+                var imageContent = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, imageFile));
+
+                // get bounds
+                var boundsInImage = ImageProcessor.FindScreen(imageContent, options);
+                var boundsInConf = RetroArchProcessor.GetBoundsFromConfig(romContent);
+
+                // make sure the bounds match
+                if (CheckCoordinate(boundsInImage.X, boundsInConf.X, options.Margin)
+                    && CheckCoordinate(boundsInImage.Y, boundsInConf.Y, options.Margin)
+                    && CheckCoordinate(boundsInImage.Width, boundsInConf.Width, options.Margin * 2)
+                    && CheckCoordinate(boundsInImage.Height, boundsInConf.Height, options.Margin * 2))
                 {
-                    var img = File.ReadAllBytes(f);
-                    var romCfgPath = Path.Join(options.RomsConfigFolder, cfgEntry.Rom);
-                    var rom = File.ReadAllText(romCfgPath);
-                    var boundsInImage = ImageProcessor.FindScreen(img, options);
-                    var boundsInConf = RetroArchProcessor.GetBoundsFromConfig(rom);
-
-                    if (CheckCoordinate(boundsInImage.X, boundsInConf.X, options.Margin)
-                        && CheckCoordinate(boundsInImage.Y, boundsInConf.Y, options.Margin)
-                        && CheckCoordinate(boundsInImage.Width, boundsInConf.Width, options.Margin)
-                        && CheckCoordinate(boundsInImage.Height, boundsInConf.Height, options.Margin))
-                    {
-                        // bounds are similar
-                        Console.WriteLine($"image {game} has proper bounds in config");
-                    }
-                    else
-                    {
-                        // output debug in all cases
-                        if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
-                        {
-                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, f, boundsInConf);
-                        }
-                        else
-                        {
-                            Error(options.ErrorFile, game, "image has width/height equal to zero in config");
-                        }
-
-                        ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, boundsInImage);
-
-                        if (options.AutoFix)
-                        {
-                            Info(options.ErrorFile, game, "Fixing screen position in config");
-                            RetroArchProcessor.SetBounds(romCfgPath, game, boundsInImage, options.TargetResolutionBounds);
-                        }
-                        else
-                        {
-                            Error(options.ErrorFile, game, $"image has wrong coordinates in config");
-                        }
-                    }
+                    // bounds are similar
+                    Console.WriteLine($"image {game} has proper bounds in config");
                 }
                 else
                 {
-                    Error(options.ErrorFile, game, "image is not used anywhere, can't calculate coordinates (run with --autofix to create the config, then re-run the check)");
+                    // output debug whether fixing or not
+                    if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
+                    {
+                        ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imageFile, boundsInConf);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"image {game} has width/height equal to zero in config");
+                    }
+
+                    ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imageFile, boundsInImage);
+
+                    // fix the image
+                    if (options.AutoFix)
+                    {
+                        Info(options.ErrorFile, game, "Fixing screen position in config");
+                        RetroArchProcessor.SetBounds(f, game, boundsInImage, options.TargetResolutionBounds);
+                    }
+                    else
+                    {
+                        Error(options.ErrorFile, game, $"image has wrong coordinates in config");
+                    }
                 }
             });
 
             Console.WriteLine("########## DONE ##########");
 
-            if (errorsNb > 0)
+            if (errorsNb > 0 || infosNb > 0)
             {
-                Console.WriteLine($"{errorsNb} error(s)! Check {options.ErrorFile}");
+                Console.WriteLine("");
+
+                Console.WriteLine("Check result:");
+                Console.WriteLine($"- {errorsNb} error(s)");
+                Console.WriteLine($"- {infosNb} info(s)");
+
+                Console.WriteLine($"Check {options.ErrorFile} to see the details");
             }
         }
 
@@ -305,11 +323,15 @@ namespace BezelTools
         private static void Error(string errorFile, string game, string msg)
         {
             Write(errorFile, game, msg, "ERROR");
+
+            errorsNb++;
         }
 
         private static void Info(string errorFile, string game, string msg)
         {
             Write(errorFile, game, msg, "INFO");
+
+            infosNb++;
         }
 
         private static void Write(string file, string game, string msg, string level)
@@ -323,8 +345,6 @@ namespace BezelTools
                     File.AppendAllText(file, $"{level};{game};{msg}\n");
                 }
             }
-
-            errorsNb++;
         }
 
         /// <summary>
