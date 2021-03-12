@@ -61,6 +61,22 @@ namespace BezelTools.Model
         public double Y { get; set; }
 
         /// <summary>
+        /// Applies a margin the the bounds
+        /// </summary>
+        /// <param name="margin">The margin to apply</param>
+        /// <returns>The new bounds</returns>
+        public Bounds ApplyMargin(int margin)
+        {
+            return new Bounds
+            {
+                X = X - margin,
+                Y = Y - margin,
+                Width = Width + margin * 2,
+                Height = Height + margin * 2
+            };
+        }
+
+        /// <summary>
         /// Create a clone of this instance
         /// </summary>
         /// <returns>The cloned bounds</returns>

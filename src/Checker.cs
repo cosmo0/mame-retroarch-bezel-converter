@@ -112,7 +112,7 @@ namespace BezelTools
 
                         // get bounds
                         var img = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, overlayFileName));
-                        var bounds = ImageProcessor.FindScreen(img, options);
+                        var bounds = ImageProcessor.FindScreen(img, options.Margin);
 
                         CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
 
@@ -176,7 +176,7 @@ namespace BezelTools
                             Info(options.ErrorFile, game, $"Creating rom config for orphan image at {romDest}");
 
                             // create the config
-                            var bounds = ImageProcessor.FindScreen(File.ReadAllBytes(f), options);
+                            var bounds = ImageProcessor.FindScreen(File.ReadAllBytes(f), options.Margin);
                             CreateConfig(options.TemplateRom, game, romDest, bounds, options.TargetResolutionBounds);
 
                             AddConfigEntry(cfgFilesName, cfgFilesName, fi.Name);
@@ -232,14 +232,14 @@ namespace BezelTools
                 var imageContent = File.ReadAllBytes(imagePath);
 
                 // get bounds
-                var boundsInImage = ImageProcessor.FindScreen(imageContent, options);
+                var boundsInImage = ImageProcessor.FindScreen(imageContent, 0);
                 var boundsInConf = RetroArchProcessor.GetBoundsFromConfig(romContent);
 
                 // make sure the bounds match
-                if (CheckCoordinate(boundsInImage.X, boundsInConf.X, options.Margin)
-                    && CheckCoordinate(boundsInImage.Y, boundsInConf.Y, options.Margin)
-                    && CheckCoordinate(boundsInImage.Width, boundsInConf.Width, options.Margin * 2)
-                    && CheckCoordinate(boundsInImage.Height, boundsInConf.Height, options.Margin * 2))
+                if (CheckCoordinate(boundsInImage.X, boundsInConf.X, options.ErrorMargin)
+                    && CheckCoordinate(boundsInImage.Y, boundsInConf.Y, options.ErrorMargin)
+                    && CheckCoordinate(boundsInImage.Width, boundsInConf.Width, options.ErrorMargin * 2)
+                    && CheckCoordinate(boundsInImage.Height, boundsInConf.Height, options.ErrorMargin * 2))
                 {
                     // bounds are similar
                     Console.WriteLine($"image {game} has proper bounds in config");
@@ -247,6 +247,8 @@ namespace BezelTools
                 else
                 {
                     Console.WriteLine($"image {game} has wrong bounds in config: {boundsInConf.ToShortString()} instead of {boundsInImage.ToShortString()}");
+
+                    boundsInImage = boundsInImage.ApplyMargin(options.Margin);
 
                     // output debug whether fixing or not
                     if (boundsInConf.Width > 0 && boundsInConf.Height > 0)

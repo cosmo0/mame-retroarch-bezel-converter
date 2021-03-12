@@ -79,7 +79,8 @@ Simple check:
     --overlays-config tmp/retroarch/configs
     --roms-config tmp/retroarch/roms
     --threads 4
-    -e tmp/errors.csv`
+    -e tmp/errors.csv
+    --error-margin 10`
 
 Check and fix:
 
@@ -92,7 +93,9 @@ Check and fix:
     --template-rom src/templates/game.cfg
     --threads 4
     -e tmp/errors.csv
-    -d tmp/debug`
+    -d tmp/debug
+    --margin 5
+    --error-margin 10`
 
 MAME to RA conversion:
 

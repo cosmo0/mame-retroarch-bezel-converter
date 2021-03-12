@@ -83,7 +83,7 @@ namespace BezelTools
                 var newPosition = new Model.Bounds();
                 if (options.ScanBezelForScreenCoordinates)
                 {
-                    newPosition = ImageProcessor.FindScreen(bezel, options);
+                    newPosition = ImageProcessor.FindScreen(bezel, options.Margin);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace BezelTools
                 var newPosition = new Model.Bounds();
                 if (options.ScanBezelForScreenCoordinates)
                 {
-                    newPosition = ImageProcessor.FindScreen(File.ReadAllBytes(processor.OverlayImagePath), options);
+                    newPosition = ImageProcessor.FindScreen(File.ReadAllBytes(processor.OverlayImagePath), options.Margin);
                 }
                 else
                 {

@@ -53,9 +53,9 @@ namespace BezelTools
         /// Finds the screen position in the specified bezel, based on transparency.
         /// </summary>
         /// <param name="bezel">The bezel file.</param>
-        /// <param name="options">The options.</param>
+        /// <param name="margin">The margins to apply.</param>
         /// <returns>The screen position</returns>
-        public static Bounds FindScreen(byte[] bezel, BaseOptions options)
+        public static Bounds FindScreen(byte[] bezel, int margin)
         {
             using (Image<Rgba32> image = Image.Load(bezel))
             {
@@ -80,12 +80,12 @@ namespace BezelTools
                 var width = right - left;
 
                 // apply margins
-                if (options.Margin > 0)
+                if (margin > 0)
                 {
-                    top -= options.Margin;
-                    left -= options.Margin;
-                    width += options.Margin * 2;
-                    height += options.Margin * 2;
+                    top -= margin;
+                    left -= margin;
+                    width += margin * 2;
+                    height += margin * 2;
                 }
 
                 return new Bounds

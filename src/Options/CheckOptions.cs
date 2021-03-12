@@ -20,6 +20,12 @@ namespace BezelTools.Options
         public bool AutoFix { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets the error margin for screen position scan
+        /// </summary>
+        [Option("error-margin", Required = false, HelpText = "The allowed error margin for screen position scan", Default = 0)]
+        public int ErrorMargin { get; set; } = 0;
+
+        /// <summary>
         /// Gets or sets the path to the overlay configuration in rom configuration (input_overlay).
         /// </summary>
         [Option('p', "input-overlay-path", Group = "fix", Required = true, HelpText = "When fixing configs, the path to the overlay that should be added in the rom config (input_overlay); ex: /opt/retropie/configs/all/retroarch/overlay/")]
