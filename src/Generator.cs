@@ -49,7 +49,7 @@ namespace BezelTools
                 }
 
                 // generate rom
-                var rom = Path.Combine(options.RomsFolder, $"{game}.cfg");
+                var rom = Path.Combine(options.RomsFolder, $"{game}.zip.cfg");
                 if (!options.Overwrite && File.Exists(rom))
                 {
                     Error(options.ErrorFile, game, $"rom file already exists: {rom}");
