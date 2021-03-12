@@ -107,7 +107,9 @@ namespace BezelTools
                 {
                     if (options.AutoFix)
                     {
-                        var dest = Path.Join(options.RomsConfigFolder, fi.Name);
+                        // create a rom
+                        var romFile = fi.Name.Replace(".cfg", ".zip.cfg");
+                        var dest = Path.Join(options.RomsConfigFolder, romFile);
                         Info(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
 
                         // get bounds
@@ -116,7 +118,7 @@ namespace BezelTools
 
                         CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
 
-                        cfgEntry = AddConfigEntry(fi.Name, fi.Name, overlayFileName);
+                        cfgEntry = AddConfigEntry(romFile, fi.Name, overlayFileName);
                     }
                     else
                     {
