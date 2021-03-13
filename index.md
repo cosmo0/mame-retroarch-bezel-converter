@@ -19,19 +19,66 @@ It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64. You can build i
 
 **!!! BACKUP YOUR FILES BEFORE USING THIS TOOL !!!** I have used it on my own files but I cannot guarantee that it will work on yours.
 
-Get a detailed help and list of options by running `bezel-tools --help` or `bezel-tools [verb] --help`.
+Get a list of possible actions using `bezel-tools --help`.  
+Get a detailed list of options for each action using `bezel-tools [verb] --help`.
 
 ### Check overlays integrity
 
-Simple check:
+Checks that:
 
-> bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms
+- the rom config points to an existing overlay
+- the overlay config points to an existing image
+- all images in the overlays folder have an associated overlay config and rom config, and can create one
+- all overlay configs are used by a rom config, and can create one
+- the path written in the config matches the expected one (to check overlays that will be used on another machine)
+- the image has a size matching the output resolution
+- the coordinates of the game in the rom config match the transparency in the image
 
-Check and fix when possible:
+It assumes that rom config are named `xxxx.zip.cfg`, and images are stored in the same folder as the overlay config.
+
+**Simple check:**
+
+> bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms --output-debug debug/
+
+- `--overlay-config` is the path where the overlays are (cfg files and images)
+- `--roms-config` is the path to the cfg files for the roms
+- `--output-debug` is the path to the debug images, to see what will be computed
+
+Example of debug output from configuration:
+
+![from config](doc/dstlku_conf.jpg)
+
+Example of debug output computed from transparency in image:
+
+![from config](doc/dstlku_computed.jpg)
+
+**Check and fix when possible:**
 
 > bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms --autofix --input-overlay-path /opt/retropie/configs/all/retroarch/overlay/ --template-overlay templates/overlay.cfg --template-rom templates/game.cfg
 
+- `--overlay-config` is the path where the overlays are (cfg files and images)
+- `--roms-config` is the path to the cfg files for the roms
+- `--autofix` fixes encountered problems
+- `--input-overlay-path` is the expected path to the overlay in the rom config (ex: /opt/retropie/configs/all/retroarch/overlay/ for a Retropie overlay)
+- `--template-overlay` is the path to the overlay template
+- `--template-rom` is the path to the rom template
+
+### Generate overlays from images
+
+Generates overlay and rom configs based on the position of the screen transparent area, and the file name.
+
+> bezel-tools generate --images samples/images --roms-configs samples/roms --template-overlay templates/overlay.cfg --template-rom templates/game.cfg
+
+- `--images` is the path to the images folder (the overlay configs will be generated inside)
+- `--roms-configs` is the path to the rom configs folder
+- `--template-overlay` is the path to the overlay template
+- `--template-rom` is the path to the rom template
+
 ### Convert MAME bezels to RetroArch overlays
+
+Scans a folder containing MAME bezel files (it can scan zip files), and converts the content to a Retroarch overlay.
+
+It can also read apply offsets stored in MAME configs.
 
 > bezel-tools mtr --source path/to/mame/zips --output-roms output/roms --output-overlays output/overlay --template-game templates/game.cfg --template-overlay templates/overlay.cfg
 
@@ -44,6 +91,8 @@ Check and fix when possible:
 
 ### Convert RetroArch overlays to MAME bezels
 
+Scans a folder containing Retroarch overlays and converts them to MAME bezels.
+
 > bezel-tools rtm --source-roms path/to/rom/files --source-configs path/to/config/files --output path/to/output --template templates/default.lay --zip
 
 - `--source-roms` is the path to the rom cfg (the .zip.cfg files)
@@ -55,8 +104,7 @@ Check and fix when possible:
 
 ### Common parameters for all actions
 
-- `--error-file` the path to the output CSV file containing the errors and fixes
-- `--scan-bezel` to scan transparent pixels in the images instead of relying on the cfg/lay files
+- `--error-file path/to/file.csv` the path to the output CSV file containing the errors and fixes
 - `--output-debug path/to/debug` to see the result of the conversion (it creates an image with a red square where the screen will be)
-- `--margin 10` to add or remove a 10px margin (positive value to crop a bit of the screen)
+- `--margin 10` to add or remove a 10px margin to the screen position (positive value to crop a bit of the screen)
 - `--threads 4` to use 4 threads
