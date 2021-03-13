@@ -38,10 +38,19 @@ It assumes that rom config are named `xxxx.zip.cfg`, and images are stored in th
 
 **Simple check:**
 
-> bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms
+> bezel-tools check --overlays-config samples/retroarch/overlays --roms-config samples/retroarch/roms --output-debug debug/
 
 - `--overlay-config` is the path where the overlays are (cfg files and images)
 - `--roms-config` is the path to the cfg files for the roms
+- `--output-debug` is the path to the debug images, to see what will be computed
+
+Example of debug output from configuration:
+
+![from config](doc/dstlku_conf.jpg)
+
+Example of debug output computed from transparency in image:
+
+![from config](doc/dstlku_computed.jpg)
 
 **Check and fix when possible:**
 
