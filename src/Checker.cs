@@ -118,13 +118,21 @@ namespace BezelTools
                         {
                             Fix(options.ErrorFile, game, $"creating rom config file for unused overlay at {dest}");
 
-                            // get bounds
-                            var img = File.ReadAllBytes(Path.Join(options.OverlaysConfigFolder, overlayFileName));
-                            var bounds = ImageProcessor.FindScreen(img, options.Margin);
+                            var imgFileName = Path.Join(options.OverlaysConfigFolder, overlayFileName);
+                            if (File.Exists(imgFileName))
+                            {
+                                // get bounds
+                                var img = File.ReadAllBytes(imgFileName);
+                                var bounds = ImageProcessor.FindScreen(img, options.Margin);
 
-                            RetroArchProcessor.CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
+                                RetroArchProcessor.CreateConfig(options.TemplateRom, game, dest, bounds, options.TargetResolutionBounds);
 
-                            cfgEntry = AddConfigEntry(romFile, fi.Name, overlayFileName);
+                                cfgEntry = AddConfigEntry(romFile, fi.Name, overlayFileName);
+                            }
+                            else
+                            {
+                                Error(options.ErrorFile, game, $"overlay points to a non-existing image: {imgFileName}");
+                            }
                         }
                     }
                     else
@@ -233,7 +241,14 @@ namespace BezelTools
 
                 // get overlay file name
                 var romContent = File.ReadAllText(f);
-                var overlayFile = Path.GetFileName(FileUtils.NormalizePath(RetroArchProcessor.GetCfgData(romContent, "input_overlay")));
+                var overlayFileName = RetroArchProcessor.GetCfgData(romContent, "input_overlay");
+                if (string.IsNullOrWhiteSpace(overlayFileName))
+                {
+                    Error(options.ErrorFile, game, $"fixing screen: rom config doesn't have an input_overlay");
+                    return;
+                }
+
+                var overlayFile = Path.GetFileName(FileUtils.NormalizePath(overlayFileName));
                 var overlayPath = Path.Join(options.OverlaysConfigFolder, overlayFile);
 
                 if (!File.Exists(overlayPath))
