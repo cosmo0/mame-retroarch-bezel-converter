@@ -15,18 +15,6 @@ namespace BezelTools.Options
         private string outputDebug;
 
         /// <summary>
-        /// Gets the assembly directory path
-        /// </summary>
-        public static string AssemblyDirectory
-        {
-            get
-            {
-                string fullPath = Assembly.GetAssembly(typeof(Program)).Location;
-                return Path.GetDirectoryName(fullPath);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the path to the error lists file
         /// </summary>
         [Option('e', "error-file", Required = false, HelpText = "The path to the CSV file containing the list of errors")]
