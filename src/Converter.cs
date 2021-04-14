@@ -91,6 +91,7 @@ namespace BezelTools
                 var newPosition = new Model.Bounds();
                 if (options.ScanBezelForScreenCoordinates)
                 {
+                    // scan image for transparent pixels
                     newPosition = ImageProcessor.FindScreen(bezel, options.Margin);
                 }
                 else
@@ -230,43 +231,41 @@ namespace BezelTools
         /// <returns>The new bounds</returns>
         private static Bounds ApplyOffset(Bounds sourcePosition, Offset offset, Bounds sourceResolution, Bounds targetResolution)
         {
-            if (offset == null)
-            {
-                return sourcePosition;
-            }
-
             var newPos = sourcePosition.Clone();
 
-            // multiply w/h by stretch = get target screen size, centered => NEW DIMENSIONS AT SOURCE RESOLUTION
-            newPos.Width *= offset.HStretch;
-            newPos.Height *= offset.VStretch;
-
-            // compute new base x/y (top/left): x = cx - (w / 2)
-            newPos.X = sourcePosition.Center.X - (newPos.Width / 2);
-            newPos.Y = sourcePosition.Center.Y - (newPos.Height / 2);
-
-            // apply offset: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) => NEW POSITION at source resolution
-            if (offset.HOffset != 0)
+            if (offset != null)
             {
-                if (newPos.Orientation == Orientation.Horizontal)
-                {
-                    newPos.X += (sourcePosition.Width / newPos.Width * newPos.Height) * offset.HOffset;
-                }
-                else
-                {
-                    newPos.X += sourcePosition.Width * offset.HOffset;
-                }
-            }
+                // multiply w/h by stretch = get target screen size, centered => NEW DIMENSIONS AT SOURCE RESOLUTION
+                newPos.Width *= offset.HStretch;
+                newPos.Height *= offset.VStretch;
 
-            if (offset.VOffset != 0)
-            {
-                if (newPos.Orientation == Orientation.Horizontal)
+                // compute new base x/y (top/left): x = cx - (w / 2)
+                newPos.X = sourcePosition.Center.X - (newPos.Width / 2);
+                newPos.Y = sourcePosition.Center.Y - (newPos.Height / 2);
+
+                // apply offset: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) => NEW POSITION at source resolution
+                if (offset.HOffset != 0)
                 {
-                    newPos.Y += sourcePosition.Height * offset.VOffset;
+                    if (newPos.Orientation == Orientation.Horizontal)
+                    {
+                        newPos.X += (sourcePosition.Width / newPos.Width * newPos.Height) * offset.HOffset;
+                    }
+                    else
+                    {
+                        newPos.X += sourcePosition.Width * offset.HOffset;
+                    }
                 }
-                else
+
+                if (offset.VOffset != 0)
                 {
-                    newPos.Y += (sourcePosition.Height / newPos.Height * newPos.Width) * offset.VOffset;
+                    if (newPos.Orientation == Orientation.Horizontal)
+                    {
+                        newPos.Y += sourcePosition.Height * offset.VOffset;
+                    }
+                    else
+                    {
+                        newPos.Y += (sourcePosition.Height / newPos.Height * newPos.Width) * offset.VOffset;
+                    }
                 }
             }
 
