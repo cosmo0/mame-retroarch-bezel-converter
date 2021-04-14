@@ -1,5 +1,7 @@
 # Retroarch bezels / overlays tool
 
+[![Build status](https://ci.appveyor.com/api/projects/status/4j976sg5sv4w0mq6?svg=true)](https://ci.appveyor.com/project/cosmo0/mame-retroarch-bezel-converter)
+
 Overlays (or bezels) are images added "above" the emulator, to mask the black borders around the image.
 
 This tool provides several utilities:
