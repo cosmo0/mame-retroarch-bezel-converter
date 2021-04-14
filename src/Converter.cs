@@ -80,6 +80,14 @@ namespace BezelTools
                 Console.WriteLine($"{game} source screen: {mameProcessor.SourceScreenPosition}");
                 Console.WriteLine($"{game} screen offset: {mameProcessor.Offset}");
 
+                // resize the bezel image
+                Console.WriteLine($"{game} resizing image");
+                bezel = ImageProcessor.Resize(
+                    bezel,
+                    (int)options.TargetResolutionBounds.Width,
+                    (int)options.TargetResolutionBounds.Height);
+
+                Console.WriteLine($"{game} getting target screen position");
                 var newPosition = new Model.Bounds();
                 if (options.ScanBezelForScreenCoordinates)
                 {
@@ -110,13 +118,6 @@ namespace BezelTools
                 {
                     File.WriteAllBytes(outputImage, bezel);
                 }
-
-                // resize the bezel image
-                Console.WriteLine($"{game} processing image");
-                ImageProcessor.Resize(
-                    outputImage,
-                    (int)options.TargetResolutionBounds.Width,
-                    (int)options.TargetResolutionBounds.Height);
 
                 // debug: draw target position
                 ImageProcessor.DebugDraw(game, options.OutputDebug, outputImage, newPosition);

@@ -2,6 +2,7 @@
 using BezelTools.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System;
@@ -138,6 +139,34 @@ namespace BezelTools
                 }
 
                 image.Save(imagePath);
+            }
+        }
+
+        /// <summary>
+        /// Resizes an image to the specified dimension, cropping it if necessary
+        /// </summary>
+        /// <param name="image">The image data</param>
+        /// <param name="width">The target width</param>
+        /// <param name="height">The target height</param>
+        public static byte[] Resize(byte[] bezel, int width, int height)
+        {
+            using (Image<Rgba32> image = Image.Load(bezel))
+            {
+                if (image.Width > width || image.Height > height)
+                {
+                    image.Mutate(x => x.Resize(new ResizeOptions
+                    {
+                        Size = new Size { Width = width, Height = height },
+                        Position = AnchorPositionMode.Center,
+                        Mode = ResizeMode.Crop
+                    }));
+                }
+
+                using (var ms = new MemoryStream())
+                {
+                    image.Save(ms, new PngEncoder { ColorType = PngColorType.RgbWithAlpha });
+                    return ms.ToArray();
+                }
             }
         }
 
