@@ -83,8 +83,8 @@ namespace BezelTools
             var bezelElementName = view.Bezels.First().ElementName;
 
             var element = lay.Elements.FirstOrDefault(e => e.Name == bezelElementName);
-            if (element == null) { throw new Exceptions.LayFileException($"Unable to find element with name {bezelElementName} in LAY file"); }
-            if (element.Images == null || !element.Images.Any()) { throw new Exceptions.LayFileException($"No images in element {bezelElementName} in LAY file"); }
+            if (element == null) { throw new Exceptions.LayFileException($"Unable to find an <element> with name {bezelElementName} in LAY file"); }
+            if (element.Images == null || !element.Images.Any()) { throw new Exceptions.LayFileException($"No images inside <element> {bezelElementName} in LAY file"); }
 
             return element.Images.First().File;
         }
@@ -96,9 +96,10 @@ namespace BezelTools
         /// <returns>The source resolution</returns>
         public static Bounds GetSourceResolution(Model.MameLayFile.View view)
         {
-            var bezelOfView = view.Bezels.FirstOrDefault();
-            if (bezelOfView == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel for view {view.Name}"); }
-            if (bezelOfView.Bounds.X != 0 || bezelOfView.Bounds.Y != 0) { throw new Exceptions.CoordinatesException($"Bezel of view {view.Name} does not have coordinates starting at (0,0)"); }
+            if (!view.Bezels.Any()) { throw new Exceptions.BezelNotFoundException($"Unable to find a <bezel> for the <view> {view.Name}"); }
+
+            var bezelOfView = view.Bezels.FirstOrDefault(b => b.Bounds.X == 0 && b.Bounds.Y == 0);
+            if (bezelOfView == null) { throw new Exceptions.CoordinatesException($"No <bezel> inside <view> {view.Name} has coordinates starting at (0,0): I don't know how to convert"); }
             return bezelOfView.Bounds;
         }
 
@@ -152,6 +153,7 @@ namespace BezelTools
                 {
                     Console.WriteLine($"{i}: {lay.Views[i].Name}");
                 }
+
                 string chosenView = "x";
                 int viewIndex;
                 while (!int.TryParse(chosenView, out viewIndex))

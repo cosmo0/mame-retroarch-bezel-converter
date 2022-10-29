@@ -267,12 +267,12 @@ namespace BezelTools
             // parse the config file if it exists
             if (!string.IsNullOrEmpty(cfgFile) && File.Exists(cfgFile))
             {
-                Console.WriteLine($"{game} config file exists");
+                Console.WriteLine($"{game} MAME config file exists");
                 return DeserializeXmlFile<Model.MameCfgFile>(cfgFile);
             }
             else
             {
-                Console.WriteLine($"{game} doesn't have a cfg file");
+                Console.WriteLine($"{game} doesn't have a MAME config file");
                 return null;
             }
         }
