@@ -64,12 +64,12 @@ namespace BezelTools
         {
             // extract source data
             var view = GetView(lay, options.UseFirstView);
-            var sourceResolution = GetSourceResolution(view);
+            var sourceRes = GetSourceResolution(view);
             var bezelFile = GetBezelFile(lay, view);
             var sourceScreenCoordinates = GetSourceScreenCoordinates(view);
-            var offset = GetOffset(cfg);
+            var off = GetOffset(cfg);
 
-            return new MameProcessor(offset, sourceResolution, sourceScreenCoordinates, bezelFile);
+            return new MameProcessor(off, sourceRes, sourceScreenCoordinates, bezelFile);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace BezelTools
         {
             var bezelElementName = view.Bezels.First().ElementName;
 
-            var element = lay.Elements.Where(e => e.Name == bezelElementName).FirstOrDefault();
+            var element = lay.Elements.FirstOrDefault(e => e.Name == bezelElementName);
             if (element == null) { throw new Exceptions.LayFileException($"Unable to find element with name {bezelElementName} in LAY file"); }
             if (element.Images == null || !element.Images.Any()) { throw new Exceptions.LayFileException($"No images in element {bezelElementName} in LAY file"); }
 

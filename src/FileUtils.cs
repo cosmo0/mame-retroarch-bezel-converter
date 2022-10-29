@@ -71,7 +71,7 @@ namespace BezelTools
             using (ZipArchive archive = ZipFile.OpenRead(zipFile))
             {
                 // get layout file
-                var layEntry = archive.Entries.Where(e => e.Name.EndsWith("default.lay", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                var layEntry = archive.Entries.FirstOrDefault(e => e.Name.EndsWith("default.lay", StringComparison.InvariantCultureIgnoreCase));
                 if (layEntry == null) { throw new Exceptions.LayFileException($"Unable to find default.lay file in {zipFile}"); }
                 using (Stream layStream = layEntry.Open())
                 {
@@ -88,7 +88,7 @@ namespace BezelTools
                 {
                     // sometimes the bezel file name in LAY doesn't have the same case as the actual file
                     var bezelFileNameInZip = FindFile(archive, bezelFileNameInLay);
-                    var bezelEntry = archive.Entries.Where(e => e.Name.EndsWith(bezelFileNameInZip, StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                    var bezelEntry = archive.Entries.FirstOrDefault(e => e.Name.EndsWith(bezelFileNameInZip, StringComparison.InvariantCultureIgnoreCase));
                     if (bezelEntry == null) { throw new Exceptions.BezelNotFoundException($"Unable to find bezel file {bezelFileNameInZip} in {zipFile}"); }
                     using (var bezelStream = bezelEntry.Open())
                     {
@@ -178,17 +178,13 @@ namespace BezelTools
         /// <summary>
         /// Searches for a file in a case-sensitive way, and returns the actual file name
         /// </summary>
-        /// <param name="folder">The folder to search</param>
         /// <param name="fileName">The file name to search</param>
         /// <returns>The proper file name, case sensitiv-ed</returns>
         public static string FindFile(ZipArchive archive, string fileName)
         {
-            foreach (var e in archive.Entries)
-            {
-                if (e.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return e.Name;
-                }
+            var found = archive.Entries.FirstOrDefault(e => e.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase));
+            if (found != null) {
+                return found.Name;
             }
 
             throw new FileNotFoundException($"Unable to find file {fileName} in archive");
@@ -236,7 +232,7 @@ namespace BezelTools
             if (!string.IsNullOrEmpty(bezelFileNameInLay))
             {
                 var bezelFilePath = Directory.GetFiles(folder, bezelFileNameInLay, new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
-                if (bezelFilePath == null || !bezelFilePath.Any()) { throw new FileNotFoundException($"Unable to find the bezel file {bezelFilePath}"); }
+                if (bezelFilePath == null || !bezelFilePath.Any()) { throw new FileNotFoundException($"Unable to find the bezel file {bezelFileNameInLay}"); }
                 bezel = File.ReadAllBytes(bezelFilePath.First());
             }
 

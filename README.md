@@ -17,6 +17,8 @@ It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64. You can build i
 
 **[Download the latest release](https://github.com/cosmo0/mame-retroarch-bezel-converter/releases)**
 
+---
+
 ## Usage
 
 **!!! BACKUP YOUR FILES BEFORE USING THIS TOOL !!!** I have used it on my own files but I cannot guarantee that it will work on yours.
@@ -111,13 +113,15 @@ Scans a folder containing Retroarch overlays and converts them to MAME bezels.
 - `--margin 10` to add or remove a 10px margin to the screen position (positive value to crop a bit of the screen)
 - `--threads 4` to use 4 threads
 
+---
+
 ## Development
 
 You'll need to install the [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
 
 ### Build
 
-`dotnet build src /BezelTools.sln`
+`dotnet build src/BezelTools.sln`
 
 ### Run
 
@@ -196,6 +200,8 @@ dotnet publish src/BezelTools.sln -r linux-x64 -p:PublishSingleFile=true --self-
 dotnet publish src/BezelTools.sln -r linux-arm64 -p:PublishSingleFile=true --self-contained true -o out/linux-arm64
 dotnet publish src/BezelTools.sln -r osx-x64 -p:PublishSingleFile=true --self-contained true -o out/osx-x64
 ````
+
+---
 
 ## Contribute
 
