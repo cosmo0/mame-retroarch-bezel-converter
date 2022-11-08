@@ -13,6 +13,10 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.3" />
