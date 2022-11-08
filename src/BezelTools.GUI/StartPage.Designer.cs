@@ -31,6 +31,8 @@
 			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartPage));
 			this.panelCommon = new System.Windows.Forms.Panel();
+			this.pictureBox11 = new System.Windows.Forms.PictureBox();
+			this.pictureBoxMargin = new System.Windows.Forms.PictureBox();
 			this.buttonDebugBrowse = new System.Windows.Forms.Button();
 			this.buttonErrorBrowse = new System.Windows.Forms.Button();
 			this.numericUpDownThreads = new System.Windows.Forms.NumericUpDown();
@@ -70,10 +72,69 @@
 			this.radioButtonCheckAndFix = new System.Windows.Forms.RadioButton();
 			this.radioButtonCheckOnly = new System.Windows.Forms.RadioButton();
 			this.tabPageGenerate = new System.Windows.Forms.TabPage();
+			this.pictureBoxGenerateRomTemplate = new System.Windows.Forms.PictureBox();
+			this.buttonGenerateRomTemplate = new System.Windows.Forms.Button();
+			this.textBoxGenerateRomTemplate = new System.Windows.Forms.TextBox();
+			this.labelGenerateOverlayRomTemplate = new System.Windows.Forms.Label();
+			this.pictureBoxGenerateOverlayTemplate = new System.Windows.Forms.PictureBox();
+			this.buttonGenerateOverlayTemplate = new System.Windows.Forms.Button();
+			this.textBoxGenerateOverlayTemplate = new System.Windows.Forms.TextBox();
+			this.labelGenerateOverlayTemplate = new System.Windows.Forms.Label();
+			this.pictureBoxGenerateRoms = new System.Windows.Forms.PictureBox();
+			this.buttonGenerateRoms = new System.Windows.Forms.Button();
+			this.textBoxGenerateRoms = new System.Windows.Forms.TextBox();
+			this.labelGenerateRoms = new System.Windows.Forms.Label();
+			this.pictureBoxGenerateImages = new System.Windows.Forms.PictureBox();
+			this.buttonGenerateImages = new System.Windows.Forms.Button();
+			this.textBoxGenerateImages = new System.Windows.Forms.TextBox();
+			this.labelGenerateImages = new System.Windows.Forms.Label();
 			this.tabPageConvertMAMEtoRA = new System.Windows.Forms.TabPage();
+			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.pictureBox5 = new System.Windows.Forms.PictureBox();
+			this.button5 = new System.Windows.Forms.Button();
+			this.textBox7 = new System.Windows.Forms.TextBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.pictureBox4 = new System.Windows.Forms.PictureBox();
+			this.button4 = new System.Windows.Forms.Button();
+			this.textBox6 = new System.Windows.Forms.TextBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.pictureBox3 = new System.Windows.Forms.PictureBox();
+			this.button3 = new System.Windows.Forms.Button();
+			this.textBox5 = new System.Windows.Forms.TextBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.pictureBox2 = new System.Windows.Forms.PictureBox();
+			this.button2 = new System.Windows.Forms.Button();
+			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.tabPageConvertRAtoMAME = new System.Windows.Forms.TabPage();
+			this.checkBox3 = new System.Windows.Forms.CheckBox();
+			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.pictureBox7 = new System.Windows.Forms.PictureBox();
+			this.button7 = new System.Windows.Forms.Button();
+			this.textBox9 = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.pictureBox8 = new System.Windows.Forms.PictureBox();
+			this.button8 = new System.Windows.Forms.Button();
+			this.textBox10 = new System.Windows.Forms.TextBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.pictureBox9 = new System.Windows.Forms.PictureBox();
+			this.button9 = new System.Windows.Forms.Button();
+			this.textBox11 = new System.Windows.Forms.TextBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.pictureBox10 = new System.Windows.Forms.PictureBox();
+			this.button10 = new System.Windows.Forms.Button();
+			this.textBox12 = new System.Windows.Forms.TextBox();
+			this.label11 = new System.Windows.Forms.Label();
 			this.toolTipInfo = new System.Windows.Forms.ToolTip(this.components);
+			this.pictureBoxErrorFile = new System.Windows.Forms.PictureBox();
+			this.pictureBoxDebugFiles = new System.Windows.Forms.PictureBox();
 			this.panelCommon.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMargin)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownThreads)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMargin)).BeginInit();
 			this.tabControlActions.SuspendLayout();
@@ -84,12 +145,34 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCheckExpectedPath)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCheckPathRom)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCheckPathOverlay)).BeginInit();
+			this.tabPageGenerate.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateRomTemplate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateOverlayTemplate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateRoms)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateImages)).BeginInit();
+			this.tabPageConvertMAMEtoRA.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.tabPageConvertRAtoMAME.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorFile)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDebugFiles)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panelCommon
 			// 
 			this.panelCommon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.panelCommon.Controls.Add(this.pictureBoxDebugFiles);
+			this.panelCommon.Controls.Add(this.pictureBoxErrorFile);
+			this.panelCommon.Controls.Add(this.pictureBox11);
+			this.panelCommon.Controls.Add(this.pictureBoxMargin);
 			this.panelCommon.Controls.Add(this.buttonDebugBrowse);
 			this.panelCommon.Controls.Add(this.buttonErrorBrowse);
 			this.panelCommon.Controls.Add(this.numericUpDownThreads);
@@ -101,15 +184,38 @@
 			this.panelCommon.Controls.Add(this.labelDebug);
 			this.panelCommon.Controls.Add(this.labelErrorFile);
 			this.panelCommon.Controls.Add(this.buttonExecute);
-			this.panelCommon.Location = new System.Drawing.Point(12, 465);
+			this.panelCommon.Location = new System.Drawing.Point(12, 339);
 			this.panelCommon.Name = "panelCommon";
 			this.panelCommon.Size = new System.Drawing.Size(793, 174);
 			this.panelCommon.TabIndex = 1;
 			// 
+			// pictureBox11
+			// 
+			this.pictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox11.Image")));
+			this.pictureBox11.Location = new System.Drawing.Point(326, 45);
+			this.pictureBox11.Name = "pictureBox11";
+			this.pictureBox11.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox11.TabIndex = 21;
+			this.pictureBox11.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox11, "The number of threads to use to process the overlays.\r\nIf you don\'t know what tha" +
+        "t means, leave it at 4.");
+			// 
+			// pictureBoxMargin
+			// 
+			this.pictureBoxMargin.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMargin.Image")));
+			this.pictureBoxMargin.Location = new System.Drawing.Point(326, 16);
+			this.pictureBoxMargin.Name = "pictureBoxMargin";
+			this.pictureBoxMargin.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxMargin.TabIndex = 20;
+			this.pictureBoxMargin.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxMargin, "Adds some margin to the screen in the overlay.\r\nA positive value will crop a bit " +
+        "of the screen, it will go under the image.\r\nA negative value will add a bit of s" +
+        "pace between the screen and the image.");
+			// 
 			// buttonDebugBrowse
 			// 
 			this.buttonDebugBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonDebugBrowse.Location = new System.Drawing.Point(708, 101);
+			this.buttonDebugBrowse.Location = new System.Drawing.Point(640, 100);
 			this.buttonDebugBrowse.Name = "buttonDebugBrowse";
 			this.buttonDebugBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonDebugBrowse.TabIndex = 9;
@@ -119,7 +225,7 @@
 			// buttonErrorBrowse
 			// 
 			this.buttonErrorBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonErrorBrowse.Location = new System.Drawing.Point(708, 70);
+			this.buttonErrorBrowse.Location = new System.Drawing.Point(640, 71);
 			this.buttonErrorBrowse.Name = "buttonErrorBrowse";
 			this.buttonErrorBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonErrorBrowse.TabIndex = 6;
@@ -133,6 +239,11 @@
 			this.numericUpDownThreads.Location = new System.Drawing.Point(265, 43);
 			this.numericUpDownThreads.Maximum = new decimal(new int[] {
             24,
+            0,
+            0,
+            0});
+			this.numericUpDownThreads.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
@@ -164,7 +275,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox4.Location = new System.Drawing.Point(265, 100);
 			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(437, 23);
+			this.textBox4.Size = new System.Drawing.Size(369, 23);
 			this.textBox4.TabIndex = 8;
 			// 
 			// textBox3
@@ -173,7 +284,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBox3.Location = new System.Drawing.Point(265, 71);
 			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(437, 23);
+			this.textBox3.Size = new System.Drawing.Size(369, 23);
 			this.textBox3.TabIndex = 5;
 			// 
 			// label1
@@ -200,11 +311,11 @@
 			// 
 			this.labelDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelDebug.AutoSize = true;
-			this.labelDebug.Location = new System.Drawing.Point(198, 103);
+			this.labelDebug.Location = new System.Drawing.Point(193, 103);
 			this.labelDebug.Name = "labelDebug";
-			this.labelDebug.Size = new System.Drawing.Size(61, 15);
+			this.labelDebug.Size = new System.Drawing.Size(66, 15);
 			this.labelDebug.TabIndex = 7;
-			this.labelDebug.Text = "Debug file";
+			this.labelDebug.Text = "Debug files";
 			// 
 			// labelErrorFile
 			// 
@@ -240,7 +351,7 @@
 			this.tabControlActions.Location = new System.Drawing.Point(12, 12);
 			this.tabControlActions.Name = "tabControlActions";
 			this.tabControlActions.SelectedIndex = 0;
-			this.tabControlActions.Size = new System.Drawing.Size(793, 447);
+			this.tabControlActions.Size = new System.Drawing.Size(793, 321);
 			this.tabControlActions.TabIndex = 0;
 			// 
 			// tabPageCheck
@@ -273,7 +384,7 @@
 			this.tabPageCheck.Location = new System.Drawing.Point(4, 24);
 			this.tabPageCheck.Name = "tabPageCheck";
 			this.tabPageCheck.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageCheck.Size = new System.Drawing.Size(785, 419);
+			this.tabPageCheck.Size = new System.Drawing.Size(785, 293);
 			this.tabPageCheck.TabIndex = 0;
 			this.tabPageCheck.Text = "Check overlays";
 			this.tabPageCheck.UseVisualStyleBackColor = true;
@@ -437,6 +548,7 @@
 			this.textBoxCheckPathInRom.Name = "textBoxCheckPathInRom";
 			this.textBoxCheckPathInRom.Size = new System.Drawing.Size(450, 23);
 			this.textBoxCheckPathInRom.TabIndex = 9;
+			this.textBoxCheckPathInRom.Text = "/opt/retropie/configs/all/retroarch/overlay/";
 			// 
 			// textBoxCheckPathTemplateRom
 			// 
@@ -504,33 +616,580 @@
 			// 
 			// tabPageGenerate
 			// 
+			this.tabPageGenerate.Controls.Add(this.pictureBoxGenerateRomTemplate);
+			this.tabPageGenerate.Controls.Add(this.buttonGenerateRomTemplate);
+			this.tabPageGenerate.Controls.Add(this.textBoxGenerateRomTemplate);
+			this.tabPageGenerate.Controls.Add(this.labelGenerateOverlayRomTemplate);
+			this.tabPageGenerate.Controls.Add(this.pictureBoxGenerateOverlayTemplate);
+			this.tabPageGenerate.Controls.Add(this.buttonGenerateOverlayTemplate);
+			this.tabPageGenerate.Controls.Add(this.textBoxGenerateOverlayTemplate);
+			this.tabPageGenerate.Controls.Add(this.labelGenerateOverlayTemplate);
+			this.tabPageGenerate.Controls.Add(this.pictureBoxGenerateRoms);
+			this.tabPageGenerate.Controls.Add(this.buttonGenerateRoms);
+			this.tabPageGenerate.Controls.Add(this.textBoxGenerateRoms);
+			this.tabPageGenerate.Controls.Add(this.labelGenerateRoms);
+			this.tabPageGenerate.Controls.Add(this.pictureBoxGenerateImages);
+			this.tabPageGenerate.Controls.Add(this.buttonGenerateImages);
+			this.tabPageGenerate.Controls.Add(this.textBoxGenerateImages);
+			this.tabPageGenerate.Controls.Add(this.labelGenerateImages);
 			this.tabPageGenerate.Location = new System.Drawing.Point(4, 24);
 			this.tabPageGenerate.Name = "tabPageGenerate";
 			this.tabPageGenerate.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGenerate.Size = new System.Drawing.Size(785, 419);
+			this.tabPageGenerate.Size = new System.Drawing.Size(785, 293);
 			this.tabPageGenerate.TabIndex = 1;
 			this.tabPageGenerate.Text = "Generate from images";
 			this.tabPageGenerate.UseVisualStyleBackColor = true;
 			// 
+			// pictureBoxGenerateRomTemplate
+			// 
+			this.pictureBoxGenerateRomTemplate.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxGenerateRomTemplate.Image")));
+			this.pictureBoxGenerateRomTemplate.Location = new System.Drawing.Point(717, 109);
+			this.pictureBoxGenerateRomTemplate.Name = "pictureBoxGenerateRomTemplate";
+			this.pictureBoxGenerateRomTemplate.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxGenerateRomTemplate.TabIndex = 35;
+			this.pictureBoxGenerateRomTemplate.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRomTemplate, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// buttonGenerateRomTemplate
+			// 
+			this.buttonGenerateRomTemplate.Location = new System.Drawing.Point(636, 106);
+			this.buttonGenerateRomTemplate.Name = "buttonGenerateRomTemplate";
+			this.buttonGenerateRomTemplate.Size = new System.Drawing.Size(75, 23);
+			this.buttonGenerateRomTemplate.TabIndex = 34;
+			this.buttonGenerateRomTemplate.Text = "...";
+			this.buttonGenerateRomTemplate.UseVisualStyleBackColor = true;
+			// 
+			// textBoxGenerateRomTemplate
+			// 
+			this.textBoxGenerateRomTemplate.Location = new System.Drawing.Point(261, 106);
+			this.textBoxGenerateRomTemplate.Name = "textBoxGenerateRomTemplate";
+			this.textBoxGenerateRomTemplate.Size = new System.Drawing.Size(369, 23);
+			this.textBoxGenerateRomTemplate.TabIndex = 33;
+			this.textBoxGenerateRomTemplate.Text = "templates/game.cfg";
+			// 
+			// labelGenerateOverlayRomTemplate
+			// 
+			this.labelGenerateOverlayRomTemplate.AutoSize = true;
+			this.labelGenerateOverlayRomTemplate.Location = new System.Drawing.Point(136, 109);
+			this.labelGenerateOverlayRomTemplate.Name = "labelGenerateOverlayRomTemplate";
+			this.labelGenerateOverlayRomTemplate.Size = new System.Drawing.Size(119, 15);
+			this.labelGenerateOverlayRomTemplate.TabIndex = 32;
+			this.labelGenerateOverlayRomTemplate.Text = "Rom config template";
+			// 
+			// pictureBoxGenerateOverlayTemplate
+			// 
+			this.pictureBoxGenerateOverlayTemplate.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxGenerateOverlayTemplate.Image")));
+			this.pictureBoxGenerateOverlayTemplate.Location = new System.Drawing.Point(717, 80);
+			this.pictureBoxGenerateOverlayTemplate.Name = "pictureBoxGenerateOverlayTemplate";
+			this.pictureBoxGenerateOverlayTemplate.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxGenerateOverlayTemplate.TabIndex = 31;
+			this.pictureBoxGenerateOverlayTemplate.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateOverlayTemplate, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// buttonGenerateOverlayTemplate
+			// 
+			this.buttonGenerateOverlayTemplate.Location = new System.Drawing.Point(636, 77);
+			this.buttonGenerateOverlayTemplate.Name = "buttonGenerateOverlayTemplate";
+			this.buttonGenerateOverlayTemplate.Size = new System.Drawing.Size(75, 23);
+			this.buttonGenerateOverlayTemplate.TabIndex = 30;
+			this.buttonGenerateOverlayTemplate.Text = "...";
+			this.buttonGenerateOverlayTemplate.UseVisualStyleBackColor = true;
+			// 
+			// textBoxGenerateOverlayTemplate
+			// 
+			this.textBoxGenerateOverlayTemplate.Location = new System.Drawing.Point(261, 77);
+			this.textBoxGenerateOverlayTemplate.Name = "textBoxGenerateOverlayTemplate";
+			this.textBoxGenerateOverlayTemplate.Size = new System.Drawing.Size(369, 23);
+			this.textBoxGenerateOverlayTemplate.TabIndex = 29;
+			this.textBoxGenerateOverlayTemplate.Text = "templates/overlay.cfg";
+			// 
+			// labelGenerateOverlayTemplate
+			// 
+			this.labelGenerateOverlayTemplate.AutoSize = true;
+			this.labelGenerateOverlayTemplate.Location = new System.Drawing.Point(158, 80);
+			this.labelGenerateOverlayTemplate.Name = "labelGenerateOverlayTemplate";
+			this.labelGenerateOverlayTemplate.Size = new System.Drawing.Size(97, 15);
+			this.labelGenerateOverlayTemplate.TabIndex = 28;
+			this.labelGenerateOverlayTemplate.Text = "Overlay template";
+			// 
+			// pictureBoxGenerateRoms
+			// 
+			this.pictureBoxGenerateRoms.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxGenerateRoms.Image")));
+			this.pictureBoxGenerateRoms.Location = new System.Drawing.Point(717, 51);
+			this.pictureBoxGenerateRoms.Name = "pictureBoxGenerateRoms";
+			this.pictureBoxGenerateRoms.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxGenerateRoms.TabIndex = 27;
+			this.pictureBoxGenerateRoms.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRoms, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// buttonGenerateRoms
+			// 
+			this.buttonGenerateRoms.Location = new System.Drawing.Point(636, 48);
+			this.buttonGenerateRoms.Name = "buttonGenerateRoms";
+			this.buttonGenerateRoms.Size = new System.Drawing.Size(75, 23);
+			this.buttonGenerateRoms.TabIndex = 26;
+			this.buttonGenerateRoms.Text = "...";
+			this.buttonGenerateRoms.UseVisualStyleBackColor = true;
+			// 
+			// textBoxGenerateRoms
+			// 
+			this.textBoxGenerateRoms.Location = new System.Drawing.Point(261, 48);
+			this.textBoxGenerateRoms.Name = "textBoxGenerateRoms";
+			this.textBoxGenerateRoms.Size = new System.Drawing.Size(369, 23);
+			this.textBoxGenerateRoms.TabIndex = 25;
+			// 
+			// labelGenerateRoms
+			// 
+			this.labelGenerateRoms.AutoSize = true;
+			this.labelGenerateRoms.Location = new System.Drawing.Point(84, 51);
+			this.labelGenerateRoms.Name = "labelGenerateRoms";
+			this.labelGenerateRoms.Size = new System.Drawing.Size(171, 15);
+			this.labelGenerateRoms.TabIndex = 24;
+			this.labelGenerateRoms.Text = "Path to the roms configs folder";
+			// 
+			// pictureBoxGenerateImages
+			// 
+			this.pictureBoxGenerateImages.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxGenerateImages.Image")));
+			this.pictureBoxGenerateImages.Location = new System.Drawing.Point(717, 22);
+			this.pictureBoxGenerateImages.Name = "pictureBoxGenerateImages";
+			this.pictureBoxGenerateImages.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxGenerateImages.TabIndex = 23;
+			this.pictureBoxGenerateImages.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateImages, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// buttonGenerateImages
+			// 
+			this.buttonGenerateImages.Location = new System.Drawing.Point(636, 19);
+			this.buttonGenerateImages.Name = "buttonGenerateImages";
+			this.buttonGenerateImages.Size = new System.Drawing.Size(75, 23);
+			this.buttonGenerateImages.TabIndex = 22;
+			this.buttonGenerateImages.Text = "...";
+			this.buttonGenerateImages.UseVisualStyleBackColor = true;
+			// 
+			// textBoxGenerateImages
+			// 
+			this.textBoxGenerateImages.Location = new System.Drawing.Point(261, 19);
+			this.textBoxGenerateImages.Name = "textBoxGenerateImages";
+			this.textBoxGenerateImages.Size = new System.Drawing.Size(369, 23);
+			this.textBoxGenerateImages.TabIndex = 21;
+			// 
+			// labelGenerateImages
+			// 
+			this.labelGenerateImages.AutoSize = true;
+			this.labelGenerateImages.Location = new System.Drawing.Point(149, 22);
+			this.labelGenerateImages.Name = "labelGenerateImages";
+			this.labelGenerateImages.Size = new System.Drawing.Size(106, 15);
+			this.labelGenerateImages.TabIndex = 20;
+			this.labelGenerateImages.Text = "Path to the images";
+			// 
 			// tabPageConvertMAMEtoRA
 			// 
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.checkBox1);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBox5);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.button5);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.textBox7);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.label6);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBox4);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.button4);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.textBox6);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.label5);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBox3);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.button3);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.textBox5);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.label4);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBox2);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.button2);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.textBox2);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.label3);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBox1);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.button1);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.textBox1);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.label2);
 			this.tabPageConvertMAMEtoRA.Location = new System.Drawing.Point(4, 24);
 			this.tabPageConvertMAMEtoRA.Name = "tabPageConvertMAMEtoRA";
 			this.tabPageConvertMAMEtoRA.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConvertMAMEtoRA.Size = new System.Drawing.Size(785, 419);
+			this.tabPageConvertMAMEtoRA.Size = new System.Drawing.Size(785, 293);
 			this.tabPageConvertMAMEtoRA.TabIndex = 2;
 			this.tabPageConvertMAMEtoRA.Text = "Convert from MAME to RA";
 			this.tabPageConvertMAMEtoRA.UseVisualStyleBackColor = true;
 			// 
+			// checkBox1
+			// 
+			this.checkBox1.AutoSize = true;
+			this.checkBox1.Location = new System.Drawing.Point(261, 164);
+			this.checkBox1.Name = "checkBox1";
+			this.checkBox1.Size = new System.Drawing.Size(145, 19);
+			this.checkBox1.TabIndex = 44;
+			this.checkBox1.Text = "Overwrite existing files";
+			this.checkBox1.UseVisualStyleBackColor = true;
+			// 
+			// pictureBox5
+			// 
+			this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+			this.pictureBox5.Location = new System.Drawing.Point(717, 138);
+			this.pictureBox5.Name = "pictureBox5";
+			this.pictureBox5.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox5.TabIndex = 43;
+			this.pictureBox5.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox5, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button5
+			// 
+			this.button5.Location = new System.Drawing.Point(636, 135);
+			this.button5.Name = "button5";
+			this.button5.Size = new System.Drawing.Size(75, 23);
+			this.button5.TabIndex = 42;
+			this.button5.Text = "...";
+			this.button5.UseVisualStyleBackColor = true;
+			// 
+			// textBox7
+			// 
+			this.textBox7.Location = new System.Drawing.Point(261, 135);
+			this.textBox7.Name = "textBox7";
+			this.textBox7.Size = new System.Drawing.Size(369, 23);
+			this.textBox7.TabIndex = 41;
+			this.textBox7.Text = "templates/game.cfg";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(136, 139);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(119, 15);
+			this.label6.TabIndex = 40;
+			this.label6.Text = "Rom config template";
+			// 
+			// pictureBox4
+			// 
+			this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+			this.pictureBox4.Location = new System.Drawing.Point(717, 109);
+			this.pictureBox4.Name = "pictureBox4";
+			this.pictureBox4.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox4.TabIndex = 39;
+			this.pictureBox4.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox4, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button4
+			// 
+			this.button4.Location = new System.Drawing.Point(636, 106);
+			this.button4.Name = "button4";
+			this.button4.Size = new System.Drawing.Size(75, 23);
+			this.button4.TabIndex = 38;
+			this.button4.Text = "...";
+			this.button4.UseVisualStyleBackColor = true;
+			// 
+			// textBox6
+			// 
+			this.textBox6.Location = new System.Drawing.Point(261, 106);
+			this.textBox6.Name = "textBox6";
+			this.textBox6.Size = new System.Drawing.Size(369, 23);
+			this.textBox6.TabIndex = 37;
+			this.textBox6.Text = "templates/overlay.cfg";
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(158, 110);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(97, 15);
+			this.label5.TabIndex = 36;
+			this.label5.Text = "Overlay template";
+			// 
+			// pictureBox3
+			// 
+			this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+			this.pictureBox3.Location = new System.Drawing.Point(717, 80);
+			this.pictureBox3.Name = "pictureBox3";
+			this.pictureBox3.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox3.TabIndex = 35;
+			this.pictureBox3.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox3, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button3
+			// 
+			this.button3.Location = new System.Drawing.Point(636, 77);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(75, 23);
+			this.button3.TabIndex = 34;
+			this.button3.Text = "...";
+			this.button3.UseVisualStyleBackColor = true;
+			// 
+			// textBox5
+			// 
+			this.textBox5.Location = new System.Drawing.Point(261, 77);
+			this.textBox5.Name = "textBox5";
+			this.textBox5.Size = new System.Drawing.Size(369, 23);
+			this.textBox5.TabIndex = 33;
+			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(138, 81);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(117, 15);
+			this.label4.TabIndex = 32;
+			this.label4.Text = "Output folder (roms)";
+			// 
+			// pictureBox2
+			// 
+			this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+			this.pictureBox2.Location = new System.Drawing.Point(717, 51);
+			this.pictureBox2.Name = "pictureBox2";
+			this.pictureBox2.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox2.TabIndex = 31;
+			this.pictureBox2.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox2, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button2
+			// 
+			this.button2.Location = new System.Drawing.Point(636, 48);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(75, 23);
+			this.button2.TabIndex = 30;
+			this.button2.Text = "...";
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// textBox2
+			// 
+			this.textBox2.Location = new System.Drawing.Point(261, 48);
+			this.textBox2.Name = "textBox2";
+			this.textBox2.Size = new System.Drawing.Size(369, 23);
+			this.textBox2.TabIndex = 29;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(122, 52);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(133, 15);
+			this.label3.TabIndex = 28;
+			this.label3.Text = "Output folder (overlays)";
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+			this.pictureBox1.Location = new System.Drawing.Point(717, 22);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox1.TabIndex = 27;
+			this.pictureBox1.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox1, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button1
+			// 
+			this.button1.Location = new System.Drawing.Point(636, 19);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 26;
+			this.button1.Text = "...";
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(261, 19);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(369, 23);
+			this.textBox1.TabIndex = 25;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(178, 23);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(77, 15);
+			this.label2.TabIndex = 24;
+			this.label2.Text = "Source folder";
+			// 
 			// tabPageConvertRAtoMAME
 			// 
+			this.tabPageConvertRAtoMAME.Controls.Add(this.checkBox3);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.checkBox2);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.pictureBox7);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.button7);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.textBox9);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.label8);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.pictureBox8);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.button8);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.textBox10);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.label9);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.pictureBox9);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.button9);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.textBox11);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.label10);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.pictureBox10);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.button10);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.textBox12);
+			this.tabPageConvertRAtoMAME.Controls.Add(this.label11);
 			this.tabPageConvertRAtoMAME.Location = new System.Drawing.Point(4, 24);
 			this.tabPageConvertRAtoMAME.Name = "tabPageConvertRAtoMAME";
 			this.tabPageConvertRAtoMAME.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConvertRAtoMAME.Size = new System.Drawing.Size(785, 419);
+			this.tabPageConvertRAtoMAME.Size = new System.Drawing.Size(785, 293);
 			this.tabPageConvertRAtoMAME.TabIndex = 3;
 			this.tabPageConvertRAtoMAME.Text = "Convert from RA to MAME";
 			this.tabPageConvertRAtoMAME.UseVisualStyleBackColor = true;
+			// 
+			// checkBox3
+			// 
+			this.checkBox3.AutoSize = true;
+			this.checkBox3.Checked = true;
+			this.checkBox3.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBox3.Location = new System.Drawing.Point(261, 137);
+			this.checkBox3.Name = "checkBox3";
+			this.checkBox3.Size = new System.Drawing.Size(245, 19);
+			this.checkBox3.TabIndex = 66;
+			this.checkBox3.Text = "Zips the result (otherwise creates a folder)";
+			this.checkBox3.UseVisualStyleBackColor = true;
+			// 
+			// checkBox2
+			// 
+			this.checkBox2.AutoSize = true;
+			this.checkBox2.Location = new System.Drawing.Point(261, 164);
+			this.checkBox2.Name = "checkBox2";
+			this.checkBox2.Size = new System.Drawing.Size(145, 19);
+			this.checkBox2.TabIndex = 65;
+			this.checkBox2.Text = "Overwrite existing files";
+			this.checkBox2.UseVisualStyleBackColor = true;
+			// 
+			// pictureBox7
+			// 
+			this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
+			this.pictureBox7.Location = new System.Drawing.Point(717, 109);
+			this.pictureBox7.Name = "pictureBox7";
+			this.pictureBox7.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox7.TabIndex = 60;
+			this.pictureBox7.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox7, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button7
+			// 
+			this.button7.Location = new System.Drawing.Point(636, 106);
+			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(75, 23);
+			this.button7.TabIndex = 59;
+			this.button7.Text = "...";
+			this.button7.UseVisualStyleBackColor = true;
+			// 
+			// textBox9
+			// 
+			this.textBox9.Location = new System.Drawing.Point(261, 106);
+			this.textBox9.Name = "textBox9";
+			this.textBox9.Size = new System.Drawing.Size(369, 23);
+			this.textBox9.TabIndex = 58;
+			this.textBox9.Text = "templates/default.lay";
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Location = new System.Drawing.Point(141, 110);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(114, 15);
+			this.label8.TabIndex = 57;
+			this.label8.Text = "MAME .lay template";
+			// 
+			// pictureBox8
+			// 
+			this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
+			this.pictureBox8.Location = new System.Drawing.Point(717, 80);
+			this.pictureBox8.Name = "pictureBox8";
+			this.pictureBox8.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox8.TabIndex = 56;
+			this.pictureBox8.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox8, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button8
+			// 
+			this.button8.Location = new System.Drawing.Point(636, 77);
+			this.button8.Name = "button8";
+			this.button8.Size = new System.Drawing.Size(75, 23);
+			this.button8.TabIndex = 55;
+			this.button8.Text = "...";
+			this.button8.UseVisualStyleBackColor = true;
+			// 
+			// textBox10
+			// 
+			this.textBox10.Location = new System.Drawing.Point(261, 77);
+			this.textBox10.Name = "textBox10";
+			this.textBox10.Size = new System.Drawing.Size(369, 23);
+			this.textBox10.TabIndex = 54;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Location = new System.Drawing.Point(176, 81);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(79, 15);
+			this.label9.TabIndex = 53;
+			this.label9.Text = "Output folder";
+			// 
+			// pictureBox9
+			// 
+			this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
+			this.pictureBox9.Location = new System.Drawing.Point(717, 51);
+			this.pictureBox9.Name = "pictureBox9";
+			this.pictureBox9.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox9.TabIndex = 52;
+			this.pictureBox9.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox9, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button9
+			// 
+			this.button9.Location = new System.Drawing.Point(636, 48);
+			this.button9.Name = "button9";
+			this.button9.Size = new System.Drawing.Size(75, 23);
+			this.button9.TabIndex = 51;
+			this.button9.Text = "...";
+			this.button9.UseVisualStyleBackColor = true;
+			// 
+			// textBox11
+			// 
+			this.textBox11.Location = new System.Drawing.Point(261, 48);
+			this.textBox11.Name = "textBox11";
+			this.textBox11.Size = new System.Drawing.Size(369, 23);
+			this.textBox11.TabIndex = 50;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(124, 52);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(131, 15);
+			this.label10.TabIndex = 49;
+			this.label10.Text = "Source folder (overlays)";
+			// 
+			// pictureBox10
+			// 
+			this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
+			this.pictureBox10.Location = new System.Drawing.Point(717, 22);
+			this.pictureBox10.Name = "pictureBox10";
+			this.pictureBox10.Size = new System.Drawing.Size(16, 16);
+			this.pictureBox10.TabIndex = 48;
+			this.pictureBox10.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBox10, "The folder where your overlays (images and associated .cfg files) are located.");
+			// 
+			// button10
+			// 
+			this.button10.Location = new System.Drawing.Point(636, 19);
+			this.button10.Name = "button10";
+			this.button10.Size = new System.Drawing.Size(75, 23);
+			this.button10.TabIndex = 47;
+			this.button10.Text = "...";
+			this.button10.UseVisualStyleBackColor = true;
+			// 
+			// textBox12
+			// 
+			this.textBox12.Location = new System.Drawing.Point(261, 19);
+			this.textBox12.Name = "textBox12";
+			this.textBox12.Size = new System.Drawing.Size(369, 23);
+			this.textBox12.TabIndex = 46;
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(140, 23);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(115, 15);
+			this.label11.TabIndex = 45;
+			this.label11.Text = "Source folder (roms)";
 			// 
 			// toolTipInfo
 			// 
@@ -538,11 +1197,34 @@
 			this.toolTipInfo.InitialDelay = 250;
 			this.toolTipInfo.ReshowDelay = 100;
 			// 
+			// pictureBoxErrorFile
+			// 
+			this.pictureBoxErrorFile.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxErrorFile.Image")));
+			this.pictureBoxErrorFile.Location = new System.Drawing.Point(721, 74);
+			this.pictureBoxErrorFile.Name = "pictureBoxErrorFile";
+			this.pictureBoxErrorFile.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxErrorFile.TabIndex = 22;
+			this.pictureBoxErrorFile.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxErrorFile, "Outputs a CSV file listing the encountered errors.\r\nUseful if you have a large nu" +
+        "mber of files to process.");
+			// 
+			// pictureBoxDebugFiles
+			// 
+			this.pictureBoxDebugFiles.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxDebugFiles.Image")));
+			this.pictureBoxDebugFiles.Location = new System.Drawing.Point(721, 102);
+			this.pictureBoxDebugFiles.Name = "pictureBoxDebugFiles";
+			this.pictureBoxDebugFiles.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxDebugFiles.TabIndex = 23;
+			this.pictureBoxDebugFiles.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxDebugFiles, "Outputs overlay images with a red square where the screen will appear.\r\nUseful if" +
+        " you want to check easily what the result will be like, but mostly used for debu" +
+        "gging the tool.");
+			// 
 			// StartPage
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(817, 651);
+			this.ClientSize = new System.Drawing.Size(817, 525);
 			this.Controls.Add(this.tabControlActions);
 			this.Controls.Add(this.panelCommon);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -550,6 +1232,8 @@
 			this.Text = "Bezel Tools";
 			this.panelCommon.ResumeLayout(false);
 			this.panelCommon.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMargin)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownThreads)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMargin)).EndInit();
 			this.tabControlActions.ResumeLayout(false);
@@ -561,6 +1245,27 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCheckExpectedPath)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCheckPathRom)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxCheckPathOverlay)).EndInit();
+			this.tabPageGenerate.ResumeLayout(false);
+			this.tabPageGenerate.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateRomTemplate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateOverlayTemplate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateRoms)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateImages)).EndInit();
+			this.tabPageConvertMAMEtoRA.ResumeLayout(false);
+			this.tabPageConvertMAMEtoRA.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.tabPageConvertRAtoMAME.ResumeLayout(false);
+			this.tabPageConvertRAtoMAME.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorFile)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDebugFiles)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -610,5 +1315,64 @@
 		private PictureBox pictureBoxCheckExpectedPath;
 		private PictureBox pictureBoxCheckPathRom;
 		private ToolTip toolTipInfo;
-	}
+        private PictureBox pictureBoxGenerateRomTemplate;
+        private Button buttonGenerateRomTemplate;
+        private TextBox textBoxGenerateRomTemplate;
+        private Label labelGenerateOverlayRomTemplate;
+        private PictureBox pictureBoxGenerateOverlayTemplate;
+        private Button buttonGenerateOverlayTemplate;
+        private TextBox textBoxGenerateOverlayTemplate;
+        private Label labelGenerateOverlayTemplate;
+        private PictureBox pictureBoxGenerateRoms;
+        private Button buttonGenerateRoms;
+        private TextBox textBoxGenerateRoms;
+        private Label labelGenerateRoms;
+        private PictureBox pictureBoxGenerateImages;
+        private Button buttonGenerateImages;
+        private TextBox textBoxGenerateImages;
+        private Label labelGenerateImages;
+        private CheckBox checkBox1;
+        private PictureBox pictureBox5;
+        private Button button5;
+        private TextBox textBox7;
+        private Label label6;
+        private PictureBox pictureBox4;
+        private Button button4;
+        private TextBox textBox6;
+        private Label label5;
+        private PictureBox pictureBox3;
+        private Button button3;
+        private TextBox textBox5;
+        private Label label4;
+        private PictureBox pictureBox2;
+        private Button button2;
+        private TextBox textBox2;
+        private Label label3;
+        private PictureBox pictureBox1;
+        private Button button1;
+        private TextBox textBox1;
+        private Label label2;
+        private CheckBox checkBox3;
+        private CheckBox checkBox2;
+        private PictureBox pictureBox7;
+        private Button button7;
+        private TextBox textBox9;
+        private Label label8;
+        private PictureBox pictureBox8;
+        private Button button8;
+        private TextBox textBox10;
+        private Label label9;
+        private PictureBox pictureBox9;
+        private Button button9;
+        private TextBox textBox11;
+        private Label label10;
+        private PictureBox pictureBox10;
+        private Button button10;
+        private TextBox textBox12;
+        private Label label11;
+        private PictureBox pictureBox11;
+        private PictureBox pictureBoxMargin;
+        private PictureBox pictureBoxDebugFiles;
+        private PictureBox pictureBoxErrorFile;
+    }
 }
