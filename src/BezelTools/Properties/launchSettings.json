@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "BezelTools": {
+      "commandName": "Project",
+      "commandLineArgs": "mtr --source .\\tmp\\overlays\\ --output-roms .\\tmp\\out\\roms --output-overlays .\\tmp\\out\\overlays --template-game .\\src\\templates\\game.cfg --template-overlay .\\src\\templates\\overlay.cfg",
+      "workingDirectory": "D:\\Perso\\mame-retroarch-bezel-converter"
+    }
+  }
+}

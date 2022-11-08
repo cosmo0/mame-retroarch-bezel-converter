@@ -5,7 +5,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>BezelTools</RootNamespace>
     <AssemblyName>bezel-tools</AssemblyName>
-    <ReleaseVersion>3.2</ReleaseVersion>
+    <ReleaseVersion>4.0</ReleaseVersion>
     <SynchReleaseVersion>false</SynchReleaseVersion>
     <RuntimeIdentifiers>win-x64;win-arm64;osx-x64;linux-x64;linux-arm64</RuntimeIdentifiers>
   </PropertyGroup>

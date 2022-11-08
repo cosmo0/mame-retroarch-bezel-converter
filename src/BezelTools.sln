@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BezelTools", "BezelTools.csproj", "{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BezelTools", "BezelTools\BezelTools.csproj", "{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{BB738DD6-20F6-4494-939E-BF26A167E238}"
 	ProjectSection(SolutionItems) = preProject
 		..\lay_files_specs.md = ..\lay_files_specs.md
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BezelTools.GUI", "BezelTools.GUI\BezelTools.GUI.csproj", "{86668810-CA9B-4CF6-8D86-48A78DD32FB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DC00E9D-18E5-4132-9E7F-82D8C3422E19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86668810-CA9B-4CF6-8D86-48A78DD32FB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86668810-CA9B-4CF6-8D86-48A78DD32FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86668810-CA9B-4CF6-8D86-48A78DD32FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86668810-CA9B-4CF6-8D86-48A78DD32FB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
