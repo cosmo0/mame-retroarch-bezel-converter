@@ -96,6 +96,7 @@
 			this.textBoxGenerateImages = new System.Windows.Forms.TextBox();
 			this.labelGenerateImages = new System.Windows.Forms.Label();
 			this.tabPageConvertMAMEtoRA = new System.Windows.Forms.TabPage();
+			this.checkBoxMtrUseFirstView = new System.Windows.Forms.CheckBox();
 			this.pictureBoxMtrSourceConfig = new System.Windows.Forms.PictureBox();
 			this.buttonMtrSourceConfig = new System.Windows.Forms.Button();
 			this.textBoxMtrSourceConfig = new System.Windows.Forms.TextBox();
@@ -147,7 +148,6 @@
 			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.checkBoxMtrUseFirstView = new System.Windows.Forms.CheckBox();
 			this.panelCommon.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTargetResolution)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDebugFiles)).BeginInit();
@@ -951,6 +951,22 @@
 			this.tabPageConvertMAMEtoRA.Text = "Convert from MAME to RA";
 			this.tabPageConvertMAMEtoRA.UseVisualStyleBackColor = true;
 			// 
+			// checkBoxMtrUseFirstView
+			// 
+			this.checkBoxMtrUseFirstView.AutoSize = true;
+			this.checkBoxMtrUseFirstView.Checked = true;
+			this.checkBoxMtrUseFirstView.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxMtrUseFirstView.Enabled = false;
+			this.checkBoxMtrUseFirstView.Location = new System.Drawing.Point(261, 218);
+			this.checkBoxMtrUseFirstView.Name = "checkBoxMtrUseFirstView";
+			this.checkBoxMtrUseFirstView.Size = new System.Drawing.Size(213, 19);
+			this.checkBoxMtrUseFirstView.TabIndex = 50;
+			this.checkBoxMtrUseFirstView.Text = "Use the first view found in the bezel";
+			this.toolTipInfo.SetToolTip(this.checkBoxMtrUseFirstView, "Choosing a different view is not implemented in the GUI at this time.\r\nUse the co" +
+        "mmand-line version of the tool (bezel-tools.exe) if you want to be able to choos" +
+        "e.");
+			this.checkBoxMtrUseFirstView.UseVisualStyleBackColor = true;
+			// 
 			// pictureBoxMtrSourceConfig
 			// 
 			this.pictureBoxMtrSourceConfig.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrSourceConfig.Image")));
@@ -992,7 +1008,7 @@
 			this.checkBoxMtrScanBezel.AutoSize = true;
 			this.checkBoxMtrScanBezel.Checked = true;
 			this.checkBoxMtrScanBezel.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxMtrScanBezel.Location = new System.Drawing.Point(261, 224);
+			this.checkBoxMtrScanBezel.Location = new System.Drawing.Point(261, 193);
 			this.checkBoxMtrScanBezel.Name = "checkBoxMtrScanBezel";
 			this.checkBoxMtrScanBezel.Size = new System.Drawing.Size(370, 19);
 			this.checkBoxMtrScanBezel.TabIndex = 45;
@@ -1003,7 +1019,7 @@
 			// 
 			this.buttonStartMtr.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.buttonStartMtr.Image = ((System.Drawing.Image)(resources.GetObject("buttonStartMtr.Image")));
-			this.buttonStartMtr.Location = new System.Drawing.Point(261, 298);
+			this.buttonStartMtr.Location = new System.Drawing.Point(261, 267);
 			this.buttonStartMtr.Name = "buttonStartMtr";
 			this.buttonStartMtr.Size = new System.Drawing.Size(450, 29);
 			this.buttonStartMtr.TabIndex = 44;
@@ -1016,7 +1032,7 @@
 			// checkBoxMtrOverwrite
 			// 
 			this.checkBoxMtrOverwrite.AutoSize = true;
-			this.checkBoxMtrOverwrite.Location = new System.Drawing.Point(261, 273);
+			this.checkBoxMtrOverwrite.Location = new System.Drawing.Point(261, 242);
 			this.checkBoxMtrOverwrite.Name = "checkBoxMtrOverwrite";
 			this.checkBoxMtrOverwrite.Size = new System.Drawing.Size(145, 19);
 			this.checkBoxMtrOverwrite.TabIndex = 15;
@@ -1026,16 +1042,16 @@
 			// pictureBoxMtrTemplateRom
 			// 
 			this.pictureBoxMtrTemplateRom.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrTemplateRom.Image")));
-			this.pictureBoxMtrTemplateRom.Location = new System.Drawing.Point(717, 198);
+			this.pictureBoxMtrTemplateRom.Location = new System.Drawing.Point(717, 167);
 			this.pictureBoxMtrTemplateRom.Name = "pictureBoxMtrTemplateRom";
 			this.pictureBoxMtrTemplateRom.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrTemplateRom.TabIndex = 43;
 			this.pictureBoxMtrTemplateRom.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrTemplateRom, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrTemplateRom, "The template for a rom config");
 			// 
 			// buttonMtrTemplateRom
 			// 
-			this.buttonMtrTemplateRom.Location = new System.Drawing.Point(636, 195);
+			this.buttonMtrTemplateRom.Location = new System.Drawing.Point(636, 164);
 			this.buttonMtrTemplateRom.Name = "buttonMtrTemplateRom";
 			this.buttonMtrTemplateRom.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrTemplateRom.TabIndex = 14;
@@ -1045,7 +1061,7 @@
 			// 
 			// textBoxMtrTemplateRom
 			// 
-			this.textBoxMtrTemplateRom.Location = new System.Drawing.Point(261, 195);
+			this.textBoxMtrTemplateRom.Location = new System.Drawing.Point(261, 164);
 			this.textBoxMtrTemplateRom.Name = "textBoxMtrTemplateRom";
 			this.textBoxMtrTemplateRom.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrTemplateRom.TabIndex = 13;
@@ -1054,7 +1070,7 @@
 			// labelMtrTemplateRom
 			// 
 			this.labelMtrTemplateRom.AutoSize = true;
-			this.labelMtrTemplateRom.Location = new System.Drawing.Point(136, 199);
+			this.labelMtrTemplateRom.Location = new System.Drawing.Point(136, 168);
 			this.labelMtrTemplateRom.Name = "labelMtrTemplateRom";
 			this.labelMtrTemplateRom.Size = new System.Drawing.Size(119, 15);
 			this.labelMtrTemplateRom.TabIndex = 12;
@@ -1063,16 +1079,16 @@
 			// pictureBoxMtrTemplateOverlay
 			// 
 			this.pictureBoxMtrTemplateOverlay.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrTemplateOverlay.Image")));
-			this.pictureBoxMtrTemplateOverlay.Location = new System.Drawing.Point(717, 169);
+			this.pictureBoxMtrTemplateOverlay.Location = new System.Drawing.Point(717, 138);
 			this.pictureBoxMtrTemplateOverlay.Name = "pictureBoxMtrTemplateOverlay";
 			this.pictureBoxMtrTemplateOverlay.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrTemplateOverlay.TabIndex = 39;
 			this.pictureBoxMtrTemplateOverlay.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrTemplateOverlay, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrTemplateOverlay, "The template for an overlay config");
 			// 
 			// buttonMtrTemplateOverlay
 			// 
-			this.buttonMtrTemplateOverlay.Location = new System.Drawing.Point(636, 166);
+			this.buttonMtrTemplateOverlay.Location = new System.Drawing.Point(636, 135);
 			this.buttonMtrTemplateOverlay.Name = "buttonMtrTemplateOverlay";
 			this.buttonMtrTemplateOverlay.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrTemplateOverlay.TabIndex = 11;
@@ -1082,7 +1098,7 @@
 			// 
 			// textBoxMtrTemplateOverlay
 			// 
-			this.textBoxMtrTemplateOverlay.Location = new System.Drawing.Point(261, 166);
+			this.textBoxMtrTemplateOverlay.Location = new System.Drawing.Point(261, 135);
 			this.textBoxMtrTemplateOverlay.Name = "textBoxMtrTemplateOverlay";
 			this.textBoxMtrTemplateOverlay.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrTemplateOverlay.TabIndex = 10;
@@ -1091,7 +1107,7 @@
 			// labelMtrTemplateOverlay
 			// 
 			this.labelMtrTemplateOverlay.AutoSize = true;
-			this.labelMtrTemplateOverlay.Location = new System.Drawing.Point(158, 170);
+			this.labelMtrTemplateOverlay.Location = new System.Drawing.Point(158, 139);
 			this.labelMtrTemplateOverlay.Name = "labelMtrTemplateOverlay";
 			this.labelMtrTemplateOverlay.Size = new System.Drawing.Size(97, 15);
 			this.labelMtrTemplateOverlay.TabIndex = 9;
@@ -1100,16 +1116,16 @@
 			// pictureBoxMtrOutRoms
 			// 
 			this.pictureBoxMtrOutRoms.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrOutRoms.Image")));
-			this.pictureBoxMtrOutRoms.Location = new System.Drawing.Point(717, 140);
+			this.pictureBoxMtrOutRoms.Location = new System.Drawing.Point(717, 109);
 			this.pictureBoxMtrOutRoms.Name = "pictureBoxMtrOutRoms";
 			this.pictureBoxMtrOutRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrOutRoms.TabIndex = 35;
 			this.pictureBoxMtrOutRoms.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutRoms, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutRoms, "The folder where the rom configs will be saved");
 			// 
 			// buttonMtrOutRoms
 			// 
-			this.buttonMtrOutRoms.Location = new System.Drawing.Point(636, 137);
+			this.buttonMtrOutRoms.Location = new System.Drawing.Point(636, 106);
 			this.buttonMtrOutRoms.Name = "buttonMtrOutRoms";
 			this.buttonMtrOutRoms.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrOutRoms.TabIndex = 8;
@@ -1119,7 +1135,7 @@
 			// 
 			// textBoxMtrOutRoms
 			// 
-			this.textBoxMtrOutRoms.Location = new System.Drawing.Point(261, 137);
+			this.textBoxMtrOutRoms.Location = new System.Drawing.Point(261, 106);
 			this.textBoxMtrOutRoms.Name = "textBoxMtrOutRoms";
 			this.textBoxMtrOutRoms.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrOutRoms.TabIndex = 7;
@@ -1127,7 +1143,7 @@
 			// labelMtrOutRoms
 			// 
 			this.labelMtrOutRoms.AutoSize = true;
-			this.labelMtrOutRoms.Location = new System.Drawing.Point(138, 141);
+			this.labelMtrOutRoms.Location = new System.Drawing.Point(138, 110);
 			this.labelMtrOutRoms.Name = "labelMtrOutRoms";
 			this.labelMtrOutRoms.Size = new System.Drawing.Size(117, 15);
 			this.labelMtrOutRoms.TabIndex = 6;
@@ -1136,16 +1152,16 @@
 			// pictureBoxMtrOutOverlays
 			// 
 			this.pictureBoxMtrOutOverlays.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrOutOverlays.Image")));
-			this.pictureBoxMtrOutOverlays.Location = new System.Drawing.Point(717, 111);
+			this.pictureBoxMtrOutOverlays.Location = new System.Drawing.Point(717, 80);
 			this.pictureBoxMtrOutOverlays.Name = "pictureBoxMtrOutOverlays";
 			this.pictureBoxMtrOutOverlays.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrOutOverlays.TabIndex = 31;
 			this.pictureBoxMtrOutOverlays.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutOverlays, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutOverlays, "The folder where the overlays will be saved");
 			// 
 			// buttonMtrOutOverlays
 			// 
-			this.buttonMtrOutOverlays.Location = new System.Drawing.Point(636, 108);
+			this.buttonMtrOutOverlays.Location = new System.Drawing.Point(636, 77);
 			this.buttonMtrOutOverlays.Name = "buttonMtrOutOverlays";
 			this.buttonMtrOutOverlays.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrOutOverlays.TabIndex = 5;
@@ -1155,7 +1171,7 @@
 			// 
 			// textBoxMtrOutOverlays
 			// 
-			this.textBoxMtrOutOverlays.Location = new System.Drawing.Point(261, 108);
+			this.textBoxMtrOutOverlays.Location = new System.Drawing.Point(261, 77);
 			this.textBoxMtrOutOverlays.Name = "textBoxMtrOutOverlays";
 			this.textBoxMtrOutOverlays.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrOutOverlays.TabIndex = 4;
@@ -1163,7 +1179,7 @@
 			// labelMtrOutOverlays
 			// 
 			this.labelMtrOutOverlays.AutoSize = true;
-			this.labelMtrOutOverlays.Location = new System.Drawing.Point(122, 112);
+			this.labelMtrOutOverlays.Location = new System.Drawing.Point(122, 81);
 			this.labelMtrOutOverlays.Name = "labelMtrOutOverlays";
 			this.labelMtrOutOverlays.Size = new System.Drawing.Size(133, 15);
 			this.labelMtrOutOverlays.TabIndex = 3;
@@ -1177,7 +1193,7 @@
 			this.pictureBoxMtrSource.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrSource.TabIndex = 27;
 			this.pictureBoxMtrSource.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSource, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSource, "The folder where the MAME bezels are located.\r\n");
 			// 
 			// buttonMtrSource
 			// 
@@ -1415,22 +1431,6 @@
 			this.toolTipInfo.AutoPopDelay = 0;
 			this.toolTipInfo.InitialDelay = 250;
 			this.toolTipInfo.ReshowDelay = 100;
-			// 
-			// checkBoxMtrUseFirstView
-			// 
-			this.checkBoxMtrUseFirstView.AutoSize = true;
-			this.checkBoxMtrUseFirstView.Checked = true;
-			this.checkBoxMtrUseFirstView.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxMtrUseFirstView.Enabled = false;
-			this.checkBoxMtrUseFirstView.Location = new System.Drawing.Point(261, 249);
-			this.checkBoxMtrUseFirstView.Name = "checkBoxMtrUseFirstView";
-			this.checkBoxMtrUseFirstView.Size = new System.Drawing.Size(213, 19);
-			this.checkBoxMtrUseFirstView.TabIndex = 50;
-			this.checkBoxMtrUseFirstView.Text = "Use the first view found in the bezel";
-			this.toolTipInfo.SetToolTip(this.checkBoxMtrUseFirstView, "Choosing a different view is not implemented in the GUI at this time.\r\nUse the co" +
-        "mmand-line version of the tool (bezel-tools.exe) if you want to be able to choos" +
-        "e.");
-			this.checkBoxMtrUseFirstView.UseVisualStyleBackColor = true;
 			// 
 			// StartPage
 			// 
