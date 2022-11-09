@@ -77,6 +77,7 @@
 			this.labelCheckTemplateOverlay = new System.Windows.Forms.Label();
 			this.labelCheckInputOverlay = new System.Windows.Forms.Label();
 			this.tabPageGenerate = new System.Windows.Forms.TabPage();
+			this.checkBoxGenerateOverwrite = new System.Windows.Forms.CheckBox();
 			this.buttonStartGenerate = new System.Windows.Forms.Button();
 			this.pictureBoxGenerateRomTemplate = new System.Windows.Forms.PictureBox();
 			this.buttonGenerateRomTemplate = new System.Windows.Forms.Button();
@@ -95,6 +96,11 @@
 			this.textBoxGenerateImages = new System.Windows.Forms.TextBox();
 			this.labelGenerateImages = new System.Windows.Forms.Label();
 			this.tabPageConvertMAMEtoRA = new System.Windows.Forms.TabPage();
+			this.pictureBoxMtrSourceConfig = new System.Windows.Forms.PictureBox();
+			this.buttonMtrSourceConfig = new System.Windows.Forms.Button();
+			this.textBoxMtrSourceConfig = new System.Windows.Forms.TextBox();
+			this.labelMtrSourceConfig = new System.Windows.Forms.Label();
+			this.checkBoxMtrScanBezel = new System.Windows.Forms.CheckBox();
 			this.buttonStartMtr = new System.Windows.Forms.Button();
 			this.checkBoxMtrOverwrite = new System.Windows.Forms.CheckBox();
 			this.pictureBoxMtrTemplateRom = new System.Windows.Forms.PictureBox();
@@ -141,6 +147,7 @@
 			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.checkBoxMtrUseFirstView = new System.Windows.Forms.CheckBox();
 			this.panelCommon.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTargetResolution)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDebugFiles)).BeginInit();
@@ -164,6 +171,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateRoms)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateImages)).BeginInit();
 			this.tabPageConvertMAMEtoRA.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrSourceConfig)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrTemplateRom)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrTemplateOverlay)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrOutRoms)).BeginInit();
@@ -708,6 +716,7 @@
 			// 
 			// tabPageGenerate
 			// 
+			this.tabPageGenerate.Controls.Add(this.checkBoxGenerateOverwrite);
 			this.tabPageGenerate.Controls.Add(this.buttonStartGenerate);
 			this.tabPageGenerate.Controls.Add(this.pictureBoxGenerateRomTemplate);
 			this.tabPageGenerate.Controls.Add(this.buttonGenerateRomTemplate);
@@ -733,11 +742,21 @@
 			this.tabPageGenerate.Text = "Generate from images";
 			this.tabPageGenerate.UseVisualStyleBackColor = true;
 			// 
+			// checkBoxGenerateOverwrite
+			// 
+			this.checkBoxGenerateOverwrite.AutoSize = true;
+			this.checkBoxGenerateOverwrite.Location = new System.Drawing.Point(261, 135);
+			this.checkBoxGenerateOverwrite.Name = "checkBoxGenerateOverwrite";
+			this.checkBoxGenerateOverwrite.Size = new System.Drawing.Size(145, 19);
+			this.checkBoxGenerateOverwrite.TabIndex = 37;
+			this.checkBoxGenerateOverwrite.Text = "Overwrite existing files";
+			this.checkBoxGenerateOverwrite.UseVisualStyleBackColor = true;
+			// 
 			// buttonStartGenerate
 			// 
 			this.buttonStartGenerate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.buttonStartGenerate.Image = ((System.Drawing.Image)(resources.GetObject("buttonStartGenerate.Image")));
-			this.buttonStartGenerate.Location = new System.Drawing.Point(261, 135);
+			this.buttonStartGenerate.Location = new System.Drawing.Point(261, 160);
 			this.buttonStartGenerate.Name = "buttonStartGenerate";
 			this.buttonStartGenerate.Size = new System.Drawing.Size(450, 29);
 			this.buttonStartGenerate.TabIndex = 36;
@@ -745,6 +764,7 @@
 			this.buttonStartGenerate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartGenerate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartGenerate.UseVisualStyleBackColor = true;
+			this.buttonStartGenerate.Click += new System.EventHandler(this.buttonStartGenerate_Click);
 			// 
 			// pictureBoxGenerateRomTemplate
 			// 
@@ -754,7 +774,7 @@
 			this.pictureBoxGenerateRomTemplate.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxGenerateRomTemplate.TabIndex = 35;
 			this.pictureBoxGenerateRomTemplate.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRomTemplate, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRomTemplate, "The template for game configs.");
 			// 
 			// buttonGenerateRomTemplate
 			// 
@@ -764,6 +784,7 @@
 			this.buttonGenerateRomTemplate.TabIndex = 11;
 			this.buttonGenerateRomTemplate.Text = "...";
 			this.buttonGenerateRomTemplate.UseVisualStyleBackColor = true;
+			this.buttonGenerateRomTemplate.Click += new System.EventHandler(this.buttonGenerateRomTemplate_Click);
 			// 
 			// textBoxGenerateRomTemplate
 			// 
@@ -790,7 +811,7 @@
 			this.pictureBoxGenerateOverlayTemplate.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxGenerateOverlayTemplate.TabIndex = 31;
 			this.pictureBoxGenerateOverlayTemplate.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateOverlayTemplate, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateOverlayTemplate, "The template for overlay configs.");
 			// 
 			// buttonGenerateOverlayTemplate
 			// 
@@ -800,6 +821,7 @@
 			this.buttonGenerateOverlayTemplate.TabIndex = 8;
 			this.buttonGenerateOverlayTemplate.Text = "...";
 			this.buttonGenerateOverlayTemplate.UseVisualStyleBackColor = true;
+			this.buttonGenerateOverlayTemplate.Click += new System.EventHandler(this.buttonGenerateOverlayTemplate_Click);
 			// 
 			// textBoxGenerateOverlayTemplate
 			// 
@@ -826,7 +848,7 @@
 			this.pictureBoxGenerateRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxGenerateRoms.TabIndex = 27;
 			this.pictureBoxGenerateRoms.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRoms, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRoms, "The folder where the rom config files will be saved.");
 			// 
 			// buttonGenerateRoms
 			// 
@@ -836,6 +858,7 @@
 			this.buttonGenerateRoms.TabIndex = 5;
 			this.buttonGenerateRoms.Text = "...";
 			this.buttonGenerateRoms.UseVisualStyleBackColor = true;
+			this.buttonGenerateRoms.Click += new System.EventHandler(this.buttonGenerateRoms_Click);
 			// 
 			// textBoxGenerateRoms
 			// 
@@ -861,7 +884,8 @@
 			this.pictureBoxGenerateImages.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxGenerateImages.TabIndex = 23;
 			this.pictureBoxGenerateImages.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateImages, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateImages, "The folder where your images are located.\r\nThey should have the same name as the " +
+        "rom, ex: \"aburner2.png\"");
 			// 
 			// buttonGenerateImages
 			// 
@@ -871,6 +895,7 @@
 			this.buttonGenerateImages.TabIndex = 2;
 			this.buttonGenerateImages.Text = "...";
 			this.buttonGenerateImages.UseVisualStyleBackColor = true;
+			this.buttonGenerateImages.Click += new System.EventHandler(this.buttonGenerateImages_Click);
 			// 
 			// textBoxGenerateImages
 			// 
@@ -890,6 +915,12 @@
 			// 
 			// tabPageConvertMAMEtoRA
 			// 
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.checkBoxMtrUseFirstView);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBoxMtrSourceConfig);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.buttonMtrSourceConfig);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.textBoxMtrSourceConfig);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.labelMtrSourceConfig);
+			this.tabPageConvertMAMEtoRA.Controls.Add(this.checkBoxMtrScanBezel);
 			this.tabPageConvertMAMEtoRA.Controls.Add(this.buttonStartMtr);
 			this.tabPageConvertMAMEtoRA.Controls.Add(this.checkBoxMtrOverwrite);
 			this.tabPageConvertMAMEtoRA.Controls.Add(this.pictureBoxMtrTemplateRom);
@@ -920,11 +951,59 @@
 			this.tabPageConvertMAMEtoRA.Text = "Convert from MAME to RA";
 			this.tabPageConvertMAMEtoRA.UseVisualStyleBackColor = true;
 			// 
+			// pictureBoxMtrSourceConfig
+			// 
+			this.pictureBoxMtrSourceConfig.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrSourceConfig.Image")));
+			this.pictureBoxMtrSourceConfig.Location = new System.Drawing.Point(717, 51);
+			this.pictureBoxMtrSourceConfig.Name = "pictureBoxMtrSourceConfig";
+			this.pictureBoxMtrSourceConfig.Size = new System.Drawing.Size(16, 16);
+			this.pictureBoxMtrSourceConfig.TabIndex = 49;
+			this.pictureBoxMtrSourceConfig.TabStop = false;
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSourceConfig, "The folder where the MAME configuration files are located.");
+			// 
+			// buttonMtrSourceConfig
+			// 
+			this.buttonMtrSourceConfig.Location = new System.Drawing.Point(636, 48);
+			this.buttonMtrSourceConfig.Name = "buttonMtrSourceConfig";
+			this.buttonMtrSourceConfig.Size = new System.Drawing.Size(75, 23);
+			this.buttonMtrSourceConfig.TabIndex = 48;
+			this.buttonMtrSourceConfig.Text = "...";
+			this.buttonMtrSourceConfig.UseVisualStyleBackColor = true;
+			this.buttonMtrSourceConfig.Click += new System.EventHandler(this.buttonMtrSourceConfig_Click);
+			// 
+			// textBoxMtrSourceConfig
+			// 
+			this.textBoxMtrSourceConfig.Location = new System.Drawing.Point(261, 48);
+			this.textBoxMtrSourceConfig.Name = "textBoxMtrSourceConfig";
+			this.textBoxMtrSourceConfig.Size = new System.Drawing.Size(369, 23);
+			this.textBoxMtrSourceConfig.TabIndex = 47;
+			// 
+			// labelMtrSourceConfig
+			// 
+			this.labelMtrSourceConfig.AutoSize = true;
+			this.labelMtrSourceConfig.Location = new System.Drawing.Point(102, 52);
+			this.labelMtrSourceConfig.Name = "labelMtrSourceConfig";
+			this.labelMtrSourceConfig.Size = new System.Drawing.Size(153, 15);
+			this.labelMtrSourceConfig.TabIndex = 46;
+			this.labelMtrSourceConfig.Text = "Configuration source folder";
+			// 
+			// checkBoxMtrScanBezel
+			// 
+			this.checkBoxMtrScanBezel.AutoSize = true;
+			this.checkBoxMtrScanBezel.Checked = true;
+			this.checkBoxMtrScanBezel.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxMtrScanBezel.Location = new System.Drawing.Point(261, 224);
+			this.checkBoxMtrScanBezel.Name = "checkBoxMtrScanBezel";
+			this.checkBoxMtrScanBezel.Size = new System.Drawing.Size(370, 19);
+			this.checkBoxMtrScanBezel.TabIndex = 45;
+			this.checkBoxMtrScanBezel.Text = "Scan bezel for screen coordinates (otherwise, converts the values)";
+			this.checkBoxMtrScanBezel.UseVisualStyleBackColor = true;
+			// 
 			// buttonStartMtr
 			// 
 			this.buttonStartMtr.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
 			this.buttonStartMtr.Image = ((System.Drawing.Image)(resources.GetObject("buttonStartMtr.Image")));
-			this.buttonStartMtr.Location = new System.Drawing.Point(261, 189);
+			this.buttonStartMtr.Location = new System.Drawing.Point(261, 298);
 			this.buttonStartMtr.Name = "buttonStartMtr";
 			this.buttonStartMtr.Size = new System.Drawing.Size(450, 29);
 			this.buttonStartMtr.TabIndex = 44;
@@ -932,11 +1011,12 @@
 			this.buttonStartMtr.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartMtr.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartMtr.UseVisualStyleBackColor = true;
+			this.buttonStartMtr.Click += new System.EventHandler(this.buttonStartMtr_Click);
 			// 
 			// checkBoxMtrOverwrite
 			// 
 			this.checkBoxMtrOverwrite.AutoSize = true;
-			this.checkBoxMtrOverwrite.Location = new System.Drawing.Point(261, 164);
+			this.checkBoxMtrOverwrite.Location = new System.Drawing.Point(261, 273);
 			this.checkBoxMtrOverwrite.Name = "checkBoxMtrOverwrite";
 			this.checkBoxMtrOverwrite.Size = new System.Drawing.Size(145, 19);
 			this.checkBoxMtrOverwrite.TabIndex = 15;
@@ -946,7 +1026,7 @@
 			// pictureBoxMtrTemplateRom
 			// 
 			this.pictureBoxMtrTemplateRom.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrTemplateRom.Image")));
-			this.pictureBoxMtrTemplateRom.Location = new System.Drawing.Point(717, 138);
+			this.pictureBoxMtrTemplateRom.Location = new System.Drawing.Point(717, 198);
 			this.pictureBoxMtrTemplateRom.Name = "pictureBoxMtrTemplateRom";
 			this.pictureBoxMtrTemplateRom.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrTemplateRom.TabIndex = 43;
@@ -955,16 +1035,17 @@
 			// 
 			// buttonMtrTemplateRom
 			// 
-			this.buttonMtrTemplateRom.Location = new System.Drawing.Point(636, 135);
+			this.buttonMtrTemplateRom.Location = new System.Drawing.Point(636, 195);
 			this.buttonMtrTemplateRom.Name = "buttonMtrTemplateRom";
 			this.buttonMtrTemplateRom.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrTemplateRom.TabIndex = 14;
 			this.buttonMtrTemplateRom.Text = "...";
 			this.buttonMtrTemplateRom.UseVisualStyleBackColor = true;
+			this.buttonMtrTemplateRom.Click += new System.EventHandler(this.buttonMtrTemplateRom_Click);
 			// 
 			// textBoxMtrTemplateRom
 			// 
-			this.textBoxMtrTemplateRom.Location = new System.Drawing.Point(261, 135);
+			this.textBoxMtrTemplateRom.Location = new System.Drawing.Point(261, 195);
 			this.textBoxMtrTemplateRom.Name = "textBoxMtrTemplateRom";
 			this.textBoxMtrTemplateRom.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrTemplateRom.TabIndex = 13;
@@ -973,7 +1054,7 @@
 			// labelMtrTemplateRom
 			// 
 			this.labelMtrTemplateRom.AutoSize = true;
-			this.labelMtrTemplateRom.Location = new System.Drawing.Point(136, 139);
+			this.labelMtrTemplateRom.Location = new System.Drawing.Point(136, 199);
 			this.labelMtrTemplateRom.Name = "labelMtrTemplateRom";
 			this.labelMtrTemplateRom.Size = new System.Drawing.Size(119, 15);
 			this.labelMtrTemplateRom.TabIndex = 12;
@@ -982,7 +1063,7 @@
 			// pictureBoxMtrTemplateOverlay
 			// 
 			this.pictureBoxMtrTemplateOverlay.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrTemplateOverlay.Image")));
-			this.pictureBoxMtrTemplateOverlay.Location = new System.Drawing.Point(717, 109);
+			this.pictureBoxMtrTemplateOverlay.Location = new System.Drawing.Point(717, 169);
 			this.pictureBoxMtrTemplateOverlay.Name = "pictureBoxMtrTemplateOverlay";
 			this.pictureBoxMtrTemplateOverlay.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrTemplateOverlay.TabIndex = 39;
@@ -991,16 +1072,17 @@
 			// 
 			// buttonMtrTemplateOverlay
 			// 
-			this.buttonMtrTemplateOverlay.Location = new System.Drawing.Point(636, 106);
+			this.buttonMtrTemplateOverlay.Location = new System.Drawing.Point(636, 166);
 			this.buttonMtrTemplateOverlay.Name = "buttonMtrTemplateOverlay";
 			this.buttonMtrTemplateOverlay.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrTemplateOverlay.TabIndex = 11;
 			this.buttonMtrTemplateOverlay.Text = "...";
 			this.buttonMtrTemplateOverlay.UseVisualStyleBackColor = true;
+			this.buttonMtrTemplateOverlay.Click += new System.EventHandler(this.buttonMtrTemplateOverlay_Click);
 			// 
 			// textBoxMtrTemplateOverlay
 			// 
-			this.textBoxMtrTemplateOverlay.Location = new System.Drawing.Point(261, 106);
+			this.textBoxMtrTemplateOverlay.Location = new System.Drawing.Point(261, 166);
 			this.textBoxMtrTemplateOverlay.Name = "textBoxMtrTemplateOverlay";
 			this.textBoxMtrTemplateOverlay.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrTemplateOverlay.TabIndex = 10;
@@ -1009,7 +1091,7 @@
 			// labelMtrTemplateOverlay
 			// 
 			this.labelMtrTemplateOverlay.AutoSize = true;
-			this.labelMtrTemplateOverlay.Location = new System.Drawing.Point(158, 110);
+			this.labelMtrTemplateOverlay.Location = new System.Drawing.Point(158, 170);
 			this.labelMtrTemplateOverlay.Name = "labelMtrTemplateOverlay";
 			this.labelMtrTemplateOverlay.Size = new System.Drawing.Size(97, 15);
 			this.labelMtrTemplateOverlay.TabIndex = 9;
@@ -1018,7 +1100,7 @@
 			// pictureBoxMtrOutRoms
 			// 
 			this.pictureBoxMtrOutRoms.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrOutRoms.Image")));
-			this.pictureBoxMtrOutRoms.Location = new System.Drawing.Point(717, 80);
+			this.pictureBoxMtrOutRoms.Location = new System.Drawing.Point(717, 140);
 			this.pictureBoxMtrOutRoms.Name = "pictureBoxMtrOutRoms";
 			this.pictureBoxMtrOutRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrOutRoms.TabIndex = 35;
@@ -1027,16 +1109,17 @@
 			// 
 			// buttonMtrOutRoms
 			// 
-			this.buttonMtrOutRoms.Location = new System.Drawing.Point(636, 77);
+			this.buttonMtrOutRoms.Location = new System.Drawing.Point(636, 137);
 			this.buttonMtrOutRoms.Name = "buttonMtrOutRoms";
 			this.buttonMtrOutRoms.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrOutRoms.TabIndex = 8;
 			this.buttonMtrOutRoms.Text = "...";
 			this.buttonMtrOutRoms.UseVisualStyleBackColor = true;
+			this.buttonMtrOutRoms.Click += new System.EventHandler(this.buttonMtrOutRoms_Click);
 			// 
 			// textBoxMtrOutRoms
 			// 
-			this.textBoxMtrOutRoms.Location = new System.Drawing.Point(261, 77);
+			this.textBoxMtrOutRoms.Location = new System.Drawing.Point(261, 137);
 			this.textBoxMtrOutRoms.Name = "textBoxMtrOutRoms";
 			this.textBoxMtrOutRoms.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrOutRoms.TabIndex = 7;
@@ -1044,7 +1127,7 @@
 			// labelMtrOutRoms
 			// 
 			this.labelMtrOutRoms.AutoSize = true;
-			this.labelMtrOutRoms.Location = new System.Drawing.Point(138, 81);
+			this.labelMtrOutRoms.Location = new System.Drawing.Point(138, 141);
 			this.labelMtrOutRoms.Name = "labelMtrOutRoms";
 			this.labelMtrOutRoms.Size = new System.Drawing.Size(117, 15);
 			this.labelMtrOutRoms.TabIndex = 6;
@@ -1053,7 +1136,7 @@
 			// pictureBoxMtrOutOverlays
 			// 
 			this.pictureBoxMtrOutOverlays.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMtrOutOverlays.Image")));
-			this.pictureBoxMtrOutOverlays.Location = new System.Drawing.Point(717, 51);
+			this.pictureBoxMtrOutOverlays.Location = new System.Drawing.Point(717, 111);
 			this.pictureBoxMtrOutOverlays.Name = "pictureBoxMtrOutOverlays";
 			this.pictureBoxMtrOutOverlays.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrOutOverlays.TabIndex = 31;
@@ -1062,16 +1145,17 @@
 			// 
 			// buttonMtrOutOverlays
 			// 
-			this.buttonMtrOutOverlays.Location = new System.Drawing.Point(636, 48);
+			this.buttonMtrOutOverlays.Location = new System.Drawing.Point(636, 108);
 			this.buttonMtrOutOverlays.Name = "buttonMtrOutOverlays";
 			this.buttonMtrOutOverlays.Size = new System.Drawing.Size(75, 23);
 			this.buttonMtrOutOverlays.TabIndex = 5;
 			this.buttonMtrOutOverlays.Text = "...";
 			this.buttonMtrOutOverlays.UseVisualStyleBackColor = true;
+			this.buttonMtrOutOverlays.Click += new System.EventHandler(this.buttonMtrOutOverlays_Click);
 			// 
 			// textBoxMtrOutOverlays
 			// 
-			this.textBoxMtrOutOverlays.Location = new System.Drawing.Point(261, 48);
+			this.textBoxMtrOutOverlays.Location = new System.Drawing.Point(261, 108);
 			this.textBoxMtrOutOverlays.Name = "textBoxMtrOutOverlays";
 			this.textBoxMtrOutOverlays.Size = new System.Drawing.Size(369, 23);
 			this.textBoxMtrOutOverlays.TabIndex = 4;
@@ -1079,7 +1163,7 @@
 			// labelMtrOutOverlays
 			// 
 			this.labelMtrOutOverlays.AutoSize = true;
-			this.labelMtrOutOverlays.Location = new System.Drawing.Point(122, 52);
+			this.labelMtrOutOverlays.Location = new System.Drawing.Point(122, 112);
 			this.labelMtrOutOverlays.Name = "labelMtrOutOverlays";
 			this.labelMtrOutOverlays.Size = new System.Drawing.Size(133, 15);
 			this.labelMtrOutOverlays.TabIndex = 3;
@@ -1103,6 +1187,7 @@
 			this.buttonMtrSource.TabIndex = 2;
 			this.buttonMtrSource.Text = "...";
 			this.buttonMtrSource.UseVisualStyleBackColor = true;
+			this.buttonMtrSource.Click += new System.EventHandler(this.buttonMtrSource_Click);
 			// 
 			// textBoxMtrSource
 			// 
@@ -1331,6 +1416,22 @@
 			this.toolTipInfo.InitialDelay = 250;
 			this.toolTipInfo.ReshowDelay = 100;
 			// 
+			// checkBoxMtrUseFirstView
+			// 
+			this.checkBoxMtrUseFirstView.AutoSize = true;
+			this.checkBoxMtrUseFirstView.Checked = true;
+			this.checkBoxMtrUseFirstView.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.checkBoxMtrUseFirstView.Enabled = false;
+			this.checkBoxMtrUseFirstView.Location = new System.Drawing.Point(261, 249);
+			this.checkBoxMtrUseFirstView.Name = "checkBoxMtrUseFirstView";
+			this.checkBoxMtrUseFirstView.Size = new System.Drawing.Size(213, 19);
+			this.checkBoxMtrUseFirstView.TabIndex = 50;
+			this.checkBoxMtrUseFirstView.Text = "Use the first view found in the bezel";
+			this.toolTipInfo.SetToolTip(this.checkBoxMtrUseFirstView, "Choosing a different view is not implemented in the GUI at this time.\r\nUse the co" +
+        "mmand-line version of the tool (bezel-tools.exe) if you want to be able to choos" +
+        "e.");
+			this.checkBoxMtrUseFirstView.UseVisualStyleBackColor = true;
+			// 
 			// StartPage
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1368,6 +1469,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxGenerateImages)).EndInit();
 			this.tabPageConvertMAMEtoRA.ResumeLayout(false);
 			this.tabPageConvertMAMEtoRA.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrSourceConfig)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrTemplateRom)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrTemplateOverlay)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMtrOutRoms)).EndInit();
@@ -1496,5 +1598,12 @@
         private FolderBrowserDialog folderBrowserDialog;
         private OpenFileDialog openFileDialog;
         private SaveFileDialog saveFileDialog;
+        private CheckBox checkBoxGenerateOverwrite;
+        private CheckBox checkBoxMtrScanBezel;
+        private PictureBox pictureBoxMtrSourceConfig;
+        private Button buttonMtrSourceConfig;
+        private TextBox textBoxMtrSourceConfig;
+        private Label labelMtrSourceConfig;
+        private CheckBox checkBoxMtrUseFirstView;
     }
 }
