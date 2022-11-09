@@ -65,22 +65,33 @@ namespace BezelTools.GUI
 
         private void buttonResolution720p_Click(object sender, EventArgs e) => textBoxTargetResolution.Text = "1280x720";
 
+        private void buttonRtmOut_Click(object sender, EventArgs e) => OpenFolder(textBoxRtmOut);
+
+        private void buttonRtmSourceOvl_Click(object sender, EventArgs e) => OpenFolder(textBoxRtmSourceOvl);
+
+        private void buttonRtmSourceRoms_Click(object sender, EventArgs e) => OpenFolder(textBoxRtmSourceRoms);
+
+        private void buttonRtmTemplate_Click(object sender, EventArgs e) => OpenFile(textBoxRtmTemplate);
+
         private void buttonStartCheck_Click(object sender, EventArgs e)
         {
             CheckOptions o = new()
             {
-                AutoFix = checkBoxCheckAutofix.Checked,
+                // common
                 ErrorFile = textBoxErrorFile.Text,
-                ErrorMargin = (int)numericUpDownCheckMargin.Value,
-                InputOverlayConfigPathInRomConfig = textBoxCheckPathInRom.Text,
                 Margin = (int)numericUpDownMargin.Value,
                 OutputDebug = textBoxDebugFiles.Text,
+                TargetResolution = textBoxTargetResolution.Text,
+                Threads = (int)numericUpDownThreads.Value,
+
+                // specific
+                AutoFix = checkBoxCheckAutofix.Checked,
+                ErrorMargin = (int)numericUpDownCheckMargin.Value,
+                InputOverlayConfigPathInRomConfig = textBoxCheckPathInRom.Text,
                 OverlaysConfigFolder = textBoxCheckPathOverlays.Text,
                 RomsConfigFolder = textBoxCheckPathRoms.Text,
-                TargetResolution = textBoxTargetResolution.Text,
                 TemplateOverlay = textBoxCheckPathTemplateOverlay.Text,
-                TemplateRom = textBoxCheckPathTemplateRom.Text,
-                Threads = (int)numericUpDownThreads.Value
+                TemplateRom = textBoxCheckPathTemplateRom.Text
             };
 
             Initializer.InitCommon(o);
@@ -93,13 +104,16 @@ namespace BezelTools.GUI
         {
             GenerateOptions o = new()
             {
+                // common
                 ErrorFile = textBoxErrorFile.Text,
                 Margin = (int)numericUpDownMargin.Value,
                 OutputDebug = textBoxDebugFiles.Text,
                 TargetResolution = textBoxTargetResolution.Text,
-                TemplateOverlay = textBoxCheckPathTemplateOverlay.Text,
-                TemplateRom = textBoxCheckPathTemplateRom.Text,
                 Threads = (int)numericUpDownThreads.Value,
+
+                // specific
+                TemplateOverlay = textBoxGenerateOverlayTemplate.Text,
+                TemplateRom = textBoxGenerateRomTemplate.Text,
                 ImagesFolder = textBoxGenerateImages.Text,
                 RomsFolder = textBoxGenerateRoms.Text,
                 Overwrite = checkBoxGenerateOverwrite.Checked
@@ -115,12 +129,15 @@ namespace BezelTools.GUI
         {
             MameToRaOptions o = new()
             {
+                // common
                 ErrorFile = textBoxErrorFile.Text,
                 Margin = (int)numericUpDownMargin.Value,
                 OutputDebug = textBoxDebugFiles.Text,
                 TargetResolution = textBoxTargetResolution.Text,
                 Threads = (int)numericUpDownThreads.Value,
-                Overwrite = checkBoxGenerateOverwrite.Checked,
+
+                // specific
+                Overwrite = checkBoxMtrOverwrite.Checked,
                 OutputOverlays = textBoxMtrOutOverlays.Text,
                 OutputRoms = textBoxMtrOutRoms.Text,
                 ScanBezelForScreenCoordinates = checkBoxMtrScanBezel.Checked,
@@ -135,6 +152,33 @@ namespace BezelTools.GUI
             Initializer.InitMameToRa(o);
 
             Converter.ConvertMameToRetroarch(o);
+        }
+
+        private void buttonStartRtm_Click(object sender, EventArgs e)
+        {
+            RaToMameOptions o = new()
+            {
+                // common
+                ErrorFile = textBoxErrorFile.Text,
+                Margin = (int)numericUpDownMargin.Value,
+                OutputDebug = textBoxDebugFiles.Text,
+                TargetResolution = textBoxTargetResolution.Text,
+                Threads = (int)numericUpDownThreads.Value,
+
+                // specific
+                Overwrite = checkBoxRtmOverwrite.Checked,
+                ScanBezelForScreenCoordinates = checkBoxMtrScanBezel.Checked,
+                SourceConfigs = textBoxMtrSourceConfig.Text,
+                Output = textBoxRtmOut.Text,
+                SourceRoms = textBoxRtmSourceRoms.Text,
+                Template = textBoxRtmTemplate.Text,
+                Zip = checkBoxRtmZip.Checked
+            };
+
+            Initializer.InitCommon(o);
+            Initializer.InitRaToMame(o);
+
+            Converter.ConvertRetroarchToMame(o);
         }
 
         private void OpenFile(TextBox target)

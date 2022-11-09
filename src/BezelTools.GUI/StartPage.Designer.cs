@@ -1262,6 +1262,7 @@
 			this.buttonStartRtm.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartRtm.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartRtm.UseVisualStyleBackColor = true;
+			this.buttonStartRtm.Click += new System.EventHandler(this.buttonStartRtm_Click);
 			// 
 			// checkBoxRtmZip
 			// 
@@ -1293,7 +1294,7 @@
 			this.pictureBoxRtmTemplate.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxRtmTemplate.TabIndex = 60;
 			this.pictureBoxRtmTemplate.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxRtmTemplate, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxRtmTemplate, "The template for a MAME layout file.");
 			// 
 			// buttonRtmTemplate
 			// 
@@ -1303,6 +1304,7 @@
 			this.buttonRtmTemplate.TabIndex = 11;
 			this.buttonRtmTemplate.Text = "...";
 			this.buttonRtmTemplate.UseVisualStyleBackColor = true;
+			this.buttonRtmTemplate.Click += new System.EventHandler(this.buttonRtmTemplate_Click);
 			// 
 			// textBoxRtmTemplate
 			// 
@@ -1329,7 +1331,7 @@
 			this.pictureBoxRtmOut.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxRtmOut.TabIndex = 56;
 			this.pictureBoxRtmOut.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxRtmOut, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxRtmOut, "The folder where you want to save the MAME bezels.");
 			// 
 			// buttonRtmOut
 			// 
@@ -1339,6 +1341,7 @@
 			this.buttonRtmOut.TabIndex = 8;
 			this.buttonRtmOut.Text = "...";
 			this.buttonRtmOut.UseVisualStyleBackColor = true;
+			this.buttonRtmOut.Click += new System.EventHandler(this.buttonRtmOut_Click);
 			// 
 			// textBoxRtmOut
 			// 
@@ -1374,6 +1377,7 @@
 			this.buttonRtmSourceOvl.TabIndex = 5;
 			this.buttonRtmSourceOvl.Text = "...";
 			this.buttonRtmSourceOvl.UseVisualStyleBackColor = true;
+			this.buttonRtmSourceOvl.Click += new System.EventHandler(this.buttonRtmSourceOvl_Click);
 			// 
 			// textBoxRtmSourceOvl
 			// 
@@ -1399,7 +1403,7 @@
 			this.pictureBoxRtmSourceRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxRtmSourceRoms.TabIndex = 48;
 			this.pictureBoxRtmSourceRoms.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxRtmSourceRoms, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxRtmSourceRoms, "The folder where your RA rom configs are located.");
 			// 
 			// buttonRtmSourceRoms
 			// 
@@ -1409,6 +1413,7 @@
 			this.buttonRtmSourceRoms.TabIndex = 2;
 			this.buttonRtmSourceRoms.Text = "...";
 			this.buttonRtmSourceRoms.UseVisualStyleBackColor = true;
+			this.buttonRtmSourceRoms.Click += new System.EventHandler(this.buttonRtmSourceRoms_Click);
 			// 
 			// textBoxRtmSourceRoms
 			// 
