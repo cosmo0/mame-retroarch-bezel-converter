@@ -10,9 +10,7 @@ public static class Interaction
     /// </summary>
     /// <param name="question">The question to ask.</param>
     /// <param name="answers">The possible answers.</param>
-    /// <returns>
-    /// The index of the picked answer
-    /// </returns>
+    /// <returns>The index of the picked answer</returns>
     public delegate int AskDelegate(string question, string[] answers);
 
     /// <summary>

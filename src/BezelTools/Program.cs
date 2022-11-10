@@ -41,28 +41,28 @@ public static class Program
                    .WithParsed<MameToRaOptions>((o) =>
                    {
                        Initializer.InitCommon(o);
-                       Initializer.InitMameToRa(o);
+                       if (!Initializer.InitMameToRa(o)) { return; }
 
                        Converter.ConvertMameToRetroarch(o);
                    })
                    .WithParsed<RaToMameOptions>((o) =>
                    {
                        Initializer.InitCommon(o);
-                       Initializer.InitRaToMame(o);
+                       if (!Initializer.InitRaToMame(o)) { return; }
 
                        Converter.ConvertRetroarchToMame(o);
                    })
                    .WithParsed<CheckOptions>((o) =>
                    {
                        Initializer.InitCommon(o);
-                       Initializer.InitCheck(o);
+                       if (!Initializer.InitCheck(o)) { return; }
 
                        Checker.Check(o);
                    })
                    .WithParsed<GenerateOptions>((o) =>
                    {
                        Initializer.InitCommon(o);
-                       Initializer.InitGenerate(o);
+                       if (!Initializer.InitGenerate(o)) { return; }
 
                        Generator.Generate(o);
                    });

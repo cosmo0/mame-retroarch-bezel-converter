@@ -1,5 +1,4 @@
 ﻿using BezelTools.Options;
-using System;
 using System.IO;
 
 namespace BezelTools;
@@ -10,17 +9,8 @@ public static class Initializer
     /// Initializes the check.
     /// </summary>
     /// <param name="options">The options.</param>
-    /// <exception cref="DirectoryNotFoundException">
-    /// Unable to find rom directory {options.RomsConfig}
-    /// or
-    /// Unable to find rom directory {options.RomsConfig}
-    /// </exception>
-    /// <exception cref="FileNotFoundException">
-    /// Unable to find rom config template
-    /// or
-    /// Unable to find overlay config template
-    /// </exception>
-    public static void InitCheck(CheckOptions options)
+    /// <returns>Whether the initialization has been successful</returns>
+    public static bool InitCheck(CheckOptions options)
     {
         bool err = false;
 
@@ -53,10 +43,7 @@ public static class Initializer
             }
         }
 
-        if (err)
-        {
-            Environment.Exit(1);
-        }
+        return !err;
     }
 
     /// <summary>
@@ -80,7 +67,8 @@ public static class Initializer
     /// Initializes the generation
     /// </summary>
     /// <param name="options">The generation options</param>
-    public static void InitGenerate(GenerateOptions options)
+    /// <returns>Whether the initialization has been successful</returns>
+    public static bool InitGenerate(GenerateOptions options)
     {
         bool err = false;
 
@@ -111,23 +99,15 @@ public static class Initializer
             err = true;
         }
 
-        if (err)
-        {
-            Environment.Exit(1);
-        }
+        return !err;
     }
 
     /// <summary>
     /// Initializes the import from MAME to Retroarch
     /// </summary>
     /// <param name="options">The options</param>
-    /// <exception cref="DirectoryNotFoundException">Unable to find directory {options.Source}</exception>
-    /// <exception cref="FileNotFoundException">
-    /// Unable to find game config template
-    /// or
-    /// Unable to find overlay config template
-    /// </exception>
-    public static void InitMameToRa(MameToRaOptions options)
+    /// <returns>Whether the initialization has been successful</returns>
+    public static bool InitMameToRa(MameToRaOptions options)
     {
         var err = false;
         // check that input folder exists
@@ -161,23 +141,15 @@ public static class Initializer
             err = true;
         }
 
-        if (err)
-        {
-            Environment.Exit(1);
-        }
+        return !err;
     }
 
     /// <summary>
     /// Initializes the import from Retroarch to MAME
     /// </summary>
     /// <param name="options">The options</param>
-    /// <exception cref="DirectoryNotFoundException">
-    /// Unable to find directory {options.SourceConfigs}
-    /// or
-    /// Unable to find directory {options.SourceRoms}
-    /// </exception>
-    /// <exception cref="FileNotFoundException">Unable to find LAY template</exception>
-    public static void InitRaToMame(RaToMameOptions options)
+    /// <returns>Whether the initialization has been successful</returns>
+    public static bool InitRaToMame(RaToMameOptions options)
     {
         var err = false;
 
@@ -212,9 +184,6 @@ public static class Initializer
             err = true;
         }
 
-        if (err)
-        {
-            Environment.Exit(1);
-        }
+        return !err;
     }
 }

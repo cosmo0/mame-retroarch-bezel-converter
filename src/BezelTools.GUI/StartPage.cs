@@ -1,9 +1,13 @@
 using BezelTools.Options;
+using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 
 namespace BezelTools.GUI
 {
     public partial class StartPage : Form
     {
+        private LogPopup logPopup = new();
+
         public StartPage()
         {
             InitializeComponent();
@@ -15,6 +19,21 @@ namespace BezelTools.GUI
             this.folderBrowserDialog.ShowNewFolderButton = true;
 
             this.saveFileDialog.OverwritePrompt = true;
+
+            Interaction.Log = logPopup.Log;
+            Interaction.Ask = (question, answers) =>
+            {
+                int chosen = 0;
+                var qp = new QuestionPopup();
+                qp.SetQuestion(question, answers);
+                qp.AnswerPicked += (index) =>
+                {
+                    chosen = index;
+                };
+                qp.ShowDialog();
+
+                return chosen;
+            };
         }
 
         private void buttonCheckPathOverlays_Click(object sender, EventArgs e) => OpenFolder(textBoxCheckPathOverlays);
@@ -94,8 +113,11 @@ namespace BezelTools.GUI
                 TemplateRom = textBoxCheckPathTemplateRom.Text
             };
 
+            logPopup.Reset();
+            logPopup.Show(this);
+
             Initializer.InitCommon(o);
-            Initializer.InitCheck(o);
+            if (!Initializer.InitCheck(o)) { return; }
 
             Checker.Check(o);
         }
@@ -119,8 +141,11 @@ namespace BezelTools.GUI
                 Overwrite = checkBoxGenerateOverwrite.Checked
             };
 
+            logPopup.Reset();
+            logPopup.Show(this);
+
             Initializer.InitCommon(o);
-            Initializer.InitGenerate(o);
+            if (!Initializer.InitGenerate(o)) { return; }
 
             Generator.Generate(o);
         }
@@ -148,8 +173,11 @@ namespace BezelTools.GUI
                 UseFirstView = checkBoxMtrUseFirstView.Checked
             };
 
+            logPopup.Reset();
+            logPopup.Show(this);
+
             Initializer.InitCommon(o);
-            Initializer.InitMameToRa(o);
+            if (!Initializer.InitMameToRa(o)) { return; }
 
             Converter.ConvertMameToRetroarch(o);
         }
@@ -175,8 +203,11 @@ namespace BezelTools.GUI
                 Zip = checkBoxRtmZip.Checked
             };
 
+            logPopup.Reset();
+            logPopup.Show(this);
+
             Initializer.InitCommon(o);
-            Initializer.InitRaToMame(o);
+            if (!Initializer.InitRaToMame(o)) { return; }
 
             Converter.ConvertRetroarchToMame(o);
         }
