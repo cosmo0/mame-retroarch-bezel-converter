@@ -58,14 +58,16 @@ namespace BezelTools
         /// <param name="cfgFile">The CFG file path.</param>
         /// <param name="tmpFolder">The temporary folder path.</param>
         /// <returns>The deserialized LAY and CFG files</returns>
-        /// <exception cref="Exceptions.LayFileException">Unable to find a view in the LAY file</exception>
+        /// <exception cref="Exceptions.LayFileException">
+        /// Unable to find a view in the LAY file
+        /// </exception>
         public static (MameLayFile lay, MameCfgFile cfg, byte[] bezel) ExtractFiles(string game, string zipFile, string cfgFile, MameToRaOptions options)
         {
             MameLayFile lay = null;
             MameCfgFile cfg = null;
             byte[] bezel = null;
 
-            Console.WriteLine($"{game} Extracting files from archive {zipFile}");
+            Interaction.Log($"{game} Extracting files from archive {zipFile}");
 
             // extract files
             using (ZipArchive archive = ZipFile.OpenRead(zipFile))
@@ -183,7 +185,8 @@ namespace BezelTools
         public static string FindFile(ZipArchive archive, string fileName)
         {
             var found = archive.Entries.FirstOrDefault(e => e.Name.Equals(fileName, StringComparison.InvariantCultureIgnoreCase));
-            if (found != null) {
+            if (found != null)
+            {
                 return found.Name;
             }
 
@@ -218,7 +221,7 @@ namespace BezelTools
         {
             byte[] bezel = null;
 
-            Console.WriteLine($"{game} Reading files from folder {folder}");
+            Interaction.Log($"{game} Reading files from folder {folder}");
 
             // get layout and bezel
             var layFiles = Directory.GetFiles(folder, "default.lay");
@@ -267,12 +270,12 @@ namespace BezelTools
             // parse the config file if it exists
             if (!string.IsNullOrEmpty(cfgFile) && File.Exists(cfgFile))
             {
-                Console.WriteLine($"{game} MAME config file exists");
+                Interaction.Log($"{game} MAME config file exists");
                 return DeserializeXmlFile<Model.MameCfgFile>(cfgFile);
             }
             else
             {
-                Console.WriteLine($"{game} doesn't have a MAME config file");
+                Interaction.Log($"{game} doesn't have a MAME config file");
                 return null;
             }
         }

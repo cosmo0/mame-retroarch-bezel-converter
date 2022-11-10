@@ -1,5 +1,4 @@
-﻿using BezelTools.Model;
-using BezelTools.Options;
+﻿using BezelTools.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,9 +12,9 @@ namespace BezelTools
     public static class Checker
     {
         private static readonly List<Config> configs = new();
-        private readonly static object configsLock = new();
-        private readonly static object errorFileLock = new();
-        private readonly static EnumerationOptions searchOption = new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive };
+        private static readonly object configsLock = new();
+        private static readonly object errorFileLock = new();
+        private static readonly EnumerationOptions searchOption = new() { MatchCasing = MatchCasing.CaseInsensitive };
         private static int errorsNb = 0;
         private static int fixesNb = 0;
 
@@ -25,9 +24,7 @@ namespace BezelTools
         /// <param name="options">The options.</param>
         public static void Check(CheckOptions options)
         {
-            Console.WriteLine("########## CHECKING ROMS CONFIGS ##########");
-
-            var romTemplateContent = string.IsNullOrEmpty(options.TemplateRom) ? "" : File.ReadAllText(options.TemplateRom);
+            Interaction.Log("########## CHECKING ROMS CONFIGS ##########");
 
             // check roms configs
             var romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
@@ -37,7 +34,7 @@ namespace BezelTools
                 var game = fi.Name.Replace(".zip.cfg", "").Replace(".cfg", "");
                 var romConfEntry = AddConfigEntry(fi.Name, null, null);
 
-                Console.WriteLine($"rom {game} start processing");
+                Interaction.Log($"rom {game} start processing");
 
                 var cfgContent = File.ReadAllText(f);
                 var overlayPath = RetroArchProcessor.GetCfgData(cfgContent, "input_overlay");
@@ -58,7 +55,7 @@ namespace BezelTools
                     }
                     else
                     {
-                        Console.WriteLine($"rom {game} uses an existing overlay config");
+                        Interaction.Log($"rom {game} uses an existing overlay config");
                         romConfEntry.Overlay = overlayFileName;
                     }
 
@@ -82,13 +79,13 @@ namespace BezelTools
                         }
                         else
                         {
-                            Console.WriteLine($"rom {game} has correct overlay path");
+                            Interaction.Log($"rom {game} has correct overlay path");
                         }
                     }
                 }
             });
 
-            Console.WriteLine("########## CHECKING OVERLAY CONFIGS ##########");
+            Interaction.Log("########## CHECKING OVERLAY CONFIGS ##########");
 
             // check overlay config files
             var configFiles = Directory.GetFiles(options.OverlaysConfigFolder, "*.cfg", searchOption);
@@ -96,7 +93,7 @@ namespace BezelTools
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".cfg", "");
-                Console.WriteLine($"overlay {game} start processing");
+                Interaction.Log($"overlay {game} start processing");
 
                 var cfgContent = File.ReadAllText(f);
                 var overlayFileName = RetroArchProcessor.GetCfgData(cfgContent, "overlay0_overlay");
@@ -148,19 +145,15 @@ namespace BezelTools
                 }
                 else
                 {
-                    Console.WriteLine($"overlay {game} uses an existing image");
+                    Interaction.Log($"overlay {game} uses an existing image");
                     if (cfgEntry == null)
                     {
-                        cfgEntry = AddConfigEntry(null, fi.Name, overlayFileName);
-                    }
-                    else
-                    {
-                        cfgEntry.Image = overlayFileName;
+                        AddConfigEntry(null, fi.Name, overlayFileName);
                     }
                 }
             });
 
-            Console.WriteLine("########## CHECKING OVERLAY IMAGES ##########");
+            Interaction.Log("########## CHECKING OVERLAY IMAGES ##########");
 
             // check that all images have an associated overlay config
             var images = Directory.GetFiles(options.OverlaysConfigFolder, "*.png", searchOption);
@@ -169,7 +162,7 @@ namespace BezelTools
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".png", "");
 
-                Console.WriteLine($"image {game} start processing");
+                Interaction.Log($"image {game} start processing");
 
                 // check that the image is used by an overlay
                 var cfgEntry = GetConfigEntry(c => c.Image != null && c.Image.Equals(fi.Name, StringComparison.InvariantCultureIgnoreCase));
@@ -177,7 +170,7 @@ namespace BezelTools
                 {
                     if (options.AutoFix)
                     {
-                        Console.WriteLine($"image {game} missing overlay, creating it");
+                        Interaction.Log($"image {game} missing overlay, creating it");
                         var cfgFilesName = $"{game}.cfg";
                         var dest = Path.Join(options.OverlaysConfigFolder, cfgFilesName);
                         if (File.Exists(dest))
@@ -206,7 +199,7 @@ namespace BezelTools
                 }
                 else
                 {
-                    Console.WriteLine($"image {game} is used");
+                    Interaction.Log($"image {game} is used");
                 }
 
                 // check that image is not too large
@@ -225,11 +218,11 @@ namespace BezelTools
                 }
                 else
                 {
-                    Console.WriteLine($"image {game} has the right size");
+                    Interaction.Log($"image {game} has the right size");
                 }
             });
 
-            Console.WriteLine("########## CHECKING SCREEN POSIITIONS ##########");
+            Interaction.Log("########## CHECKING SCREEN POSIITIONS ##########");
 
             // get list of roms configs, again (in case some have been created)
             romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
@@ -237,7 +230,7 @@ namespace BezelTools
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".cfg", "").Replace(".zip", "");
-                Console.WriteLine($"{game} checking screen position");
+                Interaction.Log($"{game} checking screen position");
 
                 // get overlay file name
                 var romContent = File.ReadAllText(f);
@@ -280,11 +273,11 @@ namespace BezelTools
                     && CheckCoordinate(boundsInImage.Height, boundsInConf.Height, options.ErrorMargin * 2))
                 {
                     // bounds are similar
-                    Console.WriteLine($"image {game} has proper bounds in config");
+                    Interaction.Log($"image {game} has proper bounds in config");
                 }
                 else
                 {
-                    Console.WriteLine($"image {game} has wrong bounds in config: {boundsInConf.ToShortString()} instead of {boundsInImage.ToShortString()}");
+                    Interaction.Log($"image {game} has wrong bounds in config: {boundsInConf.ToShortString()} instead of {boundsInImage.ToShortString()}");
 
                     boundsInImage = boundsInImage.ApplyMargin(options.Margin);
 
@@ -297,12 +290,12 @@ namespace BezelTools
                         }
                         else
                         {
-                            Console.WriteLine($"image {game} has width/height equal to zero in config");
+                            Interaction.Log($"image {game} has width/height equal to zero in config");
                         }
 
                         ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imagePath, boundsInImage);
                     }
-                    
+
                     // fix the image
                     if (options.AutoFix)
                     {
@@ -316,17 +309,17 @@ namespace BezelTools
                 }
             });
 
-            Console.WriteLine("########## DONE ##########");
+            Interaction.Log("########## DONE ##########");
 
             if (errorsNb > 0 || fixesNb > 0)
             {
-                Console.WriteLine("");
+                Interaction.Log("");
 
-                Console.WriteLine("Check result:");
-                Console.WriteLine($"- {errorsNb} error(s)");
-                Console.WriteLine($"- {fixesNb} fixes(s)");
+                Interaction.Log("Check result:");
+                Interaction.Log($"- {errorsNb} error(s)");
+                Interaction.Log($"- {fixesNb} fixes(s)");
 
-                Console.WriteLine($"Check {options.ErrorFile} to see the details");
+                Interaction.Log($"Check {options.ErrorFile} to see the details");
             }
         }
 
@@ -353,14 +346,6 @@ namespace BezelTools
             errorsNb++;
         }
 
-        private static Config GetConfigEntry(Func<Config, bool> predicate)
-        {
-            lock (configsLock)
-            {
-                return Checker.configs.Where(predicate).FirstOrDefault();
-            }
-        }
-
         private static void Fix(string errorFile, string game, string msg)
         {
             Write(errorFile, game, msg, "FIX");
@@ -368,9 +353,17 @@ namespace BezelTools
             fixesNb++;
         }
 
+        private static Config GetConfigEntry(Func<Config, bool> predicate)
+        {
+            lock (configsLock)
+            {
+                return Checker.configs.FirstOrDefault(predicate);
+            }
+        }
+
         private static void Write(string file, string game, string msg, string level)
         {
-            Console.WriteLine($"{game} {level}: {msg}");
+            Interaction.Log($"{game} {level}: {msg}");
 
             if (!string.IsNullOrWhiteSpace(file))
             {
@@ -384,7 +377,7 @@ namespace BezelTools
         /// <summary>
         /// A rom/overlay/image configuration
         /// </summary>
-        private class Config
+        private sealed class Config
         {
             public string Image;
             public string Overlay;

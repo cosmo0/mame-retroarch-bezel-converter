@@ -7,7 +7,7 @@ namespace BezelTools;
 /// <summary>
 /// Program
 /// </summary>
-public partial class Program
+public static class Program
 {
     /// <summary>
     /// Main application entry point
@@ -15,6 +15,26 @@ public partial class Program
     /// <param name="args">The command line arguments</param>
     public static void Main(string[] args)
     {
+        Interaction.Log = (message) => { Console.WriteLine(message); };
+
+        Interaction.Ask = (question, answers) =>
+        {
+            Console.WriteLine("Please choose which bezel you want");
+            foreach (var a in answers)
+            {
+                Console.WriteLine(a);
+            }
+
+            string chosenAnswer = "x";
+            int answerIndex;
+            while (!int.TryParse(chosenAnswer, out answerIndex))
+            {
+                chosenAnswer = Console.ReadLine();
+            }
+
+            return answerIndex;
+        };
+
         try
         {
             Parser.Default.ParseArguments<MameToRaOptions, RaToMameOptions, CheckOptions, GenerateOptions>(args)
@@ -49,7 +69,7 @@ public partial class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"An error has occurred: {ex.Message}\n\n{ex.StackTrace}");
+            Interaction.Log($"An error has occurred: {ex.Message}\n\n{ex.StackTrace}");
         }
     }
 }

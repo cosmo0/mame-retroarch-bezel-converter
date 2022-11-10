@@ -207,9 +207,9 @@
 			this.panelCommon.Controls.Add(this.labelMargin);
 			this.panelCommon.Controls.Add(this.labelDebug);
 			this.panelCommon.Controls.Add(this.labelErrorFile);
-			this.panelCommon.Location = new System.Drawing.Point(12, 389);
+			this.panelCommon.Location = new System.Drawing.Point(12, 470);
 			this.panelCommon.Name = "panelCommon";
-			this.panelCommon.Size = new System.Drawing.Size(793, 160);
+			this.panelCommon.Size = new System.Drawing.Size(805, 160);
 			this.panelCommon.TabIndex = 1;
 			// 
 			// buttonResolution720p
@@ -269,7 +269,7 @@
 			// 
 			this.pictureBoxDebugFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBoxDebugFiles.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxDebugFiles.Image")));
-			this.pictureBoxDebugFiles.Location = new System.Drawing.Point(654, 137);
+			this.pictureBoxDebugFiles.Location = new System.Drawing.Point(666, 137);
 			this.pictureBoxDebugFiles.Name = "pictureBoxDebugFiles";
 			this.pictureBoxDebugFiles.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxDebugFiles.TabIndex = 23;
@@ -282,7 +282,7 @@
 			// 
 			this.pictureBoxErrorFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBoxErrorFile.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxErrorFile.Image")));
-			this.pictureBoxErrorFile.Location = new System.Drawing.Point(654, 108);
+			this.pictureBoxErrorFile.Location = new System.Drawing.Point(666, 108);
 			this.pictureBoxErrorFile.Name = "pictureBoxErrorFile";
 			this.pictureBoxErrorFile.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxErrorFile.TabIndex = 22;
@@ -318,7 +318,7 @@
 			// buttonDebugBrowse
 			// 
 			this.buttonDebugBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonDebugBrowse.Location = new System.Drawing.Point(573, 134);
+			this.buttonDebugBrowse.Location = new System.Drawing.Point(585, 134);
 			this.buttonDebugBrowse.Name = "buttonDebugBrowse";
 			this.buttonDebugBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonDebugBrowse.TabIndex = 9;
@@ -329,7 +329,7 @@
 			// buttonErrorBrowse
 			// 
 			this.buttonErrorBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonErrorBrowse.Location = new System.Drawing.Point(573, 105);
+			this.buttonErrorBrowse.Location = new System.Drawing.Point(585, 105);
 			this.buttonErrorBrowse.Name = "buttonErrorBrowse";
 			this.buttonErrorBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonErrorBrowse.TabIndex = 6;
@@ -380,7 +380,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxDebugFiles.Location = new System.Drawing.Point(265, 134);
 			this.textBoxDebugFiles.Name = "textBoxDebugFiles";
-			this.textBoxDebugFiles.Size = new System.Drawing.Size(302, 23);
+			this.textBoxDebugFiles.Size = new System.Drawing.Size(314, 23);
 			this.textBoxDebugFiles.TabIndex = 8;
 			// 
 			// textBoxErrorFile
@@ -389,7 +389,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.textBoxErrorFile.Location = new System.Drawing.Point(265, 105);
 			this.textBoxErrorFile.Name = "textBoxErrorFile";
-			this.textBoxErrorFile.Size = new System.Drawing.Size(302, 23);
+			this.textBoxErrorFile.Size = new System.Drawing.Size(314, 23);
 			this.textBoxErrorFile.TabIndex = 5;
 			// 
 			// label1
@@ -444,7 +444,7 @@
 			this.tabControlActions.Location = new System.Drawing.Point(12, 12);
 			this.tabControlActions.Name = "tabControlActions";
 			this.tabControlActions.SelectedIndex = 0;
-			this.tabControlActions.Size = new System.Drawing.Size(793, 371);
+			this.tabControlActions.Size = new System.Drawing.Size(805, 452);
 			this.tabControlActions.TabIndex = 0;
 			// 
 			// tabPageCheck
@@ -476,7 +476,7 @@
 			this.tabPageCheck.Location = new System.Drawing.Point(4, 24);
 			this.tabPageCheck.Name = "tabPageCheck";
 			this.tabPageCheck.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageCheck.Size = new System.Drawing.Size(785, 343);
+			this.tabPageCheck.Size = new System.Drawing.Size(797, 424);
 			this.tabPageCheck.TabIndex = 0;
 			this.tabPageCheck.Text = "Check overlays";
 			this.tabPageCheck.UseVisualStyleBackColor = true;
@@ -737,7 +737,7 @@
 			this.tabPageGenerate.Location = new System.Drawing.Point(4, 24);
 			this.tabPageGenerate.Name = "tabPageGenerate";
 			this.tabPageGenerate.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGenerate.Size = new System.Drawing.Size(785, 343);
+			this.tabPageGenerate.Size = new System.Drawing.Size(797, 424);
 			this.tabPageGenerate.TabIndex = 1;
 			this.tabPageGenerate.Text = "Generate from images";
 			this.tabPageGenerate.UseVisualStyleBackColor = true;
@@ -946,7 +946,7 @@
 			this.tabPageConvertMAMEtoRA.Location = new System.Drawing.Point(4, 24);
 			this.tabPageConvertMAMEtoRA.Name = "tabPageConvertMAMEtoRA";
 			this.tabPageConvertMAMEtoRA.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConvertMAMEtoRA.Size = new System.Drawing.Size(785, 343);
+			this.tabPageConvertMAMEtoRA.Size = new System.Drawing.Size(797, 424);
 			this.tabPageConvertMAMEtoRA.TabIndex = 2;
 			this.tabPageConvertMAMEtoRA.Text = "Convert from MAME to RA";
 			this.tabPageConvertMAMEtoRA.UseVisualStyleBackColor = true;
@@ -1245,7 +1245,7 @@
 			this.tabPageConvertRAtoMAME.Location = new System.Drawing.Point(4, 24);
 			this.tabPageConvertRAtoMAME.Name = "tabPageConvertRAtoMAME";
 			this.tabPageConvertRAtoMAME.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConvertRAtoMAME.Size = new System.Drawing.Size(785, 343);
+			this.tabPageConvertRAtoMAME.Size = new System.Drawing.Size(797, 424);
 			this.tabPageConvertRAtoMAME.TabIndex = 3;
 			this.tabPageConvertRAtoMAME.Text = "Convert from RA to MAME";
 			this.tabPageConvertRAtoMAME.UseVisualStyleBackColor = true;
@@ -1441,7 +1441,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(817, 561);
+			this.ClientSize = new System.Drawing.Size(829, 642);
 			this.Controls.Add(this.tabControlActions);
 			this.Controls.Add(this.panelCommon);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

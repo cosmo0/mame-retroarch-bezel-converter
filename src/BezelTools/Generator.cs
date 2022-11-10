@@ -1,6 +1,4 @@
 ﻿using BezelTools.Options;
-using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace BezelTools
@@ -10,17 +8,17 @@ namespace BezelTools
     /// </summary>
     public static class Generator
     {
-        private readonly static object errorFileLock = new();
+        private static readonly object errorFileLock = new();
         private static int createdNb = 0;
         private static int errorsNb = 0;
 
         /// <summary>
-        /// Generates 
+        /// Generates
         /// </summary>
         /// <param name="options">The options</param>
         public static void Generate(GenerateOptions options)
         {
-            Console.WriteLine("########## GENERATING ROM CONFIGS ##########");
+            Interaction.Log("########## GENERATING ROM CONFIGS ##########");
 
             var images = Directory.GetFiles(options.ImagesFolder, "*.png", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
             ThreadUtils.RunThreadsOnFiles(options.Threads, images, (f) =>
@@ -28,7 +26,7 @@ namespace BezelTools
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".png", "");
 
-                Console.WriteLine($"{game} generating config");
+                Interaction.Log($"{game} generating config");
 
                 // resize
                 ImageProcessor.Resize(f, (int)options.TargetResolutionBounds.Width, (int)options.TargetResolutionBounds.Height);
@@ -46,18 +44,20 @@ namespace BezelTools
                 {
                     File.Delete(config);
                     RetroArchProcessor.CreateConfig(options.TemplateOverlay, game, config, bounds, options.TargetResolutionBounds);
+                    Create(options.ErrorFile, game, $"created config: {config}");
                 }
 
                 // generate rom
                 var rom = Path.Combine(options.RomsFolder, $"{game}.zip.cfg");
                 if (!options.Overwrite && File.Exists(rom))
                 {
-                    Error(options.ErrorFile, game, $"rom file already exists: {rom}");
+                    Error(options.ErrorFile, game, $"rom config file already exists: {rom}");
                 }
                 else
                 {
                     File.Delete(rom);
                     RetroArchProcessor.CreateConfig(options.TemplateRom, game, rom, bounds, options.TargetResolutionBounds);
+                    Create(options.ErrorFile, game, $"created rom config file: {rom}");
                 }
 
                 // debug
@@ -66,27 +66,20 @@ namespace BezelTools
                     ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, bounds);
                 }
 
-                Console.WriteLine($"{game} done");
+                Interaction.Log($"{game} done");
             });
 
-            Console.WriteLine("########## DONE ##########");
+            Interaction.Log("########## DONE ##########");
 
-            if (createdNb > 0 || errorsNb > 0)
+            if (createdNb > 0 || errorsNb > 0)
             {
-                Console.WriteLine("");
+                Interaction.Log("");
 
-                Console.WriteLine($"- {errorsNb} errors");
-                Console.WriteLine($"- {createdNb} game files created");
+                Interaction.Log($"- {errorsNb} errors");
+                Interaction.Log($"- {createdNb} game files created");
 
-                Console.WriteLine($"Check {options.ErrorFile} to see the details");
+                Interaction.Log($"Check {options.ErrorFile} to see the details");
             }
-        }
-
-        private static void Error(string errorFile, string game, string msg)
-        {
-            Write(errorFile, game, msg, "ERROR");
-
-            errorsNb++;
         }
 
         private static void Create(string errorFile, string game, string msg)
@@ -96,9 +89,16 @@ namespace BezelTools
             createdNb++;
         }
 
+        private static void Error(string errorFile, string game, string msg)
+        {
+            Write(errorFile, game, msg, "ERROR");
+
+            errorsNb++;
+        }
+
         private static void Write(string file, string game, string msg, string level)
         {
-            Console.WriteLine($"{game} {level}: {msg}");
+            Interaction.Log($"{game} {level}: {msg}");
 
             if (!string.IsNullOrWhiteSpace(file))
             {
@@ -108,6 +108,5 @@ namespace BezelTools
                 }
             }
         }
-
     }
 }

@@ -1,8 +1,6 @@
 ﻿using BezelTools.Model;
 using CommandLine;
 using System;
-using System.IO;
-using System.Reflection;
 
 namespace BezelTools.Options
 {
@@ -13,6 +11,7 @@ namespace BezelTools.Options
     {
         private string errorFile;
         private string outputDebug;
+        private string targetResolution = "1920x1080";
 
         /// <summary>
         /// Gets or sets the path to the error lists file
@@ -36,7 +35,23 @@ namespace BezelTools.Options
         /// Gets or sets the target overlay resolution
         /// </summary>
         [Option("target-resolution", Required = false, HelpText = "The target resolution", Default = "1920x1080")]
-        public string TargetResolution { get; set; }
+        public string TargetResolution
+        {
+            get
+            {
+                return targetResolution;
+            }
+            set
+            {
+                var splitRes = value.Split(new char[] { 'x', '*', ':', '/' });
+                if (splitRes.Length < 2 || !int.TryParse(splitRes[0], out int _) || !int.TryParse(splitRes[1], out int _))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(TargetResolution), $"Unable to parse target resolution ({TargetResolution})");
+                }
+
+                targetResolution = value;
+            }
+        }
 
         /// <summary>
         /// Gets the target resolution bounds
@@ -46,7 +61,6 @@ namespace BezelTools.Options
             get
             {
                 var splitRes = TargetResolution.Split(new char[] { 'x', '*', ':', '/' });
-                if (splitRes.Length < 2) { throw new ArgumentOutOfRangeException(nameof(TargetResolution), $"Unable to parse target resolution ({TargetResolution})"); }
 
                 return new Bounds
                 {

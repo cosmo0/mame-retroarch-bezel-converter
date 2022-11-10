@@ -27,13 +27,13 @@ public static class Initializer
         // check input folders
         if (!Directory.Exists(options.RomsConfigFolder))
         {
-            Console.WriteLine($"Unable to find rom directory {options.RomsConfigFolder}");
+            Interaction.Log($"Unable to find rom directory {options.RomsConfigFolder}");
             err = true;
         }
 
         if (!Directory.Exists(options.OverlaysConfigFolder))
         {
-            Console.WriteLine($"Unable to find overlays directory {options.OverlaysConfigFolder}");
+            Interaction.Log($"Unable to find overlays directory {options.OverlaysConfigFolder}");
             err = true;
         }
 
@@ -42,13 +42,13 @@ public static class Initializer
         {
             if (string.IsNullOrEmpty(options.TemplateRom) || !File.Exists(options.TemplateRom))
             {
-                Console.WriteLine($"Unable to find rom config template {options.TemplateRom}");
+                Interaction.Log($"Unable to find rom config template {options.TemplateRom}");
                 err = true;
             }
 
             if (string.IsNullOrEmpty(options.TemplateOverlay) || !File.Exists(options.TemplateOverlay))
             {
-                Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlay}");
+                Interaction.Log($"Unable to find overlay config template {options.TemplateOverlay}");
                 err = true;
             }
         }
@@ -87,27 +87,27 @@ public static class Initializer
         //check input folder
         if (!Directory.Exists(options.ImagesFolder))
         {
-            Console.WriteLine($"Unable to find image folder {options.ImagesFolder}");
+            Interaction.Log($"Unable to find image folder {options.ImagesFolder}");
             err = true;
         }
 
         // check output folders
         if (!Directory.Exists(options.RomsFolder))
         {
-            Console.WriteLine($"Unable to find rom directory {options.RomsFolder}");
+            Interaction.Log($"Unable to find rom directory {options.RomsFolder}");
             err = true;
         }
 
         // check templates
         if (string.IsNullOrEmpty(options.TemplateRom) || !File.Exists(options.TemplateRom))
         {
-            Console.WriteLine($"Unable to find rom config template {options.TemplateRom}");
+            Interaction.Log($"Unable to find rom config template {options.TemplateRom}");
             err = true;
         }
 
         if (string.IsNullOrEmpty(options.TemplateOverlay) || !File.Exists(options.TemplateOverlay))
         {
-            Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlay}");
+            Interaction.Log($"Unable to find overlay config template {options.TemplateOverlay}");
             err = true;
         }
 
@@ -133,7 +133,7 @@ public static class Initializer
         // check that input folder exists
         if (!Directory.Exists(options.Source))
         {
-            Console.WriteLine($"Unable to find directory {options.Source}");
+            Interaction.Log($"Unable to find directory {options.Source}");
             err = true;
         }
 
@@ -151,13 +151,13 @@ public static class Initializer
         // check templates
         if (!File.Exists(options.TemplateGameCfg))
         {
-            Console.WriteLine($"Unable to find game config template {options.TemplateGameCfg}");
+            Interaction.Log($"Unable to find game config template {options.TemplateGameCfg}");
             err = true;
         }
 
         if (!File.Exists(options.TemplateOverlayCfg))
         {
-            Console.WriteLine($"Unable to find overlay config template {options.TemplateOverlayCfg}");
+            Interaction.Log($"Unable to find overlay config template {options.TemplateOverlayCfg}");
             err = true;
         }
 
@@ -184,13 +184,13 @@ public static class Initializer
         // check that input folder exists
         if (!Directory.Exists(options.SourceConfigs))
         {
-            Console.WriteLine($"Unable to find directory {options.SourceConfigs}");
+            Interaction.Log($"Unable to find directory {options.SourceConfigs}");
             err = true;
         }
 
         if (!Directory.Exists(options.SourceRoms))
         {
-            Console.WriteLine($"Unable to find directory {options.SourceRoms}");
+            Interaction.Log($"Unable to find directory {options.SourceRoms}");
             err = true;
         }
 
@@ -208,7 +208,7 @@ public static class Initializer
         // check templates
         if (!File.Exists(options.Template))
         {
-            Console.WriteLine($"Unable to find LAY template {options.Template}");
+            Interaction.Log($"Unable to find LAY template {options.Template}");
             err = true;
         }
 

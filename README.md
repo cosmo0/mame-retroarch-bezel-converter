@@ -11,22 +11,27 @@ This tool provides several utilities:
 - check Retroarch overlays integrity
 - generate Retroarch overlays from images
 
-It works under Windows x64/ARM64, Linux x64/ARM64 and MacOS x64. You can build it for any platform supported by .Net 5 (it's very easy).
+It works under Windows, Linux and MacOS.
 
 ## Download
 
 **[Download the latest release](https://github.com/cosmo0/mame-retroarch-bezel-converter/releases)**
 
+## Documentation
+
+MAME layout (`.lay`) file specs are located in [lay_file_specs.md](lay_files_specs.md).
+
 ---
 
 ## Usage
 
-**!!! BACKUP YOUR FILES BEFORE USING THIS TOOL !!!** I have used it on my own files but I cannot guarantee that it will work on yours.
+**!!! BACKUP YOUR FILES BEFORE USING THIS TOOL !!!**  
+I have used it on my own files but I cannot guarantee that it will work on yours.
 
 Get a list of possible actions using `bezel-tools --help`.  
 Get a detailed list of options for each action using `bezel-tools [verb] --help`.
 
-### Check overlays integrity
+### Example : check overlays integrity
 
 Checks that:
 
@@ -117,11 +122,17 @@ Scans a folder containing Retroarch overlays and converts them to MAME bezels.
 
 ## Development
 
-You'll need to install the [.Net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0).
+You'll need to install the [.Net 6 SDK](https://dotnet.microsoft.com/download/).
 
 ### Build
 
 `dotnet build src/BezelTools.sln`
+
+### Publish
+
+Run `publish.bat` (or copy the commands in your console).
+
+The binaries will be located in the `out` folder.
 
 ### Run
 
@@ -191,27 +202,16 @@ You'll need to install the [.Net 5 SDK](https://dotnet.microsoft.com/download/do
     --threads 4
     -e tmp/errors.csv`
 
-### Publish
-
-Run `publish.bat` (or copy the commands in your console).
-
-The binaries will be located in the `out` folder.
-
 ---
 
 ## Contribute
 
-Lay file specs are located in [lay_file_specs.md](lay_files_specs.md).
-
-It's a regular .Net console app. It uses [CommandLine](https://github.com/commandlineparser/commandline)
-to parse arguments and execute the right verb.
-
-It's not a very complex app, no surprises.
+Don't hesitate to create issues or pull requests. I can't guarantee I'll be quick to respond to them (it might actually take a few years) but they are welcome anyway.
 
 ## License
 
 This app uses the MIT license. You're free to use it in any project, open source or not, paid or not.
 
-You can fork it, use part of the code, whatever, have fun.
+You can fork it, use part of the code, sell it, whatever, have fun.
 
-Please do let me know if it's been useful to you, though, it'll make me happy.
+Please do let me know if it's been useful to you, though. It'll make me happy.

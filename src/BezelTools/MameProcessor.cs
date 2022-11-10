@@ -1,6 +1,6 @@
 ﻿using BezelTools.Model;
 using BezelTools.Options;
-using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BezelTools
@@ -148,19 +148,13 @@ namespace BezelTools
             MameLayFile.View view;
             if (lay.Views.Length > 1 && !useFirstView)
             {
-                Console.WriteLine("Please choose which bezel you want");
+                var views = new List<string>();
                 for (int i = 0; i < lay.Views.Length; i++)
                 {
-                    Console.WriteLine($"{i}: {lay.Views[i].Name}");
+                    views.Add($"{i}: {lay.Views[i].Name}");
                 }
 
-                string chosenView = "x";
-                int viewIndex;
-                while (!int.TryParse(chosenView, out viewIndex))
-                {
-                    chosenView = Console.ReadLine();
-                }
-
+                int viewIndex = Interaction.Ask("Please choose which bezel you want", views.ToArray());
                 view = lay.Views[viewIndex];
             }
             else

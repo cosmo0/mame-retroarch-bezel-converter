@@ -67,7 +67,7 @@ namespace BezelTools
             {
                 var cfgFile = string.IsNullOrEmpty(options.SourceConfigs) ? string.Empty : Path.Join(options.SourceConfigs, $"{game}.cfg");
 
-                Console.WriteLine($"{game} processing start");
+                Interaction.Log($"{game} processing start");
 
                 var (lay, cfg, bezel) = isFolder
                     ? FileUtils.ReadFiles(game, fsEntry, cfgFile, options)
@@ -76,19 +76,19 @@ namespace BezelTools
                 // extracts the data from the MAME files
                 var mameProcessor = MameProcessor.BuildProcessor(options, lay, cfg);
 
-                Console.WriteLine($"{game} image: {mameProcessor.BezelFileName}");
-                Console.WriteLine($"{game} source screen: {mameProcessor.SourceScreenPosition}");
-                Console.WriteLine($"{game} screen offset: {mameProcessor.Offset}");
+                Interaction.Log($"{game} image: {mameProcessor.BezelFileName}");
+                Interaction.Log($"{game} source screen: {mameProcessor.SourceScreenPosition}");
+                Interaction.Log($"{game} screen offset: {mameProcessor.Offset}");
 
                 // resize the bezel image
-                Console.WriteLine($"{game} resizing image");
+                Interaction.Log($"{game} resizing image");
                 bezel = ImageProcessor.Resize(
                     bezel,
                     (int)options.TargetResolutionBounds.Width,
                     (int)options.TargetResolutionBounds.Height);
 
-                Console.WriteLine($"{game} getting target screen position");
-                var newPosition = new Model.Bounds();
+                Interaction.Log($"{game} getting target screen position");
+                Bounds newPosition;
                 if (options.ScanBezelForScreenCoordinates)
                 {
                     // scan image for transparent pixels
@@ -104,7 +104,7 @@ namespace BezelTools
                                         options.TargetResolutionBounds);
                 }
 
-                Console.WriteLine($"{game} target screen: {newPosition}");
+                Interaction.Log($"{game} target screen: {newPosition}");
 
                 if (newPosition.Width <= 0 || newPosition.Height <= 0)
                 {
@@ -123,7 +123,7 @@ namespace BezelTools
                 // debug: draw target position
                 ImageProcessor.DebugDraw(game, options.OutputDebug, outputImage, newPosition);
 
-                Console.WriteLine($"{game} creating configs");
+                Interaction.Log($"{game} creating configs");
 
                 // create game config files
                 var outputGameCfg = Path.Join(options.OutputRoms, $"{game}.zip.cfg");
@@ -135,7 +135,7 @@ namespace BezelTools
                 File.Copy(options.TemplateOverlayCfg, outputOverlayCfg, options.Overwrite);
                 FileUtils.FillTemplate(outputOverlayCfg, game, newPosition, options.TargetResolutionBounds);
 
-                Console.WriteLine($"{game} processing done");
+                Interaction.Log($"{game} processing done");
             }
             catch (Exception ex)
             {
@@ -154,7 +154,7 @@ namespace BezelTools
             var romFi = new FileInfo(romFile);
             var game = romFi.Name.Replace(".zip.cfg", "");
 
-            Console.WriteLine($"{game} processing start");
+            Interaction.Log($"{game} processing start");
 
             try
             {
@@ -163,10 +163,10 @@ namespace BezelTools
                 // get RA processor
                 var processor = RetroArchProcessor.GetProcessor(romFile, overlayConfigFiles, options);
 
-                Console.WriteLine($"{game} image: {processor.OverlayImageFileName}");
-                Console.WriteLine($"{game} source screen: {processor.SourceScreenPosition}");
+                Interaction.Log($"{game} image: {processor.OverlayImageFileName}");
+                Interaction.Log($"{game} source screen: {processor.SourceScreenPosition}");
 
-                var newPosition = new Model.Bounds();
+                Bounds newPosition;
                 if (options.ScanBezelForScreenCoordinates)
                 {
                     newPosition = ImageProcessor.FindScreen(File.ReadAllBytes(processor.OverlayImagePath), options.Margin);
@@ -177,7 +177,7 @@ namespace BezelTools
                     newPosition = processor.SourceScreenPosition;
                 }
 
-                Console.WriteLine($"{game} target screen: {newPosition}");
+                Interaction.Log($"{game} target screen: {newPosition}");
 
                 // create destination folder
                 if (options.Overwrite && Directory.Exists(target)) { Directory.Delete(target, true); }
@@ -187,7 +187,7 @@ namespace BezelTools
                 File.Copy(processor.OverlayImagePath, Path.Join(target, processor.OverlayImageFileName), options.Overwrite);
 
                 // resize the bezel image
-                Console.WriteLine($"{game} processing image");
+                Interaction.Log($"{game} processing image");
                 ImageProcessor.Resize(
                     processor.OverlayImagePath,
                     (int)processor.SourceResolution.Width,
@@ -196,7 +196,7 @@ namespace BezelTools
                 // debug: draw target position
                 ImageProcessor.DebugDraw(game, options.OutputDebug, processor.OverlayImagePath, newPosition);
 
-                Console.WriteLine($"{game} creating configs");
+                Interaction.Log($"{game} creating configs");
 
                 // create lay file
                 var outputLay = Path.Join(target, "default.lay");
@@ -206,14 +206,14 @@ namespace BezelTools
                 // zip overlay
                 if (options.Zip)
                 {
-                    Console.WriteLine($"{game} zipping file");
+                    Interaction.Log($"{game} zipping file");
                     var targetZip = Path.Join(options.Output, $"{game}.zip");
                     if (File.Exists(targetZip)) { File.Delete(targetZip); }
                     FileUtils.CompressFolderContent(target, targetZip);
                     Directory.Delete(target, true);
                 }
 
-                Console.WriteLine($"{game} processing done");
+                Interaction.Log($"{game} processing done");
             }
             catch (Exception ex)
             {
@@ -235,7 +235,8 @@ namespace BezelTools
 
             if (offset != null)
             {
-                // multiply w/h by stretch = get target screen size, centered => NEW DIMENSIONS AT SOURCE RESOLUTION
+                // multiply w/h by stretch = get target screen size, centered => NEW DIMENSIONS AT
+                // SOURCE RESOLUTION
                 newPos.Width *= offset.HStretch;
                 newPos.Height *= offset.VStretch;
 
@@ -243,7 +244,8 @@ namespace BezelTools
                 newPos.X = sourcePosition.Center.X - (newPos.Width / 2);
                 newPos.Y = sourcePosition.Center.Y - (newPos.Height / 2);
 
-                // apply offset: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) => NEW POSITION at source resolution
+                // apply offset: x = x + ((hres / w * h) * hoffset) ; y = y + (vres * voffset) =>
+                // NEW POSITION at source resolution
                 if (offset.HOffset != 0)
                 {
                     if (newPos.Orientation == Orientation.Horizontal)
@@ -280,7 +282,7 @@ namespace BezelTools
 
         private static void Error(string errorFile, string game, string msg)
         {
-            Console.WriteLine($"{game} PROCESSING ERROR: {msg}");
+            Interaction.Log($"{game} PROCESSING ERROR: {msg}");
 
             if (!string.IsNullOrWhiteSpace(errorFile))
             {
@@ -295,11 +297,11 @@ namespace BezelTools
 
         private static void WriteEnd(string errorFile)
         {
-            Console.WriteLine("########## DONE ##########");
+            Interaction.Log("########## DONE ##########");
 
             if (errorsNb > 0)
             {
-                Console.WriteLine($"{errorsNb} error(s)! Check {errorFile} to see the details");
+                Interaction.Log($"{errorsNb} error(s)! Check {errorFile} to see the details");
             }
         }
     }

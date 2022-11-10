@@ -26,7 +26,7 @@ namespace BezelTools
         {
             if (!string.IsNullOrEmpty(debugFolder))
             {
-                Console.WriteLine($"{game} generating debug image");
+                Interaction.Log($"{game} generating debug image");
                 var debugImage = Path.Join(debugFolder, $"{game}.png");
                 File.Copy(sourceImagePath, debugImage, true);
                 ImageProcessor.DrawRect(debugImage, position);
