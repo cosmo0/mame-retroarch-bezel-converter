@@ -21,7 +21,7 @@ namespace BezelTools
             Interaction.Log("########## GENERATING ROM CONFIGS ##########");
 
             var images = Directory.GetFiles(options.ImagesFolder, "*.png", new EnumerationOptions { MatchCasing = MatchCasing.CaseInsensitive });
-            ThreadUtils.RunThreadsOnFiles(options.Threads, images, (f) =>
+            ThreadUtils.RunAsync(options.Threads, images, (f) =>
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".png", "");

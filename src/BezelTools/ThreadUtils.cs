@@ -11,7 +11,20 @@ namespace BezelTools
     /// </summary>
     public static class ThreadUtils
     {
-        private static readonly List<Thread> threads = new List<Thread>();
+        private static readonly List<Thread> threads = new();
+
+        /// <summary>
+        /// The delegate to run a method asynchronously
+        /// </summary>
+        /// <param name="threadsNb">The number of threads.</param>
+        /// <param name="inputFiles">The input files.</param>
+        /// <param name="threadMethod">The thread method to run on the files.</param>
+        public delegate void RunAsyncDelegate(int threadsNb, IEnumerable<string> inputFiles, Action<string> threadMethod);
+
+        /// <summary>
+        /// Gets or sets the method to run methods asynchronously.
+        /// </summary>
+        public static RunAsyncDelegate RunAsync { get; set; } = RunThreadsOnFiles;
 
         /// <summary>
         /// Runs threads on the specified files
@@ -19,7 +32,7 @@ namespace BezelTools
         /// <param name="threadsNb">The number of threads to run</param>
         /// <param name="inputFiles">The input files collection</param>
         /// <param name="threadMethod">The method executed by the thread</param>
-        public static void RunThreadsOnFiles(int threadsNb, IEnumerable<string> inputFiles, Action<string> threadMethod)
+        private static void RunThreadsOnFiles(int threadsNb, IEnumerable<string> inputFiles, Action<string> threadMethod)
         {
             // get files to process
             var files = new ConcurrentQueue<string>(inputFiles.OrderBy(f => f));

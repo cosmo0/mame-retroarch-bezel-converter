@@ -28,7 +28,7 @@ namespace BezelTools
 
             // check roms configs
             var romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
-            ThreadUtils.RunThreadsOnFiles(options.Threads, romConfigs, (f) =>
+            ThreadUtils.RunAsync(options.Threads, romConfigs, (f) =>
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".zip.cfg", "").Replace(".cfg", "");
@@ -89,7 +89,7 @@ namespace BezelTools
 
             // check overlay config files
             var configFiles = Directory.GetFiles(options.OverlaysConfigFolder, "*.cfg", searchOption);
-            ThreadUtils.RunThreadsOnFiles(options.Threads, configFiles, (f) =>
+            ThreadUtils.RunAsync(options.Threads, configFiles, (f) =>
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".cfg", "");
@@ -157,7 +157,7 @@ namespace BezelTools
 
             // check that all images have an associated overlay config
             var images = Directory.GetFiles(options.OverlaysConfigFolder, "*.png", searchOption);
-            ThreadUtils.RunThreadsOnFiles(options.Threads, images, (f) =>
+            ThreadUtils.RunAsync(options.Threads, images, (f) =>
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".png", "");
@@ -226,7 +226,7 @@ namespace BezelTools
 
             // get list of roms configs, again (in case some have been created)
             romConfigs = Directory.GetFiles(options.RomsConfigFolder, "*.cfg", searchOption);
-            ThreadUtils.RunThreadsOnFiles(options.Threads, romConfigs, (f) =>
+            ThreadUtils.RunAsync(options.Threads, romConfigs, (f) =>
             {
                 var fi = new FileInfo(f);
                 var game = fi.Name.Replace(".cfg", "").Replace(".zip", "");

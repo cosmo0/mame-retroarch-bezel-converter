@@ -38,15 +38,12 @@
 			this.textBoxTargetResolution = new System.Windows.Forms.TextBox();
 			this.pictureBoxDebugFiles = new System.Windows.Forms.PictureBox();
 			this.pictureBoxErrorFile = new System.Windows.Forms.PictureBox();
-			this.pictureBox11 = new System.Windows.Forms.PictureBox();
 			this.pictureBoxMargin = new System.Windows.Forms.PictureBox();
 			this.buttonDebugBrowse = new System.Windows.Forms.Button();
 			this.buttonErrorBrowse = new System.Windows.Forms.Button();
-			this.numericUpDownThreads = new System.Windows.Forms.NumericUpDown();
 			this.numericUpDownMargin = new System.Windows.Forms.NumericUpDown();
 			this.textBoxDebugFiles = new System.Windows.Forms.TextBox();
 			this.textBoxErrorFile = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
 			this.labelMargin = new System.Windows.Forms.Label();
 			this.labelDebug = new System.Windows.Forms.Label();
 			this.labelErrorFile = new System.Windows.Forms.Label();
@@ -148,13 +145,12 @@
 			this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
 			this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.panelCommon.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTargetResolution)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDebugFiles)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorFile)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMargin)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownThreads)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMargin)).BeginInit();
 			this.tabControlActions.SuspendLayout();
 			this.tabPageCheck.SuspendLayout();
@@ -182,6 +178,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRtmOut)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRtmSourceOvl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRtmSourceRoms)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// panelCommon
@@ -195,50 +192,45 @@
 			this.panelCommon.Controls.Add(this.textBoxTargetResolution);
 			this.panelCommon.Controls.Add(this.pictureBoxDebugFiles);
 			this.panelCommon.Controls.Add(this.pictureBoxErrorFile);
-			this.panelCommon.Controls.Add(this.pictureBox11);
 			this.panelCommon.Controls.Add(this.pictureBoxMargin);
 			this.panelCommon.Controls.Add(this.buttonDebugBrowse);
 			this.panelCommon.Controls.Add(this.buttonErrorBrowse);
-			this.panelCommon.Controls.Add(this.numericUpDownThreads);
 			this.panelCommon.Controls.Add(this.numericUpDownMargin);
 			this.panelCommon.Controls.Add(this.textBoxDebugFiles);
 			this.panelCommon.Controls.Add(this.textBoxErrorFile);
-			this.panelCommon.Controls.Add(this.label1);
 			this.panelCommon.Controls.Add(this.labelMargin);
 			this.panelCommon.Controls.Add(this.labelDebug);
 			this.panelCommon.Controls.Add(this.labelErrorFile);
-			this.panelCommon.Location = new System.Drawing.Point(12, 470);
+			this.panelCommon.Location = new System.Drawing.Point(12, 402);
 			this.panelCommon.Name = "panelCommon";
-			this.panelCommon.Size = new System.Drawing.Size(805, 160);
+			this.panelCommon.Size = new System.Drawing.Size(805, 131);
 			this.panelCommon.TabIndex = 1;
 			// 
 			// buttonResolution720p
 			// 
 			this.buttonResolution720p.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonResolution720p.Location = new System.Drawing.Point(534, 18);
+			this.buttonResolution720p.Location = new System.Drawing.Point(534, 17);
 			this.buttonResolution720p.Name = "buttonResolution720p";
 			this.buttonResolution720p.Size = new System.Drawing.Size(65, 23);
 			this.buttonResolution720p.TabIndex = 28;
 			this.buttonResolution720p.Text = "720p";
 			this.buttonResolution720p.UseVisualStyleBackColor = true;
-			this.buttonResolution720p.Click += new System.EventHandler(this.buttonResolution720p_Click);
 			// 
 			// buttonResolution1080p
 			// 
 			this.buttonResolution1080p.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.buttonResolution1080p.Location = new System.Drawing.Point(463, 19);
+			this.buttonResolution1080p.Location = new System.Drawing.Point(463, 18);
 			this.buttonResolution1080p.Name = "buttonResolution1080p";
 			this.buttonResolution1080p.Size = new System.Drawing.Size(65, 23);
 			this.buttonResolution1080p.TabIndex = 27;
 			this.buttonResolution1080p.Text = "1080p";
 			this.buttonResolution1080p.UseVisualStyleBackColor = true;
-			this.buttonResolution1080p.Click += new System.EventHandler(this.buttonResolution1080p_Click);
 			// 
 			// pictureBoxTargetResolution
 			// 
 			this.pictureBoxTargetResolution.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.pictureBoxTargetResolution.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxTargetResolution.Image")));
-			this.pictureBoxTargetResolution.Location = new System.Drawing.Point(431, 21);
+			this.pictureBoxTargetResolution.Location = new System.Drawing.Point(431, 20);
 			this.pictureBoxTargetResolution.Name = "pictureBoxTargetResolution";
 			this.pictureBoxTargetResolution.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxTargetResolution.TabIndex = 26;
@@ -250,7 +242,7 @@
 			// 
 			this.labelTargetResolution.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelTargetResolution.AutoSize = true;
-			this.labelTargetResolution.Location = new System.Drawing.Point(164, 22);
+			this.labelTargetResolution.Location = new System.Drawing.Point(164, 21);
 			this.labelTargetResolution.Name = "labelTargetResolution";
 			this.labelTargetResolution.Size = new System.Drawing.Size(95, 15);
 			this.labelTargetResolution.TabIndex = 25;
@@ -259,7 +251,7 @@
 			// textBoxTargetResolution
 			// 
 			this.textBoxTargetResolution.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.textBoxTargetResolution.Location = new System.Drawing.Point(265, 19);
+			this.textBoxTargetResolution.Location = new System.Drawing.Point(265, 18);
 			this.textBoxTargetResolution.Name = "textBoxTargetResolution";
 			this.textBoxTargetResolution.Size = new System.Drawing.Size(160, 23);
 			this.textBoxTargetResolution.TabIndex = 24;
@@ -269,7 +261,7 @@
 			// 
 			this.pictureBoxDebugFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBoxDebugFiles.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxDebugFiles.Image")));
-			this.pictureBoxDebugFiles.Location = new System.Drawing.Point(666, 137);
+			this.pictureBoxDebugFiles.Location = new System.Drawing.Point(666, 108);
 			this.pictureBoxDebugFiles.Name = "pictureBoxDebugFiles";
 			this.pictureBoxDebugFiles.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxDebugFiles.TabIndex = 23;
@@ -282,7 +274,7 @@
 			// 
 			this.pictureBoxErrorFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBoxErrorFile.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxErrorFile.Image")));
-			this.pictureBoxErrorFile.Location = new System.Drawing.Point(666, 108);
+			this.pictureBoxErrorFile.Location = new System.Drawing.Point(666, 79);
 			this.pictureBoxErrorFile.Name = "pictureBoxErrorFile";
 			this.pictureBoxErrorFile.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxErrorFile.TabIndex = 22;
@@ -290,23 +282,11 @@
 			this.toolTipInfo.SetToolTip(this.pictureBoxErrorFile, "Outputs a CSV file listing the encountered errors.\r\nUseful if you have a large nu" +
         "mber of files to process.");
 			// 
-			// pictureBox11
-			// 
-			this.pictureBox11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.pictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox11.Image")));
-			this.pictureBox11.Location = new System.Drawing.Point(326, 79);
-			this.pictureBox11.Name = "pictureBox11";
-			this.pictureBox11.Size = new System.Drawing.Size(16, 16);
-			this.pictureBox11.TabIndex = 21;
-			this.pictureBox11.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBox11, "The number of threads to use to process the overlays.\r\nIf you don\'t know what tha" +
-        "t means, leave it at 4.");
-			// 
 			// pictureBoxMargin
 			// 
 			this.pictureBoxMargin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.pictureBoxMargin.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxMargin.Image")));
-			this.pictureBoxMargin.Location = new System.Drawing.Point(326, 50);
+			this.pictureBoxMargin.Location = new System.Drawing.Point(326, 49);
 			this.pictureBoxMargin.Name = "pictureBoxMargin";
 			this.pictureBoxMargin.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMargin.TabIndex = 20;
@@ -318,53 +298,27 @@
 			// buttonDebugBrowse
 			// 
 			this.buttonDebugBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonDebugBrowse.Location = new System.Drawing.Point(585, 134);
+			this.buttonDebugBrowse.Location = new System.Drawing.Point(585, 105);
 			this.buttonDebugBrowse.Name = "buttonDebugBrowse";
 			this.buttonDebugBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonDebugBrowse.TabIndex = 9;
 			this.buttonDebugBrowse.Text = "...";
 			this.buttonDebugBrowse.UseVisualStyleBackColor = true;
-			this.buttonDebugBrowse.Click += new System.EventHandler(this.buttonDebugBrowse_Click);
 			// 
 			// buttonErrorBrowse
 			// 
 			this.buttonErrorBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.buttonErrorBrowse.Location = new System.Drawing.Point(585, 105);
+			this.buttonErrorBrowse.Location = new System.Drawing.Point(585, 76);
 			this.buttonErrorBrowse.Name = "buttonErrorBrowse";
 			this.buttonErrorBrowse.Size = new System.Drawing.Size(75, 23);
 			this.buttonErrorBrowse.TabIndex = 6;
 			this.buttonErrorBrowse.Text = "...";
 			this.buttonErrorBrowse.UseVisualStyleBackColor = true;
-			this.buttonErrorBrowse.Click += new System.EventHandler(this.buttonErrorBrowse_Click);
-			// 
-			// numericUpDownThreads
-			// 
-			this.numericUpDownThreads.AllowDrop = true;
-			this.numericUpDownThreads.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.numericUpDownThreads.Location = new System.Drawing.Point(265, 77);
-			this.numericUpDownThreads.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-			this.numericUpDownThreads.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-			this.numericUpDownThreads.Name = "numericUpDownThreads";
-			this.numericUpDownThreads.Size = new System.Drawing.Size(55, 23);
-			this.numericUpDownThreads.TabIndex = 3;
-			this.numericUpDownThreads.Value = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
 			// 
 			// numericUpDownMargin
 			// 
 			this.numericUpDownMargin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.numericUpDownMargin.Location = new System.Drawing.Point(265, 48);
+			this.numericUpDownMargin.Location = new System.Drawing.Point(265, 47);
 			this.numericUpDownMargin.Minimum = new decimal(new int[] {
             100,
             0,
@@ -378,7 +332,7 @@
 			// 
 			this.textBoxDebugFiles.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxDebugFiles.Location = new System.Drawing.Point(265, 134);
+			this.textBoxDebugFiles.Location = new System.Drawing.Point(265, 105);
 			this.textBoxDebugFiles.Name = "textBoxDebugFiles";
 			this.textBoxDebugFiles.Size = new System.Drawing.Size(314, 23);
 			this.textBoxDebugFiles.TabIndex = 8;
@@ -387,26 +341,16 @@
 			// 
 			this.textBoxErrorFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textBoxErrorFile.Location = new System.Drawing.Point(265, 105);
+			this.textBoxErrorFile.Location = new System.Drawing.Point(265, 76);
 			this.textBoxErrorFile.Name = "textBoxErrorFile";
 			this.textBoxErrorFile.Size = new System.Drawing.Size(314, 23);
 			this.textBoxErrorFile.TabIndex = 5;
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(152, 79);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(107, 15);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "Number of threads";
 			// 
 			// labelMargin
 			// 
 			this.labelMargin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelMargin.AutoSize = true;
-			this.labelMargin.Location = new System.Drawing.Point(36, 50);
+			this.labelMargin.Location = new System.Drawing.Point(36, 49);
 			this.labelMargin.Name = "labelMargin";
 			this.labelMargin.Size = new System.Drawing.Size(223, 15);
 			this.labelMargin.TabIndex = 0;
@@ -416,7 +360,7 @@
 			// 
 			this.labelDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelDebug.AutoSize = true;
-			this.labelDebug.Location = new System.Drawing.Point(193, 137);
+			this.labelDebug.Location = new System.Drawing.Point(193, 108);
 			this.labelDebug.Name = "labelDebug";
 			this.labelDebug.Size = new System.Drawing.Size(66, 15);
 			this.labelDebug.TabIndex = 7;
@@ -426,7 +370,7 @@
 			// 
 			this.labelErrorFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.labelErrorFile.AutoSize = true;
-			this.labelErrorFile.Location = new System.Drawing.Point(208, 108);
+			this.labelErrorFile.Location = new System.Drawing.Point(208, 79);
 			this.labelErrorFile.Name = "labelErrorFile";
 			this.labelErrorFile.Size = new System.Drawing.Size(51, 15);
 			this.labelErrorFile.TabIndex = 4;
@@ -444,7 +388,7 @@
 			this.tabControlActions.Location = new System.Drawing.Point(12, 12);
 			this.tabControlActions.Name = "tabControlActions";
 			this.tabControlActions.SelectedIndex = 0;
-			this.tabControlActions.Size = new System.Drawing.Size(805, 452);
+			this.tabControlActions.Size = new System.Drawing.Size(805, 384);
 			this.tabControlActions.TabIndex = 0;
 			// 
 			// tabPageCheck
@@ -476,7 +420,7 @@
 			this.tabPageCheck.Location = new System.Drawing.Point(4, 24);
 			this.tabPageCheck.Name = "tabPageCheck";
 			this.tabPageCheck.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageCheck.Size = new System.Drawing.Size(797, 424);
+			this.tabPageCheck.Size = new System.Drawing.Size(797, 356);
 			this.tabPageCheck.TabIndex = 0;
 			this.tabPageCheck.Text = "Check overlays";
 			this.tabPageCheck.UseVisualStyleBackColor = true;
@@ -537,7 +481,7 @@
 			this.buttonStartCheck.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartCheck.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartCheck.UseVisualStyleBackColor = true;
-			this.buttonStartCheck.Click += new System.EventHandler(this.buttonStartCheck_Click);
+			this.buttonStartCheck.Click += new System.EventHandler(this.StartCheck);
 			// 
 			// pictureBoxCheckTemplateRom
 			// 
@@ -580,7 +524,7 @@
 			this.pictureBoxCheckPathRom.TabIndex = 20;
 			this.pictureBoxCheckPathRom.TabStop = false;
 			this.toolTipInfo.SetToolTip(this.pictureBoxCheckPathRom, "The folder where your rom config files are located; usually the same folder as th" +
-        "e rom files, but it may vary.");
+        "e rom files, but it may vary.\r\nEx: C:\\roms\\arcade\\");
 			// 
 			// pictureBoxCheckPathOverlay
 			// 
@@ -590,7 +534,8 @@
 			this.pictureBoxCheckPathOverlay.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxCheckPathOverlay.TabIndex = 19;
 			this.pictureBoxCheckPathOverlay.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxCheckPathOverlay, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxCheckPathOverlay, "The folder where your overlays (images and associated .cfg files) are located.\r\nE" +
+        "x: C:\\Retroarch\\overlays");
 			// 
 			// buttonCheckPathTemplateRom
 			// 
@@ -600,7 +545,6 @@
 			this.buttonCheckPathTemplateRom.TabIndex = 15;
 			this.buttonCheckPathTemplateRom.Text = "...";
 			this.buttonCheckPathTemplateRom.UseVisualStyleBackColor = true;
-			this.buttonCheckPathTemplateRom.Click += new System.EventHandler(this.buttonCheckPathTemplateRom_Click);
 			// 
 			// buttonCheckPathTemplateOverlay
 			// 
@@ -610,7 +554,6 @@
 			this.buttonCheckPathTemplateOverlay.TabIndex = 12;
 			this.buttonCheckPathTemplateOverlay.Text = "...";
 			this.buttonCheckPathTemplateOverlay.UseVisualStyleBackColor = true;
-			this.buttonCheckPathTemplateOverlay.Click += new System.EventHandler(this.buttonCheckPathTemplateOverlay_Click);
 			// 
 			// buttonCheckPathRoms
 			// 
@@ -620,7 +563,6 @@
 			this.buttonCheckPathRoms.TabIndex = 7;
 			this.buttonCheckPathRoms.Text = "...";
 			this.buttonCheckPathRoms.UseVisualStyleBackColor = true;
-			this.buttonCheckPathRoms.Click += new System.EventHandler(this.buttonCheckPathRoms_Click);
 			// 
 			// buttonCheckPathOverlays
 			// 
@@ -630,7 +572,6 @@
 			this.buttonCheckPathOverlays.TabIndex = 4;
 			this.buttonCheckPathOverlays.Text = "...";
 			this.buttonCheckPathOverlays.UseVisualStyleBackColor = true;
-			this.buttonCheckPathOverlays.Click += new System.EventHandler(this.buttonCheckPathOverlays_Click);
 			// 
 			// textBoxCheckPathRoms
 			// 
@@ -737,7 +678,7 @@
 			this.tabPageGenerate.Location = new System.Drawing.Point(4, 24);
 			this.tabPageGenerate.Name = "tabPageGenerate";
 			this.tabPageGenerate.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageGenerate.Size = new System.Drawing.Size(797, 424);
+			this.tabPageGenerate.Size = new System.Drawing.Size(797, 356);
 			this.tabPageGenerate.TabIndex = 1;
 			this.tabPageGenerate.Text = "Generate from images";
 			this.tabPageGenerate.UseVisualStyleBackColor = true;
@@ -764,7 +705,7 @@
 			this.buttonStartGenerate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartGenerate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartGenerate.UseVisualStyleBackColor = true;
-			this.buttonStartGenerate.Click += new System.EventHandler(this.buttonStartGenerate_Click);
+			this.buttonStartGenerate.Click += new System.EventHandler(this.StartGenerate);
 			// 
 			// pictureBoxGenerateRomTemplate
 			// 
@@ -784,7 +725,6 @@
 			this.buttonGenerateRomTemplate.TabIndex = 11;
 			this.buttonGenerateRomTemplate.Text = "...";
 			this.buttonGenerateRomTemplate.UseVisualStyleBackColor = true;
-			this.buttonGenerateRomTemplate.Click += new System.EventHandler(this.buttonGenerateRomTemplate_Click);
 			// 
 			// textBoxGenerateRomTemplate
 			// 
@@ -821,7 +761,6 @@
 			this.buttonGenerateOverlayTemplate.TabIndex = 8;
 			this.buttonGenerateOverlayTemplate.Text = "...";
 			this.buttonGenerateOverlayTemplate.UseVisualStyleBackColor = true;
-			this.buttonGenerateOverlayTemplate.Click += new System.EventHandler(this.buttonGenerateOverlayTemplate_Click);
 			// 
 			// textBoxGenerateOverlayTemplate
 			// 
@@ -848,7 +787,8 @@
 			this.pictureBoxGenerateRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxGenerateRoms.TabIndex = 27;
 			this.pictureBoxGenerateRoms.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRoms, "The folder where the rom config files will be saved.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxGenerateRoms, "The folder where the rom config files will be saved. It\'s usually the same folder" +
+        " as the roms.\r\nEx: C:\\roms\\arcade");
 			// 
 			// buttonGenerateRoms
 			// 
@@ -858,7 +798,6 @@
 			this.buttonGenerateRoms.TabIndex = 5;
 			this.buttonGenerateRoms.Text = "...";
 			this.buttonGenerateRoms.UseVisualStyleBackColor = true;
-			this.buttonGenerateRoms.Click += new System.EventHandler(this.buttonGenerateRoms_Click);
 			// 
 			// textBoxGenerateRoms
 			// 
@@ -895,7 +834,6 @@
 			this.buttonGenerateImages.TabIndex = 2;
 			this.buttonGenerateImages.Text = "...";
 			this.buttonGenerateImages.UseVisualStyleBackColor = true;
-			this.buttonGenerateImages.Click += new System.EventHandler(this.buttonGenerateImages_Click);
 			// 
 			// textBoxGenerateImages
 			// 
@@ -946,7 +884,7 @@
 			this.tabPageConvertMAMEtoRA.Location = new System.Drawing.Point(4, 24);
 			this.tabPageConvertMAMEtoRA.Name = "tabPageConvertMAMEtoRA";
 			this.tabPageConvertMAMEtoRA.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConvertMAMEtoRA.Size = new System.Drawing.Size(797, 424);
+			this.tabPageConvertMAMEtoRA.Size = new System.Drawing.Size(797, 356);
 			this.tabPageConvertMAMEtoRA.TabIndex = 2;
 			this.tabPageConvertMAMEtoRA.Text = "Convert from MAME to RA";
 			this.tabPageConvertMAMEtoRA.UseVisualStyleBackColor = true;
@@ -975,7 +913,7 @@
 			this.pictureBoxMtrSourceConfig.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrSourceConfig.TabIndex = 49;
 			this.pictureBoxMtrSourceConfig.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSourceConfig, "The folder where the MAME configuration files are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSourceConfig, "The folder where the MAME configuration files are located.\r\nEx: C:\\MAME\\Cfg");
 			// 
 			// buttonMtrSourceConfig
 			// 
@@ -985,7 +923,6 @@
 			this.buttonMtrSourceConfig.TabIndex = 48;
 			this.buttonMtrSourceConfig.Text = "...";
 			this.buttonMtrSourceConfig.UseVisualStyleBackColor = true;
-			this.buttonMtrSourceConfig.Click += new System.EventHandler(this.buttonMtrSourceConfig_Click);
 			// 
 			// textBoxMtrSourceConfig
 			// 
@@ -1027,7 +964,7 @@
 			this.buttonStartMtr.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartMtr.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartMtr.UseVisualStyleBackColor = true;
-			this.buttonStartMtr.Click += new System.EventHandler(this.buttonStartMtr_Click);
+			this.buttonStartMtr.Click += new System.EventHandler(this.StartMameToRetroarch);
 			// 
 			// checkBoxMtrOverwrite
 			// 
@@ -1057,7 +994,6 @@
 			this.buttonMtrTemplateRom.TabIndex = 14;
 			this.buttonMtrTemplateRom.Text = "...";
 			this.buttonMtrTemplateRom.UseVisualStyleBackColor = true;
-			this.buttonMtrTemplateRom.Click += new System.EventHandler(this.buttonMtrTemplateRom_Click);
 			// 
 			// textBoxMtrTemplateRom
 			// 
@@ -1094,7 +1030,6 @@
 			this.buttonMtrTemplateOverlay.TabIndex = 11;
 			this.buttonMtrTemplateOverlay.Text = "...";
 			this.buttonMtrTemplateOverlay.UseVisualStyleBackColor = true;
-			this.buttonMtrTemplateOverlay.Click += new System.EventHandler(this.buttonMtrTemplateOverlay_Click);
 			// 
 			// textBoxMtrTemplateOverlay
 			// 
@@ -1121,7 +1056,7 @@
 			this.pictureBoxMtrOutRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrOutRoms.TabIndex = 35;
 			this.pictureBoxMtrOutRoms.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutRoms, "The folder where the rom configs will be saved");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutRoms, "The folder where the rom configs will be saved.\r\nEx: C:\\roms\\arcade");
 			// 
 			// buttonMtrOutRoms
 			// 
@@ -1131,7 +1066,6 @@
 			this.buttonMtrOutRoms.TabIndex = 8;
 			this.buttonMtrOutRoms.Text = "...";
 			this.buttonMtrOutRoms.UseVisualStyleBackColor = true;
-			this.buttonMtrOutRoms.Click += new System.EventHandler(this.buttonMtrOutRoms_Click);
 			// 
 			// textBoxMtrOutRoms
 			// 
@@ -1157,7 +1091,7 @@
 			this.pictureBoxMtrOutOverlays.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrOutOverlays.TabIndex = 31;
 			this.pictureBoxMtrOutOverlays.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutOverlays, "The folder where the overlays will be saved");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrOutOverlays, "The folder where the overlays will be saved.\r\nEx: C:\\Retroarch\\overlays");
 			// 
 			// buttonMtrOutOverlays
 			// 
@@ -1167,7 +1101,6 @@
 			this.buttonMtrOutOverlays.TabIndex = 5;
 			this.buttonMtrOutOverlays.Text = "...";
 			this.buttonMtrOutOverlays.UseVisualStyleBackColor = true;
-			this.buttonMtrOutOverlays.Click += new System.EventHandler(this.buttonMtrOutOverlays_Click);
 			// 
 			// textBoxMtrOutOverlays
 			// 
@@ -1193,7 +1126,7 @@
 			this.pictureBoxMtrSource.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxMtrSource.TabIndex = 27;
 			this.pictureBoxMtrSource.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSource, "The folder where the MAME bezels are located.\r\n");
+			this.toolTipInfo.SetToolTip(this.pictureBoxMtrSource, "The folder where the MAME bezels are located\r\nEx: C:\\MAME\\Artwork");
 			// 
 			// buttonMtrSource
 			// 
@@ -1203,7 +1136,6 @@
 			this.buttonMtrSource.TabIndex = 2;
 			this.buttonMtrSource.Text = "...";
 			this.buttonMtrSource.UseVisualStyleBackColor = true;
-			this.buttonMtrSource.Click += new System.EventHandler(this.buttonMtrSource_Click);
 			// 
 			// textBoxMtrSource
 			// 
@@ -1245,7 +1177,7 @@
 			this.tabPageConvertRAtoMAME.Location = new System.Drawing.Point(4, 24);
 			this.tabPageConvertRAtoMAME.Name = "tabPageConvertRAtoMAME";
 			this.tabPageConvertRAtoMAME.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPageConvertRAtoMAME.Size = new System.Drawing.Size(797, 424);
+			this.tabPageConvertRAtoMAME.Size = new System.Drawing.Size(797, 356);
 			this.tabPageConvertRAtoMAME.TabIndex = 3;
 			this.tabPageConvertRAtoMAME.Text = "Convert from RA to MAME";
 			this.tabPageConvertRAtoMAME.UseVisualStyleBackColor = true;
@@ -1262,7 +1194,7 @@
 			this.buttonStartRtm.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.buttonStartRtm.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
 			this.buttonStartRtm.UseVisualStyleBackColor = true;
-			this.buttonStartRtm.Click += new System.EventHandler(this.buttonStartRtm_Click);
+			this.buttonStartRtm.Click += new System.EventHandler(this.StartRetroarchToMame);
 			// 
 			// checkBoxRtmZip
 			// 
@@ -1304,7 +1236,6 @@
 			this.buttonRtmTemplate.TabIndex = 11;
 			this.buttonRtmTemplate.Text = "...";
 			this.buttonRtmTemplate.UseVisualStyleBackColor = true;
-			this.buttonRtmTemplate.Click += new System.EventHandler(this.buttonRtmTemplate_Click);
 			// 
 			// textBoxRtmTemplate
 			// 
@@ -1331,7 +1262,7 @@
 			this.pictureBoxRtmOut.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxRtmOut.TabIndex = 56;
 			this.pictureBoxRtmOut.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxRtmOut, "The folder where you want to save the MAME bezels.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxRtmOut, "The folder where you want to save the MAME bezels.\r\nEx: C:\\MAME\\Artwork");
 			// 
 			// buttonRtmOut
 			// 
@@ -1341,7 +1272,6 @@
 			this.buttonRtmOut.TabIndex = 8;
 			this.buttonRtmOut.Text = "...";
 			this.buttonRtmOut.UseVisualStyleBackColor = true;
-			this.buttonRtmOut.Click += new System.EventHandler(this.buttonRtmOut_Click);
 			// 
 			// textBoxRtmOut
 			// 
@@ -1367,7 +1297,8 @@
 			this.pictureBoxRtmSourceOvl.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxRtmSourceOvl.TabIndex = 52;
 			this.pictureBoxRtmSourceOvl.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxRtmSourceOvl, "The folder where your overlays (images and associated .cfg files) are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxRtmSourceOvl, "The folder where your overlays (images and associated .cfg files) are located.\r\nE" +
+        "x: C:\\Retroarch\\overlays");
 			// 
 			// buttonRtmSourceOvl
 			// 
@@ -1377,7 +1308,6 @@
 			this.buttonRtmSourceOvl.TabIndex = 5;
 			this.buttonRtmSourceOvl.Text = "...";
 			this.buttonRtmSourceOvl.UseVisualStyleBackColor = true;
-			this.buttonRtmSourceOvl.Click += new System.EventHandler(this.buttonRtmSourceOvl_Click);
 			// 
 			// textBoxRtmSourceOvl
 			// 
@@ -1403,7 +1333,7 @@
 			this.pictureBoxRtmSourceRoms.Size = new System.Drawing.Size(16, 16);
 			this.pictureBoxRtmSourceRoms.TabIndex = 48;
 			this.pictureBoxRtmSourceRoms.TabStop = false;
-			this.toolTipInfo.SetToolTip(this.pictureBoxRtmSourceRoms, "The folder where your RA rom configs are located.");
+			this.toolTipInfo.SetToolTip(this.pictureBoxRtmSourceRoms, "The folder where your RA rom configs are located.\r\nEx: C:\\roms\\arcade");
 			// 
 			// buttonRtmSourceRoms
 			// 
@@ -1413,7 +1343,6 @@
 			this.buttonRtmSourceRoms.TabIndex = 2;
 			this.buttonRtmSourceRoms.Text = "...";
 			this.buttonRtmSourceRoms.UseVisualStyleBackColor = true;
-			this.buttonRtmSourceRoms.Click += new System.EventHandler(this.buttonRtmSourceRoms_Click);
 			// 
 			// textBoxRtmSourceRoms
 			// 
@@ -1437,11 +1366,15 @@
 			this.toolTipInfo.InitialDelay = 250;
 			this.toolTipInfo.ReshowDelay = 100;
 			// 
+			// errorProvider
+			// 
+			this.errorProvider.ContainerControl = this;
+			// 
 			// StartPage
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(829, 642);
+			this.ClientSize = new System.Drawing.Size(829, 545);
 			this.Controls.Add(this.tabControlActions);
 			this.Controls.Add(this.panelCommon);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1452,9 +1385,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxTargetResolution)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDebugFiles)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxErrorFile)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxMargin)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.numericUpDownThreads)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numericUpDownMargin)).EndInit();
 			this.tabControlActions.ResumeLayout(false);
 			this.tabPageCheck.ResumeLayout(false);
@@ -1486,6 +1417,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRtmOut)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRtmSourceOvl)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxRtmSourceRoms)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -1500,11 +1432,9 @@
 		private TabPage tabPageConvertRAtoMAME;
 		private TextBox textBoxDebugFiles;
 		private TextBox textBoxErrorFile;
-		private Label label1;
 		private Label labelMargin;
 		private Label labelDebug;
 		private Label labelErrorFile;
-		private NumericUpDown numericUpDownThreads;
 		private NumericUpDown numericUpDownMargin;
 		private Button buttonDebugBrowse;
 		private Button buttonErrorBrowse;
@@ -1583,7 +1513,6 @@
         private Button buttonRtmSourceRoms;
         private TextBox textBoxRtmSourceRoms;
         private Label labelRtmSourceRoms;
-        private PictureBox pictureBox11;
         private PictureBox pictureBoxMargin;
         private PictureBox pictureBoxDebugFiles;
         private PictureBox pictureBoxErrorFile;
@@ -1610,5 +1539,6 @@
         private TextBox textBoxMtrSourceConfig;
         private Label labelMtrSourceConfig;
         private CheckBox checkBoxMtrUseFirstView;
+        private ErrorProvider errorProvider;
     }
 }

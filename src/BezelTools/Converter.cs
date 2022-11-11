@@ -19,7 +19,7 @@ namespace BezelTools
         {
             var fsEntries = Directory.EnumerateFileSystemEntries(options.Source).OrderBy(f => f);
 
-            ThreadUtils.RunThreadsOnFiles(options.Threads, fsEntries, (f) =>
+            ThreadUtils.RunAsync(options.Threads, fsEntries, (f) =>
             {
                 ProcessMameFile(f, options);
             });
@@ -37,7 +37,7 @@ namespace BezelTools
             var romFiles = Directory.EnumerateFiles(options.SourceRoms, "*.zip.cfg").OrderBy(f => f);
             var configFiles = Directory.EnumerateFiles(options.SourceConfigs, "*.cfg"); // read-only collection, no need for it to be concurrent
 
-            ThreadUtils.RunThreadsOnFiles(options.Threads, romFiles, (f) =>
+            ThreadUtils.RunAsync(options.Threads, romFiles, (f) =>
             {
                 ProcessRetroarchFile(f, configFiles, options);
             });
