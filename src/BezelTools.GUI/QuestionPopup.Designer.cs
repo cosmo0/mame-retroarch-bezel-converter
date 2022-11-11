@@ -61,7 +61,6 @@
 			this.flowLayoutPanelAnswers.Name = "flowLayoutPanelAnswers";
 			this.flowLayoutPanelAnswers.Size = new System.Drawing.Size(550, 216);
 			this.flowLayoutPanelAnswers.TabIndex = 3;
-			this.flowLayoutPanelAnswers.WrapContents = false;
 			// 
 			// QuestionPopup
 			// 

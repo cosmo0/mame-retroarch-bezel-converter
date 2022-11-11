@@ -894,15 +894,11 @@
 			this.checkBoxMtrUseFirstView.AutoSize = true;
 			this.checkBoxMtrUseFirstView.Checked = true;
 			this.checkBoxMtrUseFirstView.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.checkBoxMtrUseFirstView.Enabled = false;
 			this.checkBoxMtrUseFirstView.Location = new System.Drawing.Point(261, 218);
 			this.checkBoxMtrUseFirstView.Name = "checkBoxMtrUseFirstView";
 			this.checkBoxMtrUseFirstView.Size = new System.Drawing.Size(213, 19);
 			this.checkBoxMtrUseFirstView.TabIndex = 50;
 			this.checkBoxMtrUseFirstView.Text = "Use the first view found in the bezel";
-			this.toolTipInfo.SetToolTip(this.checkBoxMtrUseFirstView, "Choosing a different view is not implemented in the GUI at this time.\r\nUse the co" +
-        "mmand-line version of the tool (bezel-tools.exe) if you want to be able to choos" +
-        "e.");
 			this.checkBoxMtrUseFirstView.UseVisualStyleBackColor = true;
 			// 
 			// pictureBoxMtrSourceConfig

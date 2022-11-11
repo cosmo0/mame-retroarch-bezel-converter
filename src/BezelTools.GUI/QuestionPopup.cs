@@ -41,7 +41,8 @@
                 var radio = new RadioButton
                 {
                     Text = a,
-                    Checked = ischecked
+                    Checked = ischecked,
+                    Width = flowLayoutPanelAnswers.Width - flowLayoutPanelAnswers.Margin.Right - flowLayoutPanelAnswers.Margin.Left
                 };
 
                 this.flowLayoutPanelAnswers.Controls.Add(radio);
