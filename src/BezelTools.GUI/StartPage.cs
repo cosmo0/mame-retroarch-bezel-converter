@@ -29,8 +29,8 @@ namespace BezelTools.GUI
 
             // setup handlers
             Interaction.Log = (message) => { };
-            Interaction.Ask = this.Ask;
-            ThreadUtils.RunAsync = this.RunAsync;
+            Interaction.Ask = Ask;
+            ThreadUtils.RunAsync = RunAsync;
         }
 
         private int Ask(string question, string[] answers)
@@ -169,6 +169,12 @@ namespace BezelTools.GUI
 
         private void StartCheck(object sender, EventArgs e)
         {
+            if (!ValidateCheck())
+            {
+                MessageBox.Show(this, "Please fill all mandatory fields and try again.");
+                return;
+            }
+
             CheckOptions o = new()
             {
                 // common
@@ -198,6 +204,12 @@ namespace BezelTools.GUI
 
         private void StartGenerate(object sender, EventArgs e)
         {
+            if (!ValidateGenerate())
+            {
+                MessageBox.Show(this, "Please fill all mandatory fields and try again.");
+                return;
+            }
+
             GenerateOptions o = new()
             {
                 // common
@@ -225,6 +237,12 @@ namespace BezelTools.GUI
 
         private void StartMameToRetroarch(object sender, EventArgs e)
         {
+            if (!ValidateMameToRetroarch())
+            {
+                MessageBox.Show(this, "Please fill all mandatory fields and try again.");
+                return;
+            }
+
             MameToRaOptions o = new()
             {
                 // common
@@ -256,6 +274,12 @@ namespace BezelTools.GUI
 
         private void StartRetroarchToMame(object sender, EventArgs e)
         {
+            if (!ValidateRetroarchToMame())
+            {
+                MessageBox.Show(this, "Please fill all mandatory fields and try again.");
+                return;
+            }
+
             RaToMameOptions o = new()
             {
                 // common
@@ -281,6 +305,96 @@ namespace BezelTools.GUI
             Converter.ConvertRetroarchToMame(o);
 
             MessageBox.Show(this, "All done !");
+        }
+
+        private bool ValidateCheck()
+        {
+            var result = true;
+
+            result = ValidateCommon() && result;
+
+            result = ValidateIsEmpty(textBoxCheckPathOverlays) && result;
+            result = ValidateIsEmpty(textBoxCheckPathRoms) && result;
+
+            if (checkBoxCheckAutofix.Checked)
+            {
+                result = ValidateIsEmpty(textBoxCheckPathTemplateOverlay) && result;
+                result = ValidateIsEmpty(textBoxCheckPathTemplateRom) && result;
+            }
+            else
+            {
+                errorProvider.SetError(textBoxCheckPathTemplateOverlay, string.Empty);
+                errorProvider.SetError(textBoxCheckPathTemplateRom, string.Empty);
+            }
+
+            return result;
+        }
+
+        private bool ValidateCommon()
+        {
+            var result = true;
+
+            result = ValidateIsEmpty(textBoxTargetResolution) && result;
+
+            return result;
+        }
+
+        private bool ValidateGenerate()
+        {
+            var result = true;
+
+            result = ValidateCommon() && result;
+
+            result = ValidateIsEmpty(textBoxGenerateImages) && result;
+            result = ValidateIsEmpty(textBoxGenerateRoms) && result;
+            result = ValidateIsEmpty(textBoxGenerateOverlayTemplate) && result;
+            result = ValidateIsEmpty(textBoxGenerateRomTemplate) && result;
+
+            return result;
+        }
+
+        private bool ValidateIsEmpty(TextBox control)
+        {
+            if (string.IsNullOrEmpty(control.Text))
+            {
+                errorProvider.SetError(control, "Enter a value");
+                errorProvider.SetIconPadding(control, -(errorProvider.Icon.Width + control.Bounds.Width - control.ClientRectangle.Width));
+                return false;
+            }
+            else
+            {
+                errorProvider.SetError(control, string.Empty);
+                return true;
+            }
+        }
+
+        private bool ValidateMameToRetroarch()
+        {
+            var result = true;
+
+            result = ValidateCommon() && result;
+
+            result = ValidateIsEmpty(textBoxMtrSource) && result;
+            result = ValidateIsEmpty(textBoxMtrOutOverlays) && result;
+            result = ValidateIsEmpty(textBoxMtrOutRoms) && result;
+            result = ValidateIsEmpty(textBoxMtrTemplateOverlay) && result;
+            result = ValidateIsEmpty(textBoxMtrTemplateRom) && result;
+
+            return result;
+        }
+
+        private bool ValidateRetroarchToMame()
+        {
+            var result = true;
+
+            result = ValidateCommon() && result;
+
+            result = ValidateIsEmpty(textBoxRtmSourceRoms) && result;
+            result = ValidateIsEmpty(textBoxRtmSourceOvl) && result;
+            result = ValidateIsEmpty(textBoxRtmOut) && result;
+            result = ValidateIsEmpty(textBoxRtmTemplate) && result;
+
+            return result;
         }
     }
 }
