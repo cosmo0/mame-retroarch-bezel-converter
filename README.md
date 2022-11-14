@@ -6,10 +6,10 @@ Overlays (or bezels) are images added "above" the emulator, to mask the black bo
 
 This tool provides several utilities:
 
-- check Retroarch overlays integrity
-- convert MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator
-- convert Retroarch overlays to MAME bezels
-- generate Retroarch overlays from images
+- check Retroarch overlays integrity (ex: you have lots of overlays and some of them are broken)
+- convert MAME bezels to Retroarch overlays, so they can be used with any Libretro emulator (ex: you've found great MAME bezels and want to use them under Recalbox/Retropie)
+- convert Retroarch overlays to MAME bezels (ex: you've found great RA bezels but prefer to use MAME)
+- generate Retroarch overlays from images (ex: you've found great overlay image but they don't have associated configs)
 
 It works under Windows, Linux and MacOS, except the GUI which only works on Windows.
 
