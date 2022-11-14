@@ -1,8 +1,9 @@
 # How MAME bezels / overlays work
 
-**Using OrionsAngel overlays**. Others can be more complex.
+Samples are using [OrionsAngel overlays](https://forums.libretro.com/t/my-realistic-arcade-bezels/10604/). Others can be more complex, with switches, LCD displays, moving elements, etc.
 
-A MAME overlay is (generally) composed of a LAY file, which describes how the game should be displayed, and images. OrionsAngel also provides a CFG file.
+A MAME overlay is composed of a `.lay` file, which describes how the game should be displayed, and images overlayed on top or below the game.  
+They can be completed with a `.cfg` file, which adjusts the game display.
 
 ## LAY files
 
@@ -24,21 +25,19 @@ Example of a bare-bone LAY file:
 </mamelayout>
 ````
 
-What I assume:
-
-- The `view` defines an entry in the menu, here named FooBar: TAB key in a game > video options.
-- I assume the `bezel` coordinates and size more or less define the screen resolution (this element is not documented so good luck).
+- The `view` element defines an entry in the menu, here named "FooBar": to list the views, use the TAB keyboard key in a game, then select "video options".
+- I assume the `bezel` coordinates and size more or less define the target screen resolution, but this element is not documented, so good luck figuring it out.
 - The `screen` element defines the position of the emulated machine screen.
 
 So far, pretty simple.
 
-[Full documentation](https://docs.mamedev.org/techspecs/layout_files.html)
+[Full documentation](https://docs.mamedev.org/techspecs/layout_files.html), although "full" is a stretch.
 
 Nested elements are relative to their parents:
 
 > Views, groups and elements all have their own internal coordinate systems. When an element or group is referenced from a view or another group, its coordinates are scaled as necessary to fit the specified bounds.
 
-OrionsAngel's bezels don't have children, so I don't care, my head hurts enough.
+Thankfully OrionsAngel's bezels don't have children.
 
 ## CFG files
 
@@ -50,7 +49,7 @@ No documentation exists whatsoever, have fun.
 <screen index="0" hoffset="-0.022000" hstretch="0.530000" voffset="0.072000" vstretch="0.560000" />
 ````
 
-Try out in MAME:
+What I found out after fiddling with values in MAME:
 
 - **STRETCH** is a value between 0.5 & 1.5
   - 1.0 = full screen image in its original aspect ratio, generally 4/3 (that's important for the rest)
@@ -63,7 +62,7 @@ Try out in MAME:
   - it's defined **FROM THE CENTER OF THE SCREEN** (but applying the offset to any pixel works fine)
   - it's **RELATIVE TO THE ORIGINAL SCREEN SIZE** defined in the LAY file
 
-## Math
+## Math for conversion
 
 Using a bezel configured for a resolution of 1280 x 720
 
