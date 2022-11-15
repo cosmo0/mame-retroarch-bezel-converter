@@ -121,7 +121,7 @@ namespace BezelTools
                 }
 
                 // debug: draw target position
-                ImageProcessor.DebugDraw(game, options.OutputDebug, outputImage, newPosition);
+                ImageProcessor.DebugDraw(game, options.OutputDebug, outputImage, newPosition, options.TargetResolutionBounds);
 
                 Interaction.Log($"{game} creating configs");
 
@@ -194,7 +194,7 @@ namespace BezelTools
                     (int)processor.SourceResolution.Height);
 
                 // debug: draw target position
-                ImageProcessor.DebugDraw(game, options.OutputDebug, processor.OverlayImagePath, newPosition);
+                ImageProcessor.DebugDraw(game, options.OutputDebug, processor.OverlayImagePath, newPosition, options.TargetResolutionBounds);
 
                 Interaction.Log($"{game} creating configs");
 
