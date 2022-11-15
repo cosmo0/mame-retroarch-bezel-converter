@@ -1,5 +1,4 @@
 ﻿using BezelTools.Model;
-using BezelTools.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Formats.Png;
@@ -22,31 +21,14 @@ namespace BezelTools
         /// <param name="debugFolder">The path to the debug folder</param>
         /// <param name="sourceImagePath">The path to the image</param>
         /// <param name="position">The position of the screen</param>
-        public static void DebugDraw(string game, string debugFolder, string sourceImagePath, Model.Bounds position)
+        public static void DebugDraw(string game, string debugFolder, string sourceImagePath, Bounds position, Bounds resolution)
         {
             if (!string.IsNullOrEmpty(debugFolder))
             {
                 Interaction.Log($"{game} generating debug image");
                 var debugImage = Path.Join(debugFolder, $"{game}.png");
                 File.Copy(sourceImagePath, debugImage, true);
-                ImageProcessor.DrawRect(debugImage, position);
-            }
-        }
-
-        /// <summary>
-        /// Draws a red rectangle on the specified image at the specified position
-        /// </summary>
-        /// <param name="imagePath">The path to the image</param>
-        /// <param name="position">The position at which to draw the rectangle</param>
-        public static void DrawRect(string imagePath, Bounds position)
-        {
-            using (Image image = Image.Load(imagePath))
-            {
-                var pen = Pens.Solid(Color.Red, 5);
-                var rect = new Rectangle((int)position.X, (int)position.Y, (int)position.Width, (int)position.Height);
-                image.Mutate(x => x.Draw(pen, rect));
-
-                image.Save(imagePath);
+                DrawDebugRect(debugImage, position, resolution);
             }
         }
 
@@ -58,9 +40,10 @@ namespace BezelTools
         /// <returns>The screen position</returns>
         public static Bounds FindScreen(byte[] bezel, int margin)
         {
-            using (Image<Rgba32> image = Image.Load(bezel))
+            using (Image<Rgba32> image = Image.Load<Rgba32>(bezel))
             {
-                // scan around vertical center to find the screen (it's probably more or less centered horizontally)
+                // scan around vertical center to find the screen (it's probably more or less
+                // centered horizontally)
                 var centerX = image.Width / 2;
                 var (topCenter, bottomCenter) = GetTransparentPixelsInColumn(image, centerX);
                 var (topCenterPlus, bottomCenterPlus) = GetTransparentPixelsInColumn(image, centerX + 50);
@@ -70,7 +53,8 @@ namespace BezelTools
                 var bottom = Math.Max(bottomCenter, Math.Max(bottomCenterMinus, bottomCenterPlus));
                 var height = bottom - top;
 
-                // screen is found, now scan horizontally based on these positions (it's often not centered vertically)
+                // screen is found, now scan horizontally based on these positions (it's often not
+                // centered vertically)
                 var centerY = top + (height / 2);
                 var (leftCenter, rightCenter) = GetTransparentPixelsInRow(image, centerY);
                 var (leftCenterPlus, rightCenterPlus) = GetTransparentPixelsInRow(image, centerY + 50);
@@ -150,7 +134,7 @@ namespace BezelTools
         /// <param name="height">The target height</param>
         public static byte[] Resize(byte[] bezel, int width, int height)
         {
-            using (Image<Rgba32> image = Image.Load(bezel))
+            using (Image<Rgba32> image = Image.Load<Rgba32>(bezel))
             {
                 if (image.Width > width || image.Height > height)
                 {
@@ -167,6 +151,31 @@ namespace BezelTools
                     image.Save(ms, new PngEncoder { ColorType = PngColorType.RgbWithAlpha });
                     return ms.ToArray();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Draws a red rectangle on the specified image at the specified position
+        /// </summary>
+        /// <param name="imagePath">The path to the image</param>
+        /// <param name="position">The position at which to draw the rectangle</param>
+        /// <param name="resolution">The target image resolution.</param>
+        private static void DrawDebugRect(string imagePath, Bounds position, Bounds resolution)
+        {
+            using (Image image = Image.Load(imagePath))
+            {
+                // resize if necessary (RA would do it automatically)
+                if (resolution != null && (image.Width != resolution.Width || image.Height != resolution.Height))
+                {
+                    image.Mutate(x => x.Resize((int)resolution.Width, (int)resolution.Height));
+                }
+
+                // draw screen position
+                var pen = Pens.Solid(Color.Red, 5);
+                var rect = new Rectangle((int)position.X, (int)position.Y, (int)position.Width, (int)position.Height);
+                image.Mutate(x => x.Draw(pen, rect));
+
+                image.Save(imagePath);
             }
         }
 
@@ -198,7 +207,8 @@ namespace BezelTools
                 // last transparent pixel has been found
                 if (image[column, y].A == 255 && last > 0)
                 {
-                    // arbitrary margin of error in case a transparent pixel (or column) exists somewhere in the bezel
+                    // arbitrary margin of error in case a transparent pixel (or column) exists
+                    // somewhere in the bezel
                     if (last - first < 100)
                     {
                         // it's an error = reset values
@@ -226,37 +236,41 @@ namespace BezelTools
             int first = 0;
             int last = 0;
 
-            Span<Rgba32> pixelRowSpan = image.GetPixelRowSpan(row);
-            for (int x = 0; x < image.Width; x++)
+            image.ProcessPixelRows(accessor =>
             {
-                // first transparent pixel
-                if (first == 0 && pixelRowSpan[x].A < 255)
+                Span<Rgba32> pixelRowSpan = accessor.GetRowSpan(row);
+                for (int x = 0; x < image.Width; x++)
                 {
-                    first = x;
-                }
-
-                // last transparent pixel
-                if (pixelRowSpan[x].A < 255)
-                {
-                    last = x;
-                }
-
-                // last transparent pixel has been found
-                if (pixelRowSpan[x].A == 255 && last > 0)
-                {
-                    // arbitrary margin of error in case a transparent pixel (or column) exists somewhere in the bezel
-                    if (last - first < 100)
+                    // first transparent pixel
+                    if (first == 0 && pixelRowSpan[x].A < 255)
                     {
-                        // it's an error = reset values
-                        first = 0;
-                        last = 0;
+                        first = x;
                     }
-                    else
+
+                    // last transparent pixel
+                    if (pixelRowSpan[x].A < 255)
                     {
-                        break;
+                        last = x;
+                    }
+
+                    // last transparent pixel has been found
+                    if (pixelRowSpan[x].A == 255 && last > 0)
+                    {
+                        // arbitrary margin of error in case a transparent pixel (or column) exists
+                        // somewhere in the bezel
+                        if (last - first < 100)
+                        {
+                            // it's an error = reset values
+                            first = 0;
+                            last = 0;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
-            }
+            });
 
             return (first, last);
         }

@@ -286,14 +286,14 @@ namespace BezelTools
                         // output debug whether fixing or not
                         if (boundsInConf.Width > 0 && boundsInConf.Height > 0)
                         {
-                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imagePath, boundsInConf);
+                            ImageProcessor.DebugDraw($"{game}_conf", options.OutputDebug, imagePath, boundsInConf, options.TargetResolutionBounds);
                         }
                         else
                         {
                             Interaction.Log($"image {game} has width/height equal to zero in config");
                         }
 
-                        ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imagePath, boundsInImage);
+                        ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, imagePath, boundsInImage, null);
                     }
 
                     // fix the image

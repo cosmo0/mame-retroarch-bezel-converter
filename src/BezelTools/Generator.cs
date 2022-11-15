@@ -63,7 +63,7 @@ namespace BezelTools
                 // debug
                 if (!string.IsNullOrWhiteSpace(options.OutputDebug))
                 {
-                    ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, bounds);
+                    ImageProcessor.DebugDraw($"{game}_image", options.OutputDebug, f, bounds, options.TargetResolutionBounds);
                 }
 
                 Interaction.Log($"{game} done");
