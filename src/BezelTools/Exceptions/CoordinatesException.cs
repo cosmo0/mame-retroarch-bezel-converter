@@ -31,14 +31,5 @@ namespace BezelTools.Exceptions
         public CoordinatesException(string message, System.Exception inner) : base(message, inner)
         {
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:CoordinatesException"/> class
-        /// </summary>
-        /// <param name="context">The contextual information about the source or destination.</param>
-        /// <param name="info">The object that holds the serialized object data.</param>
-        protected CoordinatesException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) : base(info, context)
-        {
-        }
     }
 }
